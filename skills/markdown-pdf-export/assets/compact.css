@@ -1,0 +1,51 @@
+@page { size: A4; margin: 10mm 10mm 10mm 10mm; }
+html { font-size: 13px; }
+body {
+  font-family: "Microsoft YaHei", "SimSun", sans-serif;
+  color: #111827;
+  line-height: 1.4;
+  max-width: 190mm;
+  margin: 0 auto;
+}
+h1 {
+  font-size: 24px;
+  margin: 0 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #0f766e;
+}
+h2 {
+  font-size: 16px;
+  margin: 10px 0 4px;
+  color: #0f766e;
+}
+h3 {
+  font-size: 14px;
+  margin: 8px 0 3px;
+}
+p { margin: 4px 0; }
+ul, ol { margin: 4px 0 6px 18px; padding: 0; }
+li { margin: 2px 0; }
+blockquote {
+  margin: 6px 0 8px;
+  padding: 6px 8px;
+  background: #f6fffb;
+  border-left: 4px solid #0f766e;
+}
+img {
+  display: block;
+  margin: 6px auto 10px;
+  max-width: 100%;
+  max-height: 200mm;
+  object-fit: contain;
+  page-break-inside: avoid;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0 10px;
+}
+th, td {
+  border: 1px solid #d1d5db;
+  padding: 4px 6px;
+  text-align: left;
+}

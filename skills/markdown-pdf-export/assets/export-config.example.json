@@ -1,0 +1,22 @@
+{
+  "defaults": {
+    "workDir": ".",
+    "resourcePath": ".",
+    "preset": "default",
+    "virtualTimeBudget": 5000
+  },
+  "documents": [
+    {
+      "input": "document.md",
+      "output": "document.pdf",
+      "title": "Document Title",
+      "preset": "default"
+    },
+    {
+      "input": "document-compact.md",
+      "output": "document-compact.pdf",
+      "title": "Compact Document",
+      "preset": "compact"
+    }
+  ]
+}
