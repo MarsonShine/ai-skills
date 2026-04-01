@@ -1,0 +1,80 @@
+ObjC.import('AppKit');
+ObjC.import('Foundation');
+
+function fitRect(srcW, srcH, dstX, dstY, dstW, dstH) {
+  const scale = Math.min(dstW / srcW, dstH / srcH);
+  const w = srcW * scale;
+  const h = srcH * scale;
+  return {
+    x: dstX + (dstW - w) / 2,
+    y: dstY + (dstH - h) / 2,
+    w,
+    h,
+  };
+}
+
+function writeText(text, x, y, w, h, fontSize) {
+  const attrs = $({
+    NSFont: $.NSFont.monospacedSystemFontOfSizeWeight(fontSize, $.NSFontWeightRegular),
+    NSForegroundColor: $.NSColor.colorWithCalibratedWhiteAlpha(0.15, 1.0),
+  });
+  $(text).drawInRectWithAttributes($.NSMakeRect(x, y, w, h), attrs);
+}
+
+function run(argv) {
+  if (argv.length < 6) {
+    throw new Error('usage: output cols rows cellWidth cellHeight img1 [img2 ...]');
+  }
+
+  const output = argv[0];
+  const cols = parseInt(argv[1], 10);
+  const rows = parseInt(argv[2], 10);
+  const cellW = parseInt(argv[3], 10);
+  const cellH = parseInt(argv[4], 10);
+  const files = argv.slice(5);
+
+  const sheetW = cols * cellW;
+  const sheetH = rows * cellH;
+  const labelH = 26;
+  const pad = 12;
+
+  const rep = $.NSBitmapImageRep.alloc.initWithBitmapDataPlanesPixelsWidePixelsHighBitsPerSampleSamplesPerPixelHasAlphaIsPlanarColorSpaceNameBitmapFormatBytesPerRowBitsPerPixel(
+    null,
+    sheetW,
+    sheetH,
+    8,
+    4,
+    true,
+    false,
+    $.NSCalibratedRGBColorSpace,
+    $.NSAlphaFirstBitmapFormat,
+    0,
+    0
+  );
+  const ctx = $.NSGraphicsContext.graphicsContextWithBitmapImageRep(rep);
+  $.NSGraphicsContext.setCurrentContext(ctx);
+
+  for (let i = 0; i < files.length; i++) {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const cellX = col * cellW;
+    const cellY = sheetH - (row + 1) * cellH;
+
+    const img = $.NSImage.alloc.initWithContentsOfFile($(files[i]));
+    if (img && img.size.width > 0 && img.size.height > 0) {
+      const srcW = Number(img.size.width);
+      const srcH = Number(img.size.height);
+      const fitted = fitRect(srcW, srcH, cellX + pad, cellY + labelH + pad, cellW - pad * 2, cellH - labelH - pad * 2);
+      const srcRect = $.NSMakeRect(0, 0, srcW, srcH);
+      const dstRect = $.NSMakeRect(fitted.x, fitted.y, fitted.w, fitted.h);
+      img.drawInRectFromRectOperationFraction(dstRect, srcRect, $.NSCompositingOperationSourceOver, 1.0);
+    }
+
+    const name = ObjC.unwrap($(files[i]).lastPathComponent);
+    writeText(name, cellX + 10, cellY + 4, cellW - 20, labelH - 2, 16);
+  }
+
+  const data = rep.representationUsingTypeProperties($.NSBitmapImageFileTypeJPEG, $({NSImageCompressionFactor: 0.78}));
+  data.writeToFileAtomically($(output), true);
+  return output;
+}
