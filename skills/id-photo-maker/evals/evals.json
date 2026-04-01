@@ -1,0 +1,50 @@
+{
+  "skill_name": "id-photo-maker",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我想做一张考试报名用的证件照。我现在只有文字描述，没有照片。请帮我生成一张白底 2 寸证件照，并做成可以直接打印裁剪的页面。",
+      "expected_output": "The skill should collect any missing framing or generation details, ask for Liblib credentials when needed, call the Liblib text2img flow, then route the result into photo processing and printable page rendering.",
+      "files": [],
+      "expectations": [
+        "The workflow asks for any missing required fields such as framing before submitting generation.",
+        "The workflow asks for Liblib AccessKey and SecretKey because this path requires generation.",
+        "The workflow uses the Liblib text2img script rather than trying to generate an image locally.",
+        "The workflow plans to produce printable output rather than stopping at a raw generated image."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "我上传了一张本地照片，想直接做成 1 寸蓝底证件照并排到 A4 和 6 寸打印页里，不要 AI 生图。",
+      "expected_output": "The skill should stay on the local-photo path, avoid asking for AK/SK, run photo processing, and render printable sheets.",
+      "files": [],
+      "expectations": [
+        "The workflow does not ask for Liblib AccessKey or SecretKey on the direct-photo path.",
+        "The workflow uses the local photo processing script for background replacement and cropping.",
+        "The workflow renders printable A4 and 6-inch HTML sheets."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "这是一张公网图片 URL：https://example.com/reference.png。请用它做图生图，生成一张更标准的白底证件照，然后输出可直接打印的页面。",
+      "expected_output": "The skill should recognize that the source is a public URL, allow Liblib img2img, ask for credentials if missing, then post-process and render print layouts.",
+      "files": [],
+      "expectations": [
+        "The workflow recognizes that a public URL can be used as Liblib sourceImage.",
+        "The workflow routes through the Liblib img2img script for generation.",
+        "The workflow still includes the local processing and print-layout steps after generation."
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "我有一张本地照片，但我想拿它做 Liblib 图生图。你先别默认上传任何第三方图床，告诉我需要补什么信息。",
+      "expected_output": "The skill should explain that Liblib img2img requires a public image URL and should not invent an upload workflow.",
+      "files": [],
+      "expectations": [
+        "The workflow explains that Liblib img2img needs a public image URL.",
+        "The workflow does not propose silently uploading the local photo to a third-party host.",
+        "The workflow offers a fallback to direct local photo processing if the user cannot provide a public URL."
+      ]
+    }
+  ]
+}
