@@ -100,17 +100,17 @@ header: "Save"
 question: "Where should these preferences be saved?"
 options:
   - label: "User (Recommended)"
-    description: "$HOME/.agent-skills/ (all projects)"
+    description: "$HOME/.baoyu-skills/ (all projects)"
   - label: "Project"
-    description: ".agent-skills/ (current project only)"
+    description: ".baoyu-skills/ (current project only)"
 ```
 
 ## Save Locations
 
 | Choice | Path | Scope |
 |--------|------|-------|
-| User | `$HOME/.agent-skills/qwen-image-generator/EXTEND.md` | All projects |
-| Project | `.agent-skills/qwen-image-generator/EXTEND.md` | Current project |
+| User | `$HOME/.baoyu-skills/qwen-image-generator/EXTEND.md` | All projects |
+| Project | `.baoyu-skills/qwen-image-generator/EXTEND.md` | Current project |
 
 ## EXTEND.md Template
 

@@ -34,16 +34,16 @@ If no API key is present, stop and tell the user to set one of the supported env
 Check `EXTEND.md` in this order:
 
 ```powershell
-if (Test-Path .agent-skills/qwen-image-generator/EXTEND.md) { "project" }
+if (Test-Path .baoyu-skills/qwen-image-generator/EXTEND.md) { "project" }
 $xdg = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { "$HOME/.config" }
-if (Test-Path "$xdg/agent-skills/qwen-image-generator/EXTEND.md") { "xdg" }
-if (Test-Path "$HOME/.agent-skills/qwen-image-generator/EXTEND.md") { "user" }
+if (Test-Path "$xdg/baoyu-skills/qwen-image-generator/EXTEND.md") { "xdg" }
+if (Test-Path "$HOME/.baoyu-skills/qwen-image-generator/EXTEND.md") { "user" }
 ```
 
 | Path | Location |
 |------|----------|
-| `.agent-skills/qwen-image-generator/EXTEND.md` | Project directory |
-| `$HOME/.agent-skills/qwen-image-generator/EXTEND.md` | User home |
+| `.baoyu-skills/qwen-image-generator/EXTEND.md` | Project directory |
+| `$HOME/.baoyu-skills/qwen-image-generator/EXTEND.md` | User home |
 
 | Result | Action |
 |--------|--------|
@@ -110,7 +110,7 @@ Follow this sequence:
 3. Fill missing parameters from `EXTEND.md`.
 4. Ask only for parameters that are still unresolved.
 5. Build a concrete final prompt in English.
-6. Run `scripts/generate_qwen_image.ps1`.
+6. If the current project already has its own batch wrapper for dataset generation, prefer that wrapper. Otherwise run `scripts/generate_qwen_image.ps1`.
 7. If multiple images or a word list are requested, generate them **sequentially by default**. Do not parallelize unless the user explicitly asks for concurrency.
 8. Save each successful result immediately and return the file path, prompt, and key generation settings.
 
@@ -122,8 +122,27 @@ When the task requires multiple images:
 - do **not** start parallel generations unless the user explicitly asks for concurrent generation
 - save each image immediately after it is generated
 - on rerun, **skip outputs that already exist** and continue from the next missing item
+- if the user wants only some bad images redone, prefer the project's selector-aware batch script over rerunning the whole dataset
 - if one item fails, record the failure, continue with the remaining items when possible, and summarize failures clearly at the end
 - for rate-limit errors, use retry with backoff instead of restarting the whole batch
+
+## Existing Project Batch Scripts
+
+If the current repo already ships a batch wrapper around this skill, use it for flashcard or dataset jobs instead of hand-writing an ad-hoc loop around `scripts/generate_qwen_image.ps1`.
+
+Prefer the repo wrapper when it can:
+
+- skip already-generated files
+- regenerate only named items
+- preserve the old file until a forced regenerate succeeds
+
+Example:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\generate_word_images.ps1 -Words Monday,scarf -Force
+```
+
+This keeps reruns scoped to the bad items instead of regenerating the full set.
 
 ## Missing-Information Rules
 
