@@ -1,279 +1,62 @@
 ---
 name: qwen-image-generator
 description: Generate images with DashScope Qwen-Image 2.0 from rough user requests and save them locally. Use this whenever the user asks to generate an image, illustration, poster, flashcard, teaching card, cover art, scene image, mascot, product concept, or "文生图"/"画一张图", even if the request is vague. Supports first-time setup via EXTEND.md, fills missing style and size from saved preferences, and asks only for still-missing image parameters.
-compatibility: "Works best with PowerShell, environment variables, and file tools. Uses a bundled PowerShell script to call DashScope Qwen-Image 2.0 and download the generated image files."
+compatibility: "Works best with PowerShell, Node.js 22+, environment variables, and file tools. The PowerShell entry is thin; scripts/generate_qwen_image.ts owns the DashScope call, polling, downloads, and JSON output."
 ---
 
 # Qwen Image Generator
 
-Turn rough image ideas into concrete Qwen-Image generations. Default to doing the work end-to-end: load preferences, ask only for still-missing parameters, build a strong prompt, generate the image, save it locally, and report the saved path and prompt used.
+Turn rough image requests into saved local files. Default to doing the work end to end: load preferences, ask only for still-missing settings, write one concrete English prompt, generate sequentially, save immediately, and report the file paths plus the final prompt used.
 
-## Script Directory
+## Runtime layout
 
-Scripts live in `scripts/`. Treat `{baseDir}` as the directory containing this `SKILL.md`.
+| File | Role |
+| --- | --- |
+| `scripts/generate_qwen_image.ps1` | Windows entrypoint |
+| `scripts/generate_qwen_image.ts` | DashScope client, polling, downloads, JSON output |
+| `references/config/extend-schema.md` | `EXTEND.md` keys |
+| `references/config/first-time-setup.md` | blocking first-run setup |
+| `references/prompting.md` | style presets, prompt shaping, flashcard rules |
 
-| Script | Purpose |
-|--------|---------|
-| `scripts/generate_qwen_image.ps1` | Calls DashScope Qwen-Image 2.0 synchronously, downloads image files, and prints a JSON summary |
+## Credentials
 
-## Environment Variables
-
-Before generation, resolve credentials in this order:
+Resolve credentials in this order:
 
 1. `QWEN_IMAGE_API_KEY`
 2. `DASHSCOPE_API_KEY`
 
-Optional:
+Optional: `DASHSCOPE_BASE_URL`
 
-- `DASHSCOPE_BASE_URL` - override the default DashScope API root
+If no key exists, stop with the credential error. Do not pretend generation succeeded.
 
-If no API key is present, stop and tell the user to set one of the supported environment variables. Do not pretend generation succeeded.
+## Preferences
 
-## Preferences (EXTEND.md)
+Check for `EXTEND.md` in this order:
 
-Check `EXTEND.md` in this order:
+1. `.baoyu-skills/qwen-image-generator/EXTEND.md`
+2. `$XDG_CONFIG_HOME/baoyu-skills/qwen-image-generator/EXTEND.md`
+3. `$HOME/.baoyu-skills/qwen-image-generator/EXTEND.md`
 
-```powershell
-if (Test-Path .baoyu-skills/qwen-image-generator/EXTEND.md) { "project" }
-$xdg = if ($env:XDG_CONFIG_HOME) { $env:XDG_CONFIG_HOME } else { "$HOME/.config" }
-if (Test-Path "$xdg/baoyu-skills/qwen-image-generator/EXTEND.md") { "xdg" }
-if (Test-Path "$HOME/.baoyu-skills/qwen-image-generator/EXTEND.md") { "user" }
-```
+If none exists, run the blocking setup in `references/config/first-time-setup.md`, save the file, then continue the image task.
 
-| Path | Location |
-|------|----------|
-| `.baoyu-skills/qwen-image-generator/EXTEND.md` | Project directory |
-| `$HOME/.baoyu-skills/qwen-image-generator/EXTEND.md` | User home |
+Built-in defaults when neither the request nor `EXTEND.md` overrides them:
 
-| Result | Action |
-|--------|--------|
-| Found | Read it, apply preferences, and briefly note which path is in use on first use in the session |
-| Not found | Run the blocking first-time setup before generating any image |
+- model: `qwen-image-2.0`
+- style: `flat-illustration`
+- size: `1024x1024`
+- text policy: `avoid`
+- prompt enhancement: `true`
+- watermark: `false`
+- output directory: `./generated-images/`
 
-Supported keys and template: [references/config/extend-schema.md](references/config/extend-schema.md)
+## Working rules
 
-### First-Time Setup (BLOCKING)
+1. Parse the request for subject, style, size, visible text, and output path.
+2. Fill missing values from `EXTEND.md`.
+3. Ask only for still-missing values that materially change the result.
+4. Write the final prompt in English.
+5. Prefer project batch wrappers when they already handle reruns or selective regeneration. Otherwise run `scripts/generate_qwen_image.ps1`.
+6. Generate sequentially by default. Only parallelize when the user explicitly asks.
+7. Save each successful result immediately and report the saved path, final prompt, and effective settings.
 
-When `EXTEND.md` is not found, do not jump into prompt writing or image generation. Run first-time setup first.
-
-Full flow: [references/config/first-time-setup.md](references/config/first-time-setup.md)
-
-Ask in the user's language. Collect these preferences:
-
-1. Default visual style
-2. Default image size
-3. Default text policy
-4. Whether prompt enhancement should be on by default
-5. Default output directory
-6. Where to save the preferences
-
-After setup, create `EXTEND.md`, confirm the path, then continue the image task.
-
-## Defaults
-
-Use these defaults when neither the request nor `EXTEND.md` overrides them:
-
-| Setting | Default | EXTEND.md key | Meaning |
-|---------|---------|---------------|---------|
-| Model | `qwen-image-2.0` | `model` | DashScope image model |
-| Style | `flat-illustration` | `default_style` | Default visual treatment |
-| Size | `1024x1024` | `default_size` | Output resolution |
-| Text policy | `avoid` | `render_text` | Whether to avoid rendered text inside the image |
-| Prompt enhancement | `true` | `prompt_extend` | Whether DashScope should expand the prompt |
-| Watermark | `false` | `watermark` | Whether DashScope watermark should be enabled |
-| Output directory | `./generated-images/` | `default_output_dir` | Where generated images should be saved |
-
-## Style Presets
-
-The user can provide any custom style description. If they do not, prefer one of these presets:
-
-| Preset | Meaning |
-|--------|---------|
-| `flat-illustration` | Clean flat-color illustration, simple composition, modern editorial clarity |
-| `clean-educational` | Minimal textbook or flashcard look, centered subject, uncluttered background |
-| `anime` | Soft anime-inspired illustration without excessive decorative detail unless requested |
-| `3d-cartoon` | Friendly stylized 3D character or object rendering |
-| `photorealistic` | Realistic photo-like scene or product image |
-| `watercolor` | Painted watercolor look with soft textures |
-
-## Workflow
-
-Follow this sequence:
-
-1. Load preferences from `EXTEND.md`, or run first-time setup if none exists.
-2. Parse the request for explicit parameters:
-   - subject or scene
-   - style
-   - size
-   - visible text requirements
-   - output location or filename
-3. Fill missing parameters from `EXTEND.md`.
-4. Ask only for parameters that are still unresolved.
-5. Build a concrete final prompt in English.
-6. If the current project already has its own batch wrapper for dataset generation, prefer that wrapper. Otherwise run `scripts/generate_qwen_image.ps1`.
-7. If multiple images or a word list are requested, generate them **sequentially by default**. Do not parallelize unless the user explicitly asks for concurrency.
-8. Save each successful result immediately and return the file path, prompt, and key generation settings.
-
-## Batch Generation Defaults
-
-When the task requires multiple images:
-
-- default to **sequential generation**, one request at a time
-- do **not** start parallel generations unless the user explicitly asks for concurrent generation
-- save each image immediately after it is generated
-- on rerun, **skip outputs that already exist** and continue from the next missing item
-- if the user wants only some bad images redone, prefer the project's selector-aware batch script over rerunning the whole dataset
-- if one item fails, record the failure, continue with the remaining items when possible, and summarize failures clearly at the end
-- for rate-limit errors, use retry with backoff instead of restarting the whole batch
-
-## Existing Project Batch Scripts
-
-If the current repo already ships a batch wrapper around this skill, use it for flashcard or dataset jobs instead of hand-writing an ad-hoc loop around `scripts/generate_qwen_image.ps1`.
-
-Prefer the repo wrapper when it can:
-
-- skip already-generated files
-- regenerate only named items
-- preserve the old file until a forced regenerate succeeds
-
-Example:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\generate_word_images.ps1 -Words Monday,scarf -Force
-```
-
-This keeps reruns scoped to the bad items instead of regenerating the full set.
-
-## Missing-Information Rules
-
-- Never ask for style if the user already gave one.
-- Never ask for size if the user already gave one.
-- Never ask for values already available in `EXTEND.md`.
-- If a request is still usable without extra clarification, proceed.
-- Ask follow-up questions only for details that materially change the result, typically style, size, text policy, or output location.
-- Ask in the smallest possible set. Do not ask the user to re-state the whole prompt.
-
-## Prompt-Building Strategy
-
-Build prompts in two passes.
-
-### Pass 1: Extract scene semantics
-
-Figure out these fields from the request:
-
-- `mainSubject` - the main object, person, creature, or focal concept
-- `supportingVisual` - one optional helper element if it truly clarifies the idea
-- `actionOrGesture` - the visible action, pose, or interaction
-- `sceneSetting` - minimal setting only when needed
-- `backgroundHint` - plain or lightly directed background guidance
-- `overlayText` - exact visible text only when the user explicitly wants it
-- `negativeElements` - things that should not appear
-
-Keep each field short and concrete. Do not over-design the scene.
-
-### Pass 2: Write the final image prompt
-
-- Write the final prompt in English, even if the user asked in Chinese.
-- Keep it model-agnostic in wording, but use settings compatible with the current Qwen-Image 2.0 DashScope API through the script.
-- Prefer clear nouns, visible actions, composition guidance, and concise style language.
-- Avoid vague filler such as "high quality masterpiece" unless the user explicitly wants that aesthetic.
-- If `render_text` is `avoid`, do not ask the model to render long text. Instead, reserve a clean blank area for later manual overlay when text matters.
-- Add a short negative clause only when it prevents likely failure modes.
-
-## Educational and Flashcard Requests
-
-This skill should reuse the same design intent as the educational flashcard prompt builder pattern:
-
-- favor semantic clarity over beauty
-- keep the subject large, centered, and easy to understand
-- keep the background plain or minimally directed
-- avoid decorative clutter, glamour portrait styling, and scenic filler
-- avoid unnecessary visible text
-- use only the minimum props needed to teach the concept
-
-Apply these rules whenever the request is for:
-
-- alphabet cards
-- vocabulary cards
-- phrase meaning scenes
-- textbook illustrations
-- classroom teaching images
-- children's English-learning visuals
-
-For alphabet cards:
-
-- show only the exact requested letter if visible text is required
-- pair it with one simple matching object
-
-For word or phrase cards:
-
-- prefer text-free illustrations
-- if the user needs text shown, keep it exact and very short
-- reserve clean space rather than forcing long text rendering
-
-## Size Guidance
-
-Use the user's requested size when available. Otherwise use the configured default. Common values:
-
-| Size | Best for |
-|------|----------|
-| `1024x1024` | Square illustrations, icons, stickers, object studies |
-| `1024x1792` | Posters, book covers, mobile wallpapers, portrait scenes |
-| `1792x1024` | Flashcards, banners, wide teaching scenes, landscape compositions |
-
-## Output Path Rules
-
-If the user gave an output path or filename, use it.
-
-Otherwise:
-
-1. Start from `default_output_dir` in `EXTEND.md`, or `./generated-images/`
-2. Create a short slug from the request subject
-3. Save as `{output_dir}/{slug}-{timestamp}.png`
-
-If multiple images are requested, save them as `-01`, `-02`, and so on.
-
-## Execution
-
-Run the bundled script from PowerShell. Example:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File "{baseDir}\scripts\generate_qwen_image.ps1" `
-  -Prompt "<final english prompt>" `
-  -Size "1024x1024" `
-  -OutputPath ".\generated-images\apple-card.png" `
-  -PromptExtend:$true `
-  -Watermark:$false
-```
-
-The script prints JSON with:
-
-- `model`
-- `size`
-- `taskId`
-- `imageUrls`
-- `savedFiles`
-
-Read that JSON and report the saved file path succinctly.
-
-## Output Expectations
-
-After generation, report:
-
-1. The saved file path or paths
-2. The final prompt actually used
-3. The effective style, size, and text policy
-
-If generation fails, surface the API or credential problem clearly. Do not hide it behind a generic success message. For batch jobs, report which items succeeded, which were skipped, and which failed.
-
-## Example Requests
-
-- "帮我画一张单词 apple 的英语教学闪卡，风格可爱一点"
-- "Generate a clean mascot illustration for a study app, blue and white, square image"
-- "做一张横版海报图，主题是 AI learning community，先别放字"
-
-## Resources
-
-- `references/config/first-time-setup.md` - first-use preference flow
-- `references/config/extend-schema.md` - supported configuration keys and template
-- `scripts/generate_qwen_image.ps1` - deterministic DashScope generation helper
+Load `references/prompting.md` when the request needs preset choice, educational-image rules, or prompt-shaping guidance.
