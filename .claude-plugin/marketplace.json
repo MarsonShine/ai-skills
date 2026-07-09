@@ -1,0 +1,31 @@
+{
+  "name": "ai-skills",
+  "owner": {
+    "name": "marsonshine",
+    "email": "ms27946@163.com"
+  },
+  "metadata": {
+    "description": "Reusable AI agent skills for solution design, code review, documents, images, translation, and loop orchestration.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "ai-skills",
+      "description": "Reusable AI agent skills for Codex, Claude Code, GitHub Copilot, and other Agent Skills-compatible tools.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/business-solution-architect",
+        "./skills/csharp-dotnet-code-checklist",
+        "./skills/fact-check-debunker",
+        "./skills/id-photo-maker",
+        "./skills/loop-orchestrator",
+        "./skills/markdown-pdf-export",
+        "./skills/photo-selector",
+        "./skills/qwen-image-generator",
+        "./skills/resume-builder",
+        "./skills/translate-tech-en-zh"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+# Dependencies and package managers
+node_modules/
+*.tgz
+
+# Local scratch and generated output
+work/
+outputs/
+.codex-tmp/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+*.iml

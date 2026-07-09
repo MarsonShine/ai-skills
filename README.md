@@ -32,7 +32,29 @@ Current skills:
 
 ## Install For Codex
 
-This repository is already packaged as a local Codex plugin. From the repository root:
+### One-command Skills CLI install
+
+For most users, install with the open Agent Skills CLI:
+
+```bash
+npx skills add MarsonShine/ai-skills
+```
+
+Install only selected skills when you do not want the whole set:
+
+```bash
+npx skills add MarsonShine/ai-skills --skill loop-orchestrator --skill csharp-dotnet-code-checklist
+```
+
+Install globally for a specific agent:
+
+```bash
+npx skills add MarsonShine/ai-skills -g -a codex
+```
+
+### Codex plugin marketplace install
+
+This repository is also packaged as a local Codex plugin. From the repository root:
 
 ```powershell
 codex plugin marketplace add .
@@ -51,6 +73,18 @@ codex plugin add ai-skills@ai-skills
 Start a new Codex thread after reinstalling so the updated skill metadata is loaded.
 
 ## Install For Claude Code
+
+Recommended:
+
+```bash
+npx skills add MarsonShine/ai-skills -a claude-code
+```
+
+Global install:
+
+```bash
+npx skills add MarsonShine/ai-skills -g -a claude-code
+```
 
 Claude Code loads custom skills from personal, project, and plugin locations. For a personal install that stays linked to this repository, create directory junctions on Windows:
 
@@ -91,6 +125,18 @@ Copilot can use repository custom instructions and agent skills.
 
 This repo already includes `.github/copilot-instructions.md` for repository-level guidance.
 
+Recommended:
+
+```bash
+npx skills add MarsonShine/ai-skills -a github-copilot
+```
+
+Global install:
+
+```bash
+npx skills add MarsonShine/ai-skills -g -a github-copilot
+```
+
 For personal skills that stay linked to this repository on Windows:
 
 ```powershell
@@ -126,6 +172,14 @@ gh skill install MarsonShine/ai-skills loop-orchestrator
 ## Install For Other Agent-Skills Tools
 
 Many tools support the same basic shape: each skill is a folder containing `SKILL.md` plus optional `references/`, `scripts/`, and `assets/`.
+
+The `skills` CLI supports many agents and can auto-detect installed tools:
+
+```bash
+npx skills add MarsonShine/ai-skills
+npx skills add MarsonShine/ai-skills --list
+npx skills add MarsonShine/ai-skills --all
+```
 
 Use one of these patterns:
 
@@ -197,6 +251,8 @@ gh skill publish
 
 Use `--dry-run` before publishing. Use `--fix` only after reviewing the resulting diff.
 
+For `npx skills` discovery, this repository includes `.claude-plugin/marketplace.json` and standard `skills/<name>/SKILL.md` directories.
+
 ## Maintenance Workflow
 
 1. Add or edit a skill under `skills/<skill-name>/`.
@@ -211,6 +267,7 @@ See [docs/skill-development-guide.md](docs/skill-development-guide.md) for the d
 
 ## References
 
+- [Vercel Agent Skills CLI (`npx skills`)](https://github.com/vercel-labs/skills)
 - [Claude Code skills documentation](https://code.claude.com/docs/en/skills)
 - [GitHub Copilot agent skills documentation](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/add-skills)
 - [GitHub Copilot repository custom instructions](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions)
