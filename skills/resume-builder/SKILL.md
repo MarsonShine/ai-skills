@@ -1,12 +1,15 @@
 ---
 name: resume-builder
 description: "Build or rewrite professional resumes and CVs from scattered materials, existing resumes, PDFs, job histories, work photos, certificates, or target job postings. Use this skill whenever the user asks to create, improve, quantify, tailor, condense, localize, or polish any resume or CV, even if they only provide rough notes or evidence files. Default to producing truthful, well-structured markdown resumes and a concise version when that would help the user apply faster."
-compatibility: "Works best with file viewing/search tools and PowerShell so you can inspect source files, extract PDF text, and create final markdown deliverables in the working directory."
 ---
 
 # Resume Builder
 
 Turn incomplete source material into a strong, believable, application-ready resume. Default to doing the work end-to-end: inspect files, infer the user's target role, enrich details carefully, quantify achievements conservatively, and write polished markdown output instead of stopping at advice.
+
+## Compatibility
+
+Works best with file viewing/search tools and PowerShell so you can inspect source files, extract PDF text, and create final markdown deliverables in the working directory.
 
 ## Default operating mode
 

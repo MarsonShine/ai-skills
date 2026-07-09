@@ -275,7 +275,7 @@ async function main(): Promise<void> {
         </ItemGroup>
       </Project>
     `;
-    const project = analyzeProject("C:\\repo", "C:\\repo\\tests\\Sample.Tests.csproj", sample);
+    const project = analyzeProject("/repo", "/repo/tests/Sample.Tests.csproj", sample);
     assert.deepEqual(project.targetFrameworks, ["net10.0"]);
     assert.equal(project.nullable, "enable");
     assert.equal(project.isTestProject, true);

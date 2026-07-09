@@ -1,12 +1,15 @@
 ---
 name: markdown-pdf-export
 description: "Export Markdown files to polished, print-ready PDFs and set up reusable local export scripts. Use this skill whenever the user wants Markdown converted to PDF, asks for one-click export automation, needs reusable styling presets, or wants to tune margins, fonts, images, or page layout for resumes, reports, manuals, proposals, or summaries. Default to a script-based workflow instead of a one-off manual conversion."
-compatibility: "Works best on Windows with PowerShell, Node.js 22+, Pandoc, and Microsoft Edge or Chrome. The PowerShell wrapper stays thin; scripts/export_markdown_pdf.ts validates config, runs Pandoc, and prints stable PDFs through a headless browser."
 ---
 
 # Markdown PDF Export
 
 Use this skill to turn markdown deliverables into repeatable PDF outputs. Default to leaving behind a reusable script + config setup instead of a one-off command.
+
+## Compatibility
+
+Works best on Windows with PowerShell, Node.js 22+, Pandoc, and Microsoft Edge or Chrome. The PowerShell wrapper stays thin; `scripts/export_markdown_pdf.ts` validates config, runs Pandoc, and prints stable PDFs through a headless browser.
 
 ## Runtime layout
 

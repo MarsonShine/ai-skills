@@ -1,12 +1,15 @@
 ---
 name: csharp-dotnet-code-checklist
 description: Review C#, ASP.NET Core, and .NET 10 pull requests or code diffs with a practical checklist focused on correctness, nullability, async/await, EF Core, DI, security, performance, observability, and tests. Use this skill whenever the user asks for a C#/.NET code review, PR review, diff review, checklist-based review, best-practices validation, 架构审查, or wants actionable findings instead of style-only comments.
-compatibility: Best when a git diff, PR patch, changed files, or file paths are available. When repo context exists, run scripts/inspect_dotnet_repo.ts first to collect target frameworks, nullable, analyzer, ASP.NET Core, EF Core, test, and CI signals before judging conventions.
 ---
 
 # C# / .NET Code Checklist
 
 Review `C#`, `ASP.NET Core`, and `.NET` changes like a pragmatic senior engineer. Default to diff review, not full-repo style commentary.
+
+## Compatibility
+
+Best when a git diff, PR patch, changed files, or file paths are available. When repo context exists, run `scripts/inspect_dotnet_repo.ts` first to collect target frameworks, nullable, analyzer, ASP.NET Core, EF Core, test, and CI signals before judging conventions.
 
 ## Workflow
 

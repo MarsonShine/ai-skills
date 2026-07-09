@@ -1,0 +1,20 @@
+{
+  "name": "ai-skills",
+  "interface": {
+    "displayName": "AI Skills"
+  },
+  "plugins": [
+    {
+      "name": "ai-skills",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

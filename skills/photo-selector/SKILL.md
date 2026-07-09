@@ -1,12 +1,15 @@
 ---
 name: photo-selector
 description: "从本地照片文件夹中按专业摄影标准筛选出值得精修的照片。先生成联络表，再做多轮挑片，最后把终选片复制到“精修”文件夹。macOS 默认走原生 JXA，Linux 和 Windows 可走 Python Pillow 后端。"
-compatibility: "macOS uses bash + osascript + JXA + AppKit by default. Linux and Windows use Python 3 + Pillow. A PowerShell wrapper is included for Windows."
 ---
 
 # Photo Selector
 
 把本地照片挑片任务做成稳定、可复用的执行流程：先盘点素材，再生成联络表完成大范围初筛，随后压缩连拍、复核原图，最后把终选片复制到同级 `精修` 文件夹。默认直接执行，不停留在抽象建议。
+
+## Compatibility
+
+macOS uses bash + osascript + JXA + AppKit by default. Linux and Windows use Python 3 + Pillow. A PowerShell wrapper is included for Windows.
 
 ## Default operating mode
 
@@ -22,15 +25,15 @@ compatibility: "macOS uses bash + osascript + JXA + AppKit by default. Linux and
 - **macOS**
   - 默认后端：`osascript + JXA + AppKit`
   - 推荐命令：
-    - `bash ~/.copilot/skills/photo-selector/scripts/make_contact_sheets.sh "/path/to/photos" "/path/to/contact_sheets_16" 4 4 480 360`
+    - `bash "{baseDir}/scripts/make_contact_sheets.sh" "/path/to/photos" "/path/to/contact_sheets_16" 4 4 480 360`
 - **Linux**
   - 后端：`Python 3 + Pillow`
   - 推荐命令：
-    - `bash ~/.copilot/skills/photo-selector/scripts/make_contact_sheets.sh "/path/to/photos" "/path/to/contact_sheets_16" 4 4 480 360`
+    - `bash "{baseDir}/scripts/make_contact_sheets.sh" "/path/to/photos" "/path/to/contact_sheets_16" 4 4 480 360`
 - **Windows**
   - 后端：`Python 3 + Pillow`
   - 推荐命令：
-    - `pwsh -File "$HOME/.copilot/skills/photo-selector/scripts/make_contact_sheets.ps1" "C:\path\to\photos" "C:\path\to\contact_sheets_16" 4 4 480 360`
+    - `pwsh -File "{baseDir}\scripts\make_contact_sheets.ps1" "<photos-dir>" "<contact-sheets-dir>" 4 4 480 360`
   - 如果在 Git Bash 或 WSL 下运行，也可以继续使用 `make_contact_sheets.sh`。
 
 依赖说明：
@@ -54,8 +57,8 @@ compatibility: "macOS uses bash + osascript + JXA + AppKit by default. Linux and
    - 对整批 JPG 生成 `4x4` 联络表。
    - 文件名必须显示在每张缩略图下方，方便快速回指原图。
    - 推荐使用：
-      - `bash ~/.copilot/skills/photo-selector/scripts/make_contact_sheets.sh "/path/to/photos" "/path/to/contact_sheets_16" 4 4 480 360`
-      - Windows PowerShell: `pwsh -File "$HOME/.copilot/skills/photo-selector/scripts/make_contact_sheets.ps1" "C:\path\to\photos" "C:\path\to\contact_sheets_16" 4 4 480 360`
+      - `bash "{baseDir}/scripts/make_contact_sheets.sh" "/path/to/photos" "/path/to/contact_sheets_16" 4 4 480 360`
+      - Windows PowerShell: `pwsh -File "{baseDir}\scripts\make_contact_sheets.ps1" "<photos-dir>" "<contact-sheets-dir>" 4 4 480 360`
 
 3. 第一轮初筛
    - 先抓“大方向正确”的帧：
@@ -69,8 +72,8 @@ compatibility: "macOS uses bash + osascript + JXA + AppKit by default. Linux and
 4. 第二轮压缩
    - 把候选名单写入一个文本文件，每行一个文件名。
    - 用更大的 `3x3` 联络表复看候选：
-      - `bash ~/.copilot/skills/photo-selector/scripts/make_contact_sheets.sh "/path/to/photos" "/path/to/round2_sheets" 3 3 640 480 "/path/to/candidate_list.txt"`
-      - Windows PowerShell: `pwsh -File "$HOME/.copilot/skills/photo-selector/scripts/make_contact_sheets.ps1" "C:\path\to\photos" "C:\path\to\round2_sheets" 3 3 640 480 "C:\path\to\candidate_list.txt"`
+      - `bash "{baseDir}/scripts/make_contact_sheets.sh" "/path/to/photos" "/path/to/round2_sheets" 3 3 640 480 "/path/to/candidate_list.txt"`
+      - Windows PowerShell: `pwsh -File "{baseDir}\scripts\make_contact_sheets.ps1" "<photos-dir>" "<round2-sheets-dir>" 3 3 640 480 "<candidate-list.txt>"`
    - 在同组连拍里压掉弱帧，只保留真正最强的那一两张。
 
 5. 原图复核

@@ -1,12 +1,15 @@
 ---
 name: qwen-image-generator
 description: Generate images with DashScope Qwen-Image 2.0 from rough user requests and save them locally. Use this whenever the user asks to generate an image, illustration, poster, flashcard, teaching card, cover art, scene image, mascot, product concept, or "文生图"/"画一张图", even if the request is vague. Supports first-time setup via EXTEND.md, fills missing style and size from saved preferences, and asks only for still-missing image parameters.
-compatibility: "Works best with PowerShell, Node.js 22+, environment variables, and file tools. The PowerShell entry is thin; scripts/generate_qwen_image.ts owns the DashScope call, polling, downloads, and JSON output."
 ---
 
 # Qwen Image Generator
 
 Turn rough image requests into saved local files. Default to doing the work end to end: load preferences, ask only for still-missing settings, write one concrete English prompt, generate sequentially, save immediately, and report the file paths plus the final prompt used.
+
+## Compatibility
+
+Works best with PowerShell, Node.js 22+, environment variables, and file tools. The PowerShell entry is thin; `scripts/generate_qwen_image.ts` owns the DashScope call, polling, downloads, and JSON output.
 
 ## Runtime layout
 

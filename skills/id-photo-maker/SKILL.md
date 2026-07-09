@@ -1,12 +1,15 @@
 ---
 name: id-photo-maker
 description: "根据文字、参考图、公网图片 URL 或本地照片制作可直接打印裁剪的证件照。只要用户提到证件照、报名照、护照照、白底/蓝底/红底换底、1寸/2寸、证件照排版、证件照打印、或想把普通照片变成证件照，都应使用这个 skill。默认优先处理用户已有照片；只有缺图或用户明确要求时，才调用 Liblib 的文生图或图生图。"
-compatibility: "Works best with bash and Python 3.11+. Liblib API calls use only Python stdlib. Photo processing needs Pillow and rembg, ideally inside ~/.copilot/skills/id-photo-maker/.venv."
 ---
 
 # ID Photo Maker
 
 把证件照制作变成稳定、可重复的执行流程：先判断输入来源，再收集缺失参数，然后按需走 Liblib 生图或本地照片处理，最后输出可直接打印裁剪的静态排版页。
+
+## Compatibility
+
+Works best with bash and Python 3.11+. Liblib API calls use only Python stdlib. Photo processing needs Pillow and rembg, ideally inside this skill's local `.venv`.
 
 ## Default operating mode
 

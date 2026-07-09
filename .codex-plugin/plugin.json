@@ -1,0 +1,39 @@
+{
+  "name": "ai-skills",
+  "version": "0.1.0",
+  "description": "A local Codex plugin that bundles reusable AI agent skills for writing, review, design, automation, document export, image workflows, and skill orchestration.",
+  "author": {
+    "name": "marsonshine",
+    "email": "ms27946@163.com",
+    "url": "https://github.com/MarsonShine"
+  },
+  "homepage": "https://github.com/MarsonShine/ai-skills",
+  "repository": "https://github.com/MarsonShine/ai-skills",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "skills",
+    "agents",
+    "workflow",
+    "automation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AI Skills",
+    "shortDescription": "Reusable local skills for Codex workflows.",
+    "longDescription": "AI Skills bundles a maintained set of local Codex skills for solution design, code review, translation, resume writing, Markdown PDF export, image workflows, fact checking, and loop orchestration.",
+    "developerName": "marsonshine",
+    "category": "Productivity",
+    "capabilities": [
+      "Skills",
+      "Workflow",
+      "Local"
+    ],
+    "defaultPrompt": [
+      "Use my AI skills to choose the right workflow.",
+      "Route this task through the best local skill.",
+      "Help me maintain and validate these skills."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

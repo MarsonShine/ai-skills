@@ -38,6 +38,14 @@ Move long checklists, examples, policies, and domain knowledge into `references/
 
 Move deterministic or repeatable operations into `scripts/`.
 
+## Plugin Layout
+
+This repository is a Codex plugin source. Keep `.codex-plugin/plugin.json` at the repository root and expose reusable skills through `skills/`.
+
+Only real skills belong directly under `skills/`. Evaluation output, benchmark workspaces, experiments, and generated review artifacts belong under repository-level folders such as `workspaces/` or `docs/`, because the plugin validator treats every direct child of `skills/` as an installable skill.
+
+Use `.agents/plugins/marketplace.json` as the local marketplace entry for this repository. Do not copy maintained skills into user profile skill folders as a long-term workflow; install or reinstall the plugin instead.
+
 ## Language Selection Rules
 
 ### Use Python when the script mainly does local processing
