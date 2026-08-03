@@ -17,6 +17,7 @@ Do not copy, edit, or migrate skills during routing unless the user explicitly a
 | `qwen-image-generator` | `../qwen-image-generator/SKILL.md` | Generating images with DashScope Qwen-Image, including illustrations, posters, flashcards, covers, mascots, product concepts, and vague image requests. |
 | `resume-builder` | `../resume-builder/SKILL.md` | Creating, improving, quantifying, tailoring, condensing, localizing, or polishing resumes and CVs from rough notes, PDFs, job histories, evidence files, or job postings. |
 | `translate-tech-en-zh` | `../translate-tech-en-zh/SKILL.md` | Technical English-Chinese translation, localization, terminology consistency, and developer-facing article translation. |
+| `windows-reclaim-disk-space` | `../windows-reclaim-disk-space/SKILL.md` | Auditing Windows system-drive usage, ranking reclaimable space, producing safe/conditional/do-not-delete reports, and executing explicitly approved cache cleanup with strict safety checks. |
 
 ## Routing Rules
 

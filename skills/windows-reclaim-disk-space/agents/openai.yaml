@@ -1,0 +1,4 @@
+interface:
+  display_name: "Windows Disk Space Reclaimer"
+  short_description: "Audit Windows disk usage and produce safe cleanup reports"
+  default_prompt: "Use $windows-reclaim-disk-space to audit my Windows system drive, rank reclaimable space, and produce a safe cleanup report before making changes."

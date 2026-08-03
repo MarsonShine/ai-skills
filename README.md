@@ -29,6 +29,9 @@ Current skills:
 - `qwen-image-generator`
 - `resume-builder`
 - `translate-tech-en-zh`
+- `windows-reclaim-disk-space`
+
+`windows-reclaim-disk-space` performs a read-only Windows drive audit, ranks reclaimable space, and separates confirmed cleanable targets from conditional and manually forbidden targets. See its anonymized [cleanup report example](skills/windows-reclaim-disk-space/references/report-example.md).
 
 ## Install For Codex
 
