@@ -1,0 +1,4 @@
+interface:
+  display_name: "Decision Record Maintenance"
+  short_description: "Maintain repository decision records and lifecycle"
+  default_prompt: "Use $maintain-decision-records to audit and maintain this repository's decision records."

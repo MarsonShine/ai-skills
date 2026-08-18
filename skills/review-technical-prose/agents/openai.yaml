@@ -1,0 +1,4 @@
+interface:
+  display_name: "Technical Prose Review"
+  short_description: "Review technical prose for complete clear contracts"
+  default_prompt: "Use $review-technical-prose to improve this technical prose without losing important facts."

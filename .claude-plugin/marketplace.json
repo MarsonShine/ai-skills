@@ -5,7 +5,7 @@
     "email": "ms27946@163.com"
   },
   "metadata": {
-    "description": "Reusable AI agent skills for solution design, code review, documents, images, translation, Windows disk auditing, and loop orchestration.",
+    "description": "Reusable AI agent skills for solution design, review, repository maintenance, documents, images, translation, and workflow orchestration.",
     "version": "0.2.0"
   },
   "plugins": [
@@ -18,13 +18,23 @@
         "./skills/business-solution-architect",
         "./skills/csharp-dotnet-code-checklist",
         "./skills/fact-check-debunker",
+        "./skills/find-code-simplifications",
         "./skills/id-photo-maker",
         "./skills/loop-orchestrator",
+        "./skills/maintain-decision-records",
         "./skills/markdown-pdf-export",
+        "./skills/merge-stacked-prs",
         "./skills/photo-selector",
         "./skills/qwen-image-generator",
+        "./skills/record-browser-gif",
         "./skills/resume-builder",
+        "./skills/review-code-change",
+        "./skills/review-technical-prose",
+        "./skills/run-pre-push-checks",
+        "./skills/sync-bilingual-docs",
+        "./skills/sync-documentation-site",
         "./skills/translate-tech-en-zh",
+        "./skills/trim-reasoning-leakage",
         "./skills/windows-reclaim-disk-space"
       ]
     }

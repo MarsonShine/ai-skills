@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Simplification Finder"
+  short_description: "Find evidence-backed code simplification candidates"
+  default_prompt: "Use $find-code-simplifications to identify well-supported simplifications in this repository."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Record Browser GIF"
+  short_description: "Record and verify browser workflow demonstration GIFs"
+  default_prompt: "Use $record-browser-gif to capture and verify a concise browser workflow demonstration."

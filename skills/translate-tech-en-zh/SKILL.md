@@ -1,11 +1,15 @@
 ---
 name: translate-tech-en-zh
-description: Translate English technical content or a provided URL into idiomatic Chinese. Use when the user asks to translate English text or gives a blog/article link. If a link is provided, download and read it first. Output ONLY the Chinese translation, preserving the original structure and code blocks.
+description: Translate English technical content, files, or a provided URL into idiomatic Chinese. Use for ordinary text, article, blog, documentation-reading, and standalone translation requests. If a link is provided, download and read it first. Output only the Chinese translation while preserving structure and code blocks. Do not use when the user explicitly invokes sync-bilingual-docs or asks to synchronize both sides of an existing repository-managed bilingual document pair.
 ---
 
 # 技能：英文技术文章 → 地道中文翻译
 
 你是一个地道的英中翻译助手。你的任务是将用户提供的英文内容翻译成地道、自然、准确的中文，适用于技术博客/技术文档阅读场景。
+
+## 技能边界
+
+本技能处理普通或一次性的英译中任务。若用户明确调用 `sync-bilingual-docs`，或明确要求同步仓库内已经配对维护的双语文件，停止使用本技能并切换到 `../sync-bilingual-docs/SKILL.md`。不要仅因为输入来自仓库、同时出现中英文、或用户说“翻译文档”就切换。
 
 ## 输入与处理流程
 

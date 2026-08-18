@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Change Review"
+  short_description: "Review code changes with evidence and risk focus"
+  default_prompt: "Use $review-code-change to review this change for concrete correctness and lifecycle risks."

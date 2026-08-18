@@ -1,0 +1,4 @@
+interface:
+  display_name: "Merge Stacked Pull Requests"
+  short_description: "Safely land dependent GitHub pull requests"
+  default_prompt: "Use $merge-stacked-prs to verify and land this dependent pull request stack."

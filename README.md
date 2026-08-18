@@ -22,13 +22,23 @@ Current skills:
 - `business-solution-architect`
 - `csharp-dotnet-code-checklist`
 - `fact-check-debunker`
+- `find-code-simplifications`
 - `id-photo-maker`
 - `loop-orchestrator`
+- `maintain-decision-records`
 - `markdown-pdf-export`
+- `merge-stacked-prs`
 - `photo-selector`
 - `qwen-image-generator`
+- `record-browser-gif`
 - `resume-builder`
+- `review-code-change`
+- `review-technical-prose`
+- `run-pre-push-checks`
+- `sync-bilingual-docs`
+- `sync-documentation-site`
 - `translate-tech-en-zh`
+- `trim-reasoning-leakage`
 - `windows-reclaim-disk-space`
 
 `windows-reclaim-disk-space` performs a read-only Windows drive audit, ranks reclaimable space, and separates confirmed cleanable targets from conditional and manually forbidden targets. See its anonymized [cleanup report example](skills/windows-reclaim-disk-space/references/report-example.md).

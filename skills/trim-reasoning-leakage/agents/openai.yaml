@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reasoning Leakage Cleanup"
+  short_description: "Remove authoring-session residue from durable prose"
+  default_prompt: "Use $trim-reasoning-leakage to clean session-specific reasoning residue from this prose."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pre-Push Evidence Checks"
+  short_description: "Select and run relevant checks before pushing"
+  default_prompt: "Use $run-pre-push-checks to select and run the evidence needed before this push."

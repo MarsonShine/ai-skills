@@ -1,0 +1,4 @@
+interface:
+  display_name: "Documentation Site Sync"
+  short_description: "Synchronize canonical docs with a generated site"
+  default_prompt: "Use $sync-documentation-site to update this repository's documentation site from canonical sources."
