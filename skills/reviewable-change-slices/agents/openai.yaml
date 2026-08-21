@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reviewable Change Slices"
+  short_description: "大型代码任务拆分为一次一个、可独立审查的变更切片"
+  default_prompt: "Use $reviewable-change-slices to split this coding task into reviewable commit-sized slices and deliver only the next slice."

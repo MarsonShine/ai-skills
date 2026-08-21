@@ -34,6 +34,7 @@ Current skills:
 - `resume-builder`
 - `review-code-change`
 - `review-technical-prose`
+- `reviewable-change-slices`
 - `run-pre-push-checks`
 - `sync-bilingual-docs`
 - `sync-documentation-site`

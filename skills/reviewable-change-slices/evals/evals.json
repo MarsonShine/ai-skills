@@ -1,0 +1,39 @@
+{
+  "skill_name": "reviewable-change-slices",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "请为一次大型身份系统整改制定可执行计划，范围包括 JWT 密钥外置、授权默认拒绝、旧密码哈希迁移、上传端点加固、ProblemDetails、数据库事务和 Outbox。现在只要计划，不要修改代码。",
+      "expected_output": "输出紧凑的、按 SRP 和依赖顺序排列的 commit 切片清单；每项包含单一职责、拟定 commit 标题和验收方式；只详细展开第一个就绪切片，并在计划 review 点停止，不执行代码修改。",
+      "files": [],
+      "expectations": [
+        "The response decomposes the request into independently reviewable commit-sized slices rather than one large implementation phase.",
+        "Each slice has a single responsibility, a proposed commit title, and an acceptance or validation check.",
+        "Only the first ready slice is expanded in detail and no implementation is started."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "把这个仓库的认证、缓存、数据库健康检查和 Docker 构建问题全部修好，相关测试也补齐。直接开始做。",
+      "expected_output": "识别出多个独立职责，先给出紧凑切片账本，然后只实现和验证第一个切片；因为用户没有明确授权 git commit，所以不得提交或为了展示而暂存；报告建议 commit 标题并停止，下一切片标记为未开始。",
+      "files": [],
+      "expectations": [
+        "The response selects and works on exactly one coherent slice despite the request to fix everything.",
+        "The active slice includes its corresponding regression tests and excludes adjacent cleanup.",
+        "No git commit is created because the prompt did not explicitly authorize committing.",
+        "The delivery report marks the next slice as not started and stops for human review."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "这次明确不要按一次一个切片暂停。我已经 review 过方案，授权你连续完成下面三个独立修改并各自提交，然后统一汇报：修复配置校验、授权生命周期和健康检查。",
+      "expected_output": "识别并尊重用户对单切片停止规则和 commit 权限的明确覆盖；仍保持三个独立 commit、各自验证且不混入无关改动，而不是强制在第一个 commit 后停止。",
+      "files": [],
+      "expectations": [
+        "The response recognizes the explicit opt-out from the one-slice stopping rule.",
+        "The three responsibilities remain separate commits with their own validation boundaries.",
+        "The response does not incorrectly claim that commit authorization is missing."
+      ]
+    }
+  ]
+}
