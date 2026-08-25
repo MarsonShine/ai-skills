@@ -1,6 +1,6 @@
 ---
 name: merge-stacked-prs
-description: Verify and land a same-repository stack of dependent GitHub pull requests using GitHub's official stack support. Use when asked to merge stacked PRs, a PR stack, dependent PRs, or a pull request whose base is another open PR branch. Do not mutate remote state unless the user explicitly asks to land, link, synchronize, or otherwise change the stack.
+description: Verify or land a same-repository stack of dependent GitHub pull requests. Use for stacked PRs, dependent PRs, or a pull request whose base is another open PR branch. Do not use for independent PRs, cross-repository dependency chains, or ordinary branch merges.
 ---
 
 # Merge Stacked Pull Requests

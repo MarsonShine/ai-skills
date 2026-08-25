@@ -1,6 +1,6 @@
 ---
 name: resume-builder
-description: "Build or rewrite professional resumes and CVs from scattered materials, existing resumes, PDFs, job histories, work photos, certificates, or target job postings. Use this skill whenever the user asks to create, improve, quantify, tailor, condense, localize, or polish any resume or CV, even if they only provide rough notes or evidence files. Default to producing truthful, well-structured markdown resumes and a concise version when that would help the user apply faster."
+description: "Create, rewrite, tailor, condense, localize, or polish a professional resume or CV. Use when the target artifact is a resume built from notes, existing documents, job history, evidence, or a job posting. Do not use for general biography writing, portfolio sites, or unrelated PDF/document editing."
 ---
 
 # Resume Builder

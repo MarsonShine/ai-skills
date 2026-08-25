@@ -1,6 +1,6 @@
 ---
 name: markdown-pdf-export
-description: "Export Markdown files to polished, print-ready PDFs and set up reusable local export scripts. Use this skill whenever the user wants Markdown converted to PDF, asks for one-click export automation, needs reusable styling presets, or wants to tune margins, fonts, images, or page layout for resumes, reports, manuals, proposals, or summaries. Default to a script-based workflow instead of a one-off manual conversion."
+description: "Export Markdown to a polished, print-ready PDF or configure a reusable local Markdown-to-PDF workflow. Use for Markdown 转 PDF, export styling, margins, fonts, images, or page layout. Do not use for editing existing PDFs, converting non-Markdown source files, or general document writing."
 ---
 
 # Markdown PDF Export

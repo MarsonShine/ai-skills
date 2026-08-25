@@ -1,6 +1,6 @@
 ---
 name: windows-reclaim-disk-space
-description: Audit Windows system-drive usage, rank cleanup candidates by reclaimable bytes, produce low-risk/conditional/do-not-delete reports, and optionally execute explicitly approved cleanup with strict path and process checks. Use when a user asks to scan or clean the C drive, diagnose low disk space, reclaim Windows storage, repeat a previous disk cleanup, generate a deletion checklist, or explain which Windows files are safe to remove.
+description: Audit or clean Windows system-drive storage with ranked, safety-classified candidates. Use for C 盘清理, low disk space, reclaiming Windows storage, deletion checklists, or deciding which system files are safe to remove. Do not use for non-Windows systems, arbitrary file deletion, or general performance troubleshooting.
 ---
 
 # Windows Reclaim Disk Space
