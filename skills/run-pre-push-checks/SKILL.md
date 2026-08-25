@@ -1,6 +1,6 @@
 ---
 name: run-pre-push-checks
-description: Select and run the smallest credible set of local checks that covers an outgoing Git change before pushing, force-pushing, or marking a branch ready for review. Use for pre-push validation, post-rebase or post-stack-sync evidence, and requests to determine which tests, builds, linters, documentation checks, or smokes are relevant. Do not push unless the user also asks to push.
+description: Choose and run local validation for an outgoing Git change before push or pull-request readiness. Use for 提交或推送前检查, pre-push validation, and post-rebase or stack-sync revalidation. Do not use for code review, general debugging, CI repair, or pushing itself.
 ---
 
 # Run Pre-Push Checks

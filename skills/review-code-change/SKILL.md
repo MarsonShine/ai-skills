@@ -1,6 +1,6 @@
 ---
 name: review-code-change
-description: Review pull requests, patches, commits, and working-tree diffs across programming languages with evidence-based findings focused on correctness, security, lifecycle, compatibility, performance, and test strength. Use for general code review, PR review, diff review, or architecture-risk review. For C# and .NET changes, also use the more specific csharp-dotnet-code-checklist skill.
+description: Review an existing code change—PR, commit, patch, diff, branch, or changed files—for concrete defects and regressions. Use for code review, 看看这次改动, 检查这个提交, or asking whether a change is safe and correct. Do not use for implementation, architecture design from requirements, whole-repository audits, or style-only cleanup.
 ---
 
 # Review Code Changes
