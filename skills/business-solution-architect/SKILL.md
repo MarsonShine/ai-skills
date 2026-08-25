@@ -1,6 +1,6 @@
 ---
 name: business-solution-architect
-description: "Convert rough business requirements into complete, implementation-ready solution blueprints in Chinese. Use this whenever the user asks for 业务实现方案, 技术方案, 架构设计, PRD转实现, 需求拆解, 数据模型, 状态流转, 接口设计, or wants a coding agent to build directly from a high-level requirement, even if the input is incomplete."
+description: "Create a Chinese, implementation-ready business solution blueprint from a high-level requirement or PRD. Use for 业务实现方案, PRD转实现, or turning an incomplete business process into an engineering plan. Do not use for direct code implementation, review of an existing change, or an isolated architecture question."
 ---
 
 # 业务实现方案架构师

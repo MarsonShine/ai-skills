@@ -1,6 +1,6 @@
 ---
 name: fact-check-debunker
-description: "Investigate whether a news item, rumor, screenshot claim, social post, statement, image/video description, or link is true, partly true, misleading, false, or still unverified. Use this skill whenever the user asks to 辟谣, 事实核查, 查证真假, verify a claim, analyze a screenshot/link/post, or wants a source-backed judgment instead of a quick opinion, especially for politics, disasters, war, public safety, medicine, finance, law, and other high-risk topics."
+description: "Verify a specific factual claim and return a source-backed verdict. Use for 辟谣, 事实核查, 查证真假, or deciding whether a news item, rumor, screenshot claim, post, or statement is true, misleading, false, or unverified. Do not use for general research, summarization, opinion, or link/image analysis without a truth claim."
 ---
 
 # 辟谣与事实核查 Agent

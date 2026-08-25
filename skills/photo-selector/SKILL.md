@@ -1,6 +1,6 @@
 ---
 name: photo-selector
-description: "从本地照片文件夹中按专业摄影标准筛选出值得精修的照片。先生成联络表，再做多轮挑片，最后把终选片复制到“精修”文件夹。macOS 默认走原生 JXA，Linux 和 Windows 可走 Python Pillow 后端。"
+description: "从一批本地照片中按摄影质量挑片、排序并选出待精修照片。用户要求批量选片、生成联络表或比较相似照片时使用；不要用于生成、修饰或编辑单张图片。"
 ---
 
 # Photo Selector

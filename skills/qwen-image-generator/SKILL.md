@@ -1,6 +1,6 @@
 ---
 name: qwen-image-generator
-description: Generate images with DashScope Qwen-Image 2.0 from rough user requests and save them locally. Use this whenever the user asks to generate an image, illustration, poster, flashcard, teaching card, cover art, scene image, mascot, product concept, or "文生图"/"画一张图", even if the request is vague. Supports first-time setup via EXTEND.md, fills missing style and size from saved preferences, and asks only for still-missing image parameters.
+description: Generate and save images through DashScope Qwen-Image 2.0. Use when the user explicitly requests Qwen, DashScope, or this repository's Qwen image workflow. Do not use for provider-neutral image generation, ID-photo processing, image editing, or requests already assigned to another image generator.
 ---
 
 # Qwen Image Generator
