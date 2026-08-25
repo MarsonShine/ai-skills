@@ -1,4 +1,4 @@
 interface:
   display_name: "Code Simplification Finder"
-  short_description: "Find evidence-backed code simplification candidates"
-  default_prompt: "Use $find-code-simplifications to identify well-supported simplifications in this repository."
+  short_description: "Audit and safely apply evidence-backed code reductions"
+  default_prompt: "Use $find-code-simplifications to audit this repository and safely apply proven reductions when implementation is requested."

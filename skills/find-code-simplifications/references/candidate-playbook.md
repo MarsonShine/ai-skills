@@ -24,6 +24,18 @@ Search the exact name and its serialized forms. Inspect:
 
 Reject the candidate when a current production caller exists and removal would be an unowned product choice, or when a recorded defensive constraint still applies.
 
+## Implementation Gate
+
+Apply a candidate only when all of the following are true:
+
+- the user requested implementation rather than an audit-only report;
+- production, dynamic, external, persisted, and documentation consumers have been accounted for;
+- the required behavior is protected by focused tests, executable checks, or other reproducible evidence;
+- any compatibility or migration obligation is either preserved or explicitly retired by its owner; and
+- the change can be validated and reported as one coherent simplification.
+
+Update or remove tests and documentation only after establishing which behavior remains required. Re-run the focused evidence first, then the smallest broader check needed for shared surfaces.
+
 ## Dependency Replacement
 
 Compare the maintained dependency or builtin against the exact current surface. Count implementation, dedicated tests, docs, and glue deleted, then subtract adapters and residual semantics. Check maintenance, adoption, release cadence, transitive footprint, license, supported runtimes, and security posture. A wrapper that preserves the same complexity is not a simplification.
