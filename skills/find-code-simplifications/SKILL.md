@@ -1,6 +1,6 @@
 ---
 name: find-code-simplifications
-description: Find or safely apply evidence-backed reductions in existing code, configuration, dependencies, tests, or documentation. Use for 代码做减法, 删除无用或重复代码, 去过度设计, removing unnecessary abstractions, or reducing maintenance cost while preserving required behavior. Do not use for general code review, product feature cuts, or style-only refactoring.
+description: Find or safely apply evidence-backed reductions in existing codebase surfaces such as code, configuration, dependencies, tests, or behavior-owned documentation. Use for 代码做减法, 删除无用或重复代码, 去过度设计, or reducing maintenance cost while preserving required behavior. Do not use for general code review, product feature cuts, prose-only editing, or style-only refactoring.
 ---
 
 # Find Code Simplifications

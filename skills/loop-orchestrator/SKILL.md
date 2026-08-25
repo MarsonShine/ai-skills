@@ -1,6 +1,6 @@
 ---
 name: loop-orchestrator
-description: Design bounded execution loops for recurring, scheduled, monitored, event-driven, or repeated-attempt work. Use when cadence, triggers, measurable stop conditions, retry limits, or cost boundaries are part of the request. Do not use for ordinary one-off coding, review, refactoring, analysis, planning, or validation merely because the task is complex or multi-step.
+description: Design bounded execution loops for recurring, scheduled, monitored, event-driven, or repeated-attempt work. Use when cadence, measurable stop conditions, retry limits, or cost boundaries matter. Do not use for one-off coding, review, planning, validation, or human-gated commit/slice delivery unless a separate schedule, monitor, or retry loop is requested.
 ---
 
 # Loop Orchestrator
@@ -14,7 +14,7 @@ Default to the user's language. For Chinese input, respond in Chinese.
 1. Confirm that the request needs a loop.
    - Goal signal: the user wants repeated attempts until a measurable target is reached or an attempt limit is exhausted.
    - Time signal: the same check or action must run on a schedule or at an interval.
-   - Event signal: new items must be processed continuously or whenever an event arrives.
+   - Event signal: new items from an ongoing external source must be processed continuously or whenever an event arrives. A human review checkpoint in bounded staged delivery is not an event loop.
    - If none applies, return to the ordinary bounded workflow without emitting a loop contract.
 
 2. Classify the loop.
@@ -63,4 +63,5 @@ Do not add this template to bounded one-off tasks.
 - Prefer deterministic checks, tests, screenshots, logs, metrics, or real interaction over self-assessment.
 - Convert repeated deterministic work into scripts or tool calls when that is cheaper and more reliable than reasoning repeatedly.
 - Avoid nested loops unless the inner and outer stop conditions are independently necessary.
+- Route human-gated commit or slice delivery to its staged-delivery workflow unless the request also has a real schedule, monitor, or retry loop.
 - Do not reinterpret an ordinary bounded task as a loop merely because it has several steps or requires validation.

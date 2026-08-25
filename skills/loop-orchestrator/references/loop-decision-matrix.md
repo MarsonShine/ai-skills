@@ -46,3 +46,4 @@ Use this reference only after the request has a real repetition signal: repeated
 - Reviewing a specific change once.
 - Producing a plan, report, or artifact in one request.
 - Running the ordinary validation required to complete a one-off task.
+- Pausing between commit-sized slices for human review without a separate schedule, monitor, or retry loop.
