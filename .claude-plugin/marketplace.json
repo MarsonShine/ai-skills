@@ -30,6 +30,7 @@
         "./skills/resume-builder",
         "./skills/review-code-change",
         "./skills/review-technical-prose",
+        "./skills/reviewable-change-slices",
         "./skills/run-pre-push-checks",
         "./skills/sync-bilingual-docs",
         "./skills/sync-documentation-site",
