@@ -1,34 +1,41 @@
 ---
 name: reviewable-change-slices
-description: Break multi-part software plans and implementation requests into SRP-aligned, reviewable change slices, then deliver exactly one validated slice per turn and stop for human review. Use by default for broad fixes, refactors, migrations, remediation backlogs, or any coding task with multiple independently reviewable responsibilities, unless the user explicitly opts out. Do not use for read-only analysis or genuinely tiny single-responsibility edits.
+description: Plan or deliver software work as commit-sized slices with a human checkpoint after each slice. Use when the user explicitly asks for one-slice-per-turn delivery, commit-by-commit review, staged implementation, or a slice ledger. Do not use for ordinary implementation, refactoring, analysis, code review, or a coherent multi-file change.
 ---
 
 # Reviewable Change Slices
 
-Protect the human owner's ability to understand, review, and redirect a codebase. A long backlog may be planned at once, but implementation must advance through small, coherent delivery boundaries.
+Protect the human owner's ability to understand, review, and redirect a codebase when they have chosen a staged delivery cadence. A long backlog may be planned at once, while each delivered slice remains coherent and independently reviewable.
 
 Default to the user's language.
 
 ## Activation Contract
 
-Apply this workflow unless the user explicitly says to avoid slicing, complete multiple slices without stopping, or use another delivery cadence. A broad instruction such as "implement this plan" is not an opt-out.
+Apply this workflow only when at least one activation signal is present:
 
-If the request is read-only or is already one genuinely small responsibility, handle it directly without adding ceremony.
+- the user explicitly invokes `$reviewable-change-slices`;
+- the user asks for one slice or commit at a time with review between deliveries;
+- the user asks for a slice ledger, staged migration, or commit-by-commit implementation; or
+- repository instructions require human review checkpoints between independent changes.
+
+A large, multi-file, or multi-responsibility request is not sufficient by itself. Ordinary implementation, refactoring, planning, analysis, and code review should use their normal workflows unless the user also chooses staged delivery.
+
+Once activated, default to one validated slice per turn. If the user explicitly requests multiple slices in one pass, keep the slice and commit boundaries but continue through the authorized set before reporting.
 
 ## Workflow
 
 1. Read the repository instructions and inspect the relevant code, tests, current diff, and user-provided plan.
 2. Separate the work by responsibility, observable behavior, dependency order, and rollback boundary. Keep code and the tests that prove it in the same slice.
-3. Present a compact slice ledger for the overall request. For every slice, state its purpose, proposed commit title, acceptance check, and dependencies. Expand only the next slice in detail.
+3. Present a compact slice ledger for the overall request. For every slice, state its purpose, proposed commit title, acceptance check, and dependencies. Expand only the next slice unless the user authorized a multi-slice pass.
 4. Select exactly one ready slice. State its included scope, explicit exclusions, validation, and review budget before editing.
 5. Implement only that slice. Do not absorb adjacent cleanup, formatting, renames, dependency upgrades, or another backlog item.
 6. Run the smallest sufficient deterministic validation. Repair failures caused by the active slice, but do not switch to a different slice when blocked.
 7. Create a commit only when the user explicitly authorized committing. Generic requests to fix, implement, or continue do not grant commit permission.
    - With authorization: stage only the slice, inspect the staged diff, create one commit, and report its hash.
    - Without authorization: leave the validated slice uncommitted and provide the proposed commit title. Do not stage files merely for presentation.
-8. Deliver the slice report and end the turn. Do not start the next slice, even when time, context, or tool budget remains. Continue only after the human replies.
+8. Deliver the slice report and end the turn unless the user explicitly authorized multiple slices in the current pass. With that authorization, repeat steps 4–7 for each ready slice and provide one final ledger showing every completed commit and validation result.
 
-For a plan-only request, produce the compact slice ledger, identify the first ready slice, and stop without changing files.
+For a plan-only request that includes an activation signal, produce the compact slice ledger, identify the first ready slice, and stop without changing files.
 
 Read [references/slicing-rules.md](references/slicing-rules.md) when the boundary is ambiguous, the change crosses layers, the plan has more than three responsibilities, or a candidate slice exceeds the default review budget.
 

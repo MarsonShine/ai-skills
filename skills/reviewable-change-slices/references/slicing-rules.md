@@ -2,6 +2,12 @@
 
 Use these rules to turn a large software request into reviewable, buildable delivery units. The aim is not the smallest possible diff; it is the smallest coherent change a human can understand, validate, and redirect independently.
 
+## Confirm Activation
+
+Use these rules only after the user explicitly chooses staged delivery or repository instructions require human review checkpoints. Size, complexity, multiple files, or multiple responsibilities do not activate this workflow on their own.
+
+Valid signals include requests for one slice or commit per review turn, a slice ledger, staged implementation, commit-by-commit delivery, or an explicit `$reviewable-change-slices` invocation.
+
 ## Find Responsibility Boundaries
 
 Prefer a new slice when work changes a different:
@@ -81,19 +87,19 @@ Inspect the working tree before editing. Treat pre-existing changes as user-owne
 
 ## Interpret User Overrides
 
-Only explicit instructions override the one-slice stop, for example:
+After the workflow is activated, explicit instructions may override the one-slice stop, for example:
 
 - "Do all slices in one pass."
 - "Continue through the whole plan without waiting for review."
 - "Do not use the atomic-slice workflow for this task."
 
-These are not overrides:
+These phrases do not activate the workflow and do not override an already active one-slice stop:
 
 - "Implement the plan."
 - "Finish the feature."
 - "Keep going" when no slice has yet been delivered.
 
-After a slice report, a user reply such as "continue" authorizes the next slice, not every remaining slice.
+After a slice report, a user reply such as "continue" authorizes the next slice, not every remaining slice. A request to finish the remaining slices in one pass and commit each separately authorizes that bounded multi-slice pass.
 
 ## Commit Authorization
 
