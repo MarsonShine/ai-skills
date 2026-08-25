@@ -1,7 +1,7 @@
 {
   "name": "ai-skills",
-  "version": "0.2.0+codex.20260825051610",
-  "description": "A local Codex plugin that bundles reusable AI agent skills for writing, review, repository maintenance, automation, documents, images, and workflow orchestration.",
+  "version": "0.2.0+codex.20260825060548",
+  "description": "A local Codex plugin that bundles reusable AI agent skills for natural prose writing, review, repository maintenance, automation, documents, images, and workflow orchestration.",
   "author": {
     "name": "marsonshine",
     "email": "ms27946@163.com",
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "AI Skills",
     "shortDescription": "Reusable local skills for Codex workflows.",
-    "longDescription": "AI Skills bundles maintained local workflows for solution design, reviewable code-change slicing, code and prose review, repository simplification, decision records, documentation sites, bilingual pair synchronization, pre-push evidence, stacked pull requests, browser GIFs, document export, images, fact checking, and safe local automation.",
+    "longDescription": "AI Skills bundles maintained local workflows for natural prose writing, solution design, reviewable code-change slicing, code and prose review, repository simplification, decision records, documentation sites, bilingual pair synchronization, pre-push evidence, stacked pull requests, browser GIFs, document export, images, fact checking, and safe local automation.",
     "developerName": "marsonshine",
     "category": "Productivity",
     "capabilities": [

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Natural Prose"
+  short_description: "Write natural prose in the context-appropriate language"
+  default_prompt: "Use $write-natural-prose to draft or rewrite this text in the language and style established by its context."
+
+policy:
+  allow_implicit_invocation: true

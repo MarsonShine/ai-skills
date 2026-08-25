@@ -99,52 +99,101 @@
       "reason": "The task combines explicit simplification with staged human review."
     },
     {
+      "id": "natural-prose-article-drafting",
+      "prompt": "根据这些真实的练琴经历，起草一篇自然、有个人观察的中文生活文章；不要虚构细节，也不要套用“背景—意义—展望”的模板。",
+      "expected_skills": ["write-natural-prose"],
+      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "business-solution-architect"],
+      "reason": "The request is original personal-article drafting with an explicit natural voice."
+    },
+    {
+      "id": "natural-prose-project-language-doc",
+      "prompt": "为 docs/payments/retries.md 起草“重试边界”一节。该文件和同目录文档都使用日文，请沿用现有语言和术语，不要翻译其他页面。",
+      "expected_skills": ["write-natural-prose"],
+      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "sync-bilingual-docs", "sync-documentation-site"],
+      "reason": "The target and neighboring documents determine the language in a multilingual project."
+    },
+    {
+      "id": "natural-prose-code-comments",
+      "prompt": "给这个锁升级实现补上必要的代码注释，只解释为什么二次检查和失败回滚不可省，并沿用当前源文件的语言；不要改代码。",
+      "expected_skills": ["write-natural-prose"],
+      "forbidden_skills": ["review-technical-prose", "review-code-change", "trim-reasoning-leakage"],
+      "reason": "The task authors focused code comments in the source file's established language."
+    },
+    {
+      "id": "natural-prose-de-ai-rewrite",
+      "prompt": "把下面这段技术说明改得像人写的，去掉翻译腔和模板化总结，同时保持事实、限定条件和 API 名称不变。",
+      "expected_skills": ["write-natural-prose"],
+      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "trim-reasoning-leakage"],
+      "reason": "Natural rewriting is the goal; preserving content does not make this a contract audit."
+    },
+    {
+      "id": "natural-prose-explicit-language-override",
+      "prompt": "这个仓库的文档主要是中文，但这份面向海外用户的故障排查说明必须用英语起草，并保持自然、直接的表达。",
+      "expected_skills": ["write-natural-prose"],
+      "forbidden_skills": ["translate-tech-en-zh", "sync-bilingual-docs", "sync-documentation-site"],
+      "reason": "The user's explicit English requirement overrides the repository's usual language."
+    },
+    {
+      "id": "natural-prose-no-context-chinese-fallback",
+      "prompt": "There is no target file, neighboring document, or repository language convention, and I am not specifying a language. Draft a natural release note explaining that failed uploads can now be resumed.",
+      "expected_skills": ["write-natural-prose"],
+      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh"],
+      "reason": "With no language evidence or explicit choice, the skill should use its Chinese fallback despite the prompt language."
+    },
+    {
+      "id": "natural-prose-contract-combination",
+      "prompt": "把这份 API 文档重写得自然、清楚，去掉翻译腔；同时逐项保留所有请求字段、默认值、错误条件和兼容性承诺。",
+      "expected_skills": ["write-natural-prose", "review-technical-prose"],
+      "forbidden_skills": ["translate-tech-en-zh", "trim-reasoning-leakage"],
+      "reason": "The request explicitly combines natural style rewriting with complete contract preservation."
+    },
+    {
       "id": "technical-prose-review",
       "prompt": "审查这份 README 的信息放置和重复内容，精简但不要丢失契约。",
       "expected_skills": ["review-technical-prose"],
-      "forbidden_skills": ["review-code-change", "find-code-simplifications", "trim-reasoning-leakage"],
-      "reason": "The target is durable technical prose quality."
+      "forbidden_skills": ["write-natural-prose", "review-code-change", "find-code-simplifications", "trim-reasoning-leakage"],
+      "reason": "The target is technical-prose review without a natural-voice request."
     },
     {
       "id": "reasoning-leakage-cleanup",
       "prompt": "去掉这些注释里的“本次 PR”“上一版方案”和评审过程表述，让它们只描述当前状态。",
       "expected_skills": ["trim-reasoning-leakage"],
-      "forbidden_skills": ["review-technical-prose", "review-code-change", "find-code-simplifications"],
+      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "review-code-change", "find-code-simplifications"],
       "reason": "The request names authoring-session and review residue."
     },
     {
       "id": "decision-record-lifecycle",
       "prompt": "审计 ADR，合并重复决策并归档已经被取代的记录。",
       "expected_skills": ["maintain-decision-records"],
-      "forbidden_skills": ["review-technical-prose", "review-code-change"],
+      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "review-code-change"],
       "reason": "Decision records and their lifecycle are the target."
     },
     {
       "id": "standalone-translation",
       "prompt": "把这篇英文技术文章翻译成中文，保持代码块和结构。",
       "expected_skills": ["translate-tech-en-zh"],
-      "forbidden_skills": ["sync-bilingual-docs", "sync-documentation-site"],
+      "forbidden_skills": ["write-natural-prose", "sync-bilingual-docs", "sync-documentation-site"],
       "reason": "This is an ordinary one-way translation."
     },
     {
       "id": "bilingual-pair-sync",
       "prompt": "同步仓库中已经配对的中英文文档，只更新英文侧这次变化对应的中文段落。",
       "expected_skills": ["sync-bilingual-docs"],
-      "forbidden_skills": ["translate-tech-en-zh", "sync-documentation-site"],
+      "forbidden_skills": ["write-natural-prose", "translate-tech-en-zh", "sync-documentation-site"],
       "reason": "The request explicitly maintains both sides of an existing pair."
     },
     {
       "id": "documentation-site-sync",
       "prompt": "把规范 Markdown 的页面移动同步到 Docusaurus 导航、路由和链接，并验证本地构建。",
       "expected_skills": ["sync-documentation-site"],
-      "forbidden_skills": ["review-technical-prose", "sync-bilingual-docs", "translate-tech-en-zh"],
+      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "sync-bilingual-docs", "translate-tech-en-zh"],
       "reason": "The task projects canonical documentation into a framework-backed site."
     },
     {
       "id": "business-solution-blueprint",
       "prompt": "把这个退款工单 PRD 整理成中文、可直接交给开发的业务实现方案。",
       "expected_skills": ["business-solution-architect"],
-      "forbidden_skills": ["loop-orchestrator", "reviewable-change-slices"],
+      "forbidden_skills": ["write-natural-prose", "loop-orchestrator", "reviewable-change-slices"],
       "reason": "The requested artifact is an implementation-ready business blueprint."
     },
     {
@@ -214,7 +263,7 @@
       "id": "resume-artifact",
       "prompt": "根据这些工作经历和职位描述，重写并精简我的英文简历。",
       "expected_skills": ["resume-builder"],
-      "forbidden_skills": ["review-technical-prose", "markdown-pdf-export"],
+      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "markdown-pdf-export"],
       "reason": "The target artifact is a professional resume."
     },
     {

@@ -5,7 +5,7 @@
     "email": "ms27946@163.com"
   },
   "metadata": {
-    "description": "Reusable AI agent skills for solution design, review, repository maintenance, documents, images, translation, and workflow orchestration.",
+    "description": "Reusable AI agent skills for natural prose writing, solution design, review, repository maintenance, documents, images, translation, and workflow orchestration.",
     "version": "0.2.0"
   },
   "plugins": [
@@ -36,7 +36,8 @@
         "./skills/sync-documentation-site",
         "./skills/translate-tech-en-zh",
         "./skills/trim-reasoning-leakage",
-        "./skills/windows-reclaim-disk-space"
+        "./skills/windows-reclaim-disk-space",
+        "./skills/write-natural-prose"
       ]
     }
   ]

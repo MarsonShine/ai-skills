@@ -41,6 +41,7 @@ Current skills:
 - `translate-tech-en-zh`
 - `trim-reasoning-leakage`
 - `windows-reclaim-disk-space`
+- `write-natural-prose`
 
 `windows-reclaim-disk-space` performs a read-only Windows drive audit, ranks reclaimable space, and separates confirmed cleanable targets from conditional and manually forbidden targets. See its anonymized [cleanup report example](skills/windows-reclaim-disk-space/references/report-example.md).
 
