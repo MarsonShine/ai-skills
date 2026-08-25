@@ -1,4 +1,4 @@
 interface:
   display_name: "Loop Orchestrator"
-  short_description: "复杂任务循环编排、停止条件、验证策略与权限执行边界"
-  default_prompt: "Use $loop-orchestrator to classify this complex task, choose the right loop, and execute or plan based on permissions."
+  short_description: "为定时、持续监控、事件处理和重复达标任务定义执行循环边界"
+  default_prompt: "Use $loop-orchestrator to define the trigger, stop condition, validation, and cost boundary for this recurring or repeated-attempt workflow."
