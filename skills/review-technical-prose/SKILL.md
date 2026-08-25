@@ -1,6 +1,6 @@
 ---
 name: review-technical-prose
-description: Write, review, restructure, or audit technical prose across Markdown, READMEs, API documentation, JSDoc, code comments, prompts, diagnostics, and CLI or UI strings. Use when asked to improve documentation, choose where a fact belongs, reduce duplication or verbosity, preserve complete contracts, or review prose quality. Do not infer a repository-wide scope when the user names no scope.
+description: Review or edit durable technical prose—Markdown, API docs, JSDoc, comments, prompts, diagnostics, and user-visible strings—while preserving complete contracts. Use for 文档审查, 精简注释, information placement, deduplication, or concision. Do not use for program behavior review, translation, documentation-site synchronization, or decision-record lifecycle work.
 ---
 
 # Review Technical Prose

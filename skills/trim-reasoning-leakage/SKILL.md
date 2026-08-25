@@ -1,6 +1,6 @@
 ---
 name: trim-reasoning-leakage
-description: Audit or fix durable technical prose that leaks an authoring session or private reasoning transcript, including dead plan or decision ordinals, PR or review vantage, change narration, reviewer-directed justification, control-flow walkthroughs, unexplained hedges, and working-language residue. Use for comments, JSDoc, docs, decision records, prompts, and diagnostics that should stand on their own at the current repository state.
+description: Remove authoring-session, plan, PR/review, or private-reasoning residue from durable repository prose. Use for 去掉评审或过程性表述, stale “this PR/previous version” wording, unexplained plan ordinals, or text that must stand alone. Do not use for general copyediting, code review, or code simplification.
 ---
 
 # Trim Reasoning Leakage
