@@ -1,6 +1,6 @@
 ---
 name: translate-tech-en-zh
-description: Translate English technical content, files, or a provided URL into idiomatic Chinese. Use for ordinary text, article, blog, documentation-reading, and standalone translation requests. If a link is provided, download and read it first. Output only the Chinese translation while preserving structure and code blocks. Do not use when the user explicitly invokes sync-bilingual-docs or asks to synchronize both sides of an existing repository-managed bilingual document pair.
+description: Translate standalone English technical content, files, articles, or URLs into idiomatic Chinese. Use for 英译中, translate this, documentation-reading, and ordinary one-way translation requests. Do not use when maintaining both sides of an existing repository-managed bilingual document pair.
 ---
 
 # 技能：英文技术文章 → 地道中文翻译

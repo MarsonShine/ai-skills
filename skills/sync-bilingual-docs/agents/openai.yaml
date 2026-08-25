@@ -1,7 +1,4 @@
 interface:
   display_name: "Bilingual Repository Sync"
-  short_description: "Explicitly synchronize existing bilingual doc pairs"
+  short_description: "Synchronize existing repository-managed bilingual pairs"
   default_prompt: "Use $sync-bilingual-docs to synchronize the existing bilingual document pair in this repository."
-
-policy:
-  allow_implicit_invocation: false

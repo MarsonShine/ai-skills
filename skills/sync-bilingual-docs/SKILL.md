@@ -1,6 +1,6 @@
 ---
 name: sync-bilingual-docs
-description: Synchronize repository-managed bilingual document pairs only when the user explicitly invokes $sync-bilingual-docs or makes an unambiguous pair-maintenance request such as “同步已有双语文档对”, “同时更新仓库中的中英文配对文件”, or “保持已配对的两种语言文件一致”. Preserve minimal counterpart edits, structure, terminology, links, and pairing metadata. Never use for requests phrased only as 翻译文档, 英译中, 中译英, translate this, pasted text, article or URL translation, or standalone translation; route those to a general translation skill.
+description: Synchronize both sides of an existing repository-managed bilingual document pair. Use for 同步已有双语文档对, 同时更新中英文配对文件, or keeping paired files structurally and terminologically aligned. Do not use for pasted text, article or URL translation, or any standalone one-way translation.
 ---
 
 # Synchronize Bilingual Repository Documents

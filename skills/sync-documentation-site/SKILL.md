@@ -1,6 +1,6 @@
 ---
 name: sync-documentation-site
-description: Synchronize canonical repository documentation with a generated or framework-backed documentation site, including page mappings, navigation, routes, projected links, moves, removals, and local build verification. Use for VitePress, Docusaurus, MkDocs, or custom documentation pipelines when repository Markdown remains the editable source. Do not use for deploying or changing hosting unless explicitly requested.
+description: Synchronize canonical repository Markdown with a generated or framework-backed documentation site. Use for VitePress, Docusaurus, MkDocs, or custom site projections involving pages, navigation, routes, links, moves, or removals. Do not use for ordinary documentation editing, translation, deployment, or hosting changes.
 ---
 
 # Synchronize a Documentation Site
