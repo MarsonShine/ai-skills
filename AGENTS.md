@@ -172,6 +172,16 @@ Before adding or changing scripts, decide:
 
 Explain this choice briefly in the PR or commit message when adding a new script language.
 
+## Bug Fixes
+
+Treat a reported failure as evidence of a failure class, not just an example to make pass. Before editing, trace the relevant implementation or data path and available evidence. Briefly distinguish facts from hypotheses and state the evidence-backed cause, violated invariant, likely variants, the lowest appropriate layer that owns the invariant and is shared by affected paths, the proposed fix, and expected impact and risks.
+
+Restore the invariant there. Do not add hard-coded values or narrow conditionals unless they encode a genuine business, domain, security, or compatibility rule and have regression coverage. Do not generalize beyond evidence or refactor unrelated code.
+
+Add or update a focused regression check that captures the invariant, using an appropriate test, evaluation, fixture-backed assertion, or validator. Cover the reported failure, representative unseen variants and boundaries, inverse cases when applicable, normal paths, and regression-sensitive behavior; run focused and appropriate broader checks. If a related variant fails, stop stacking patches and reassess the diagnosis and fix layer.
+
+Report the cause, invariant and owner, behavior change, validation, and remaining uncertainty.
+
 ## Quality Bar
 
 A good skill should be:
