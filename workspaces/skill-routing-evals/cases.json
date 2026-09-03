@@ -4,7 +4,7 @@
       "id": "loop-scheduled-monitor-zh",
       "prompt": "每十分钟检查一次这个 PR 的 CI，合并后自动停止。",
       "expected_skills": ["loop-orchestrator"],
-      "forbidden_skills": ["reviewable-change-slices", "run-pre-push-checks"],
+      "forbidden_skills": ["reviewable-change-slices", "run-pre-push-checks", "implement-minimal-code"],
       "reason": "The request has an explicit cadence and terminal condition."
     },
     {
@@ -17,9 +17,9 @@
     {
       "id": "loop-negative-one-off-feature",
       "prompt": "实现这个多文件功能并运行相关测试。",
-      "expected_skills": [],
+      "expected_skills": ["implement-minimal-code"],
       "forbidden_skills": ["loop-orchestrator", "reviewable-change-slices"],
-      "reason": "A bounded implementation is not a recurring loop or explicitly staged delivery."
+      "reason": "Ordinary feature implementation selects minimal-code guidance without a recurring loop or staged delivery request."
     },
     {
       "id": "slices-one-commit-per-review",
@@ -31,261 +31,324 @@
     {
       "id": "slices-negative-large-refactor",
       "prompt": "重构认证模块并一次完成所有必要修改和测试。",
-      "expected_skills": [],
+      "expected_skills": ["implement-minimal-code"],
       "forbidden_skills": ["reviewable-change-slices", "loop-orchestrator"],
-      "reason": "Size and refactoring alone do not select staged delivery."
+      "reason": "An ordinary refactor selects minimal-code guidance; size alone does not select staged delivery."
     },
     {
       "id": "review-general-change",
       "prompt": "请审查这个提交，看看这次改动有没有 bug 或回归。",
       "expected_skills": ["review-code-change"],
-      "forbidden_skills": ["loop-orchestrator", "reviewable-change-slices", "run-pre-push-checks"],
+      "forbidden_skills": ["loop-orchestrator", "reviewable-change-slices", "run-pre-push-checks", "implement-minimal-code"],
       "reason": "The target is a defined existing code change."
     },
     {
       "id": "review-csharp-combination",
       "prompt": "Review this C# pull request for correctness and .NET-specific production risks.",
       "expected_skills": ["review-code-change", "csharp-dotnet-code-checklist"],
-      "forbidden_skills": ["loop-orchestrator", "reviewable-change-slices"],
+      "forbidden_skills": ["loop-orchestrator", "reviewable-change-slices", "implement-minimal-code"],
       "reason": "General change review and the .NET specialist are both relevant."
     },
     {
       "id": "review-negative-implementation",
       "prompt": "实现一个新的 ASP.NET Core 订单接口。",
-      "expected_skills": [],
+      "expected_skills": ["implement-minimal-code"],
       "forbidden_skills": ["review-code-change", "csharp-dotnet-code-checklist"],
-      "reason": "Writing new .NET code is not an existing-change review."
+      "reason": "New ASP.NET Core functionality selects implementation guidance, not existing-change review or the .NET review specialist."
     },
     {
       "id": "pre-push-validation",
       "prompt": "推送这个分支前，选择并运行最必要的本地检查。",
       "expected_skills": ["run-pre-push-checks"],
-      "forbidden_skills": ["review-code-change", "loop-orchestrator"],
+      "forbidden_skills": ["review-code-change", "loop-orchestrator", "implement-minimal-code"],
       "reason": "The requested outcome is local outgoing-change evidence."
     },
     {
       "id": "pre-push-negative-ci-repair",
       "prompt": "CI 红了，帮我诊断并修复失败。",
-      "expected_skills": [],
+      "expected_skills": ["implement-minimal-code"],
       "forbidden_skills": ["run-pre-push-checks"],
-      "reason": "CI repair is not pre-push evidence selection."
+      "reason": "The user requests diagnosis and repair, so implementation guidance applies; this is not pre-push evidence selection."
     },
     {
       "id": "review-csharp-prepush-combination",
       "prompt": "审查这个 C# diff，并在推送前运行相关检查。",
       "expected_skills": ["review-code-change", "csharp-dotnet-code-checklist", "run-pre-push-checks"],
-      "forbidden_skills": ["loop-orchestrator", "reviewable-change-slices"],
+      "forbidden_skills": ["loop-orchestrator", "reviewable-change-slices", "implement-minimal-code"],
       "reason": "The request explicitly combines review, .NET specialization, and outgoing validation."
     },
     {
       "id": "simplification-audit-zh",
       "prompt": "看看仓库里哪些无用代码、重复路径和不必要抽象可以删掉。",
       "expected_skills": ["find-code-simplifications"],
-      "forbidden_skills": ["review-code-change", "reviewable-change-slices", "loop-orchestrator"],
+      "forbidden_skills": ["review-code-change", "reviewable-change-slices", "loop-orchestrator", "implement-minimal-code"],
       "reason": "Reduction of maintenance surface is the explicit goal."
     },
     {
       "id": "simplification-implementation-en",
       "prompt": "Remove the proven dead compatibility layer and validate that required behavior is unchanged.",
       "expected_skills": ["find-code-simplifications"],
-      "forbidden_skills": ["review-code-change"],
+      "forbidden_skills": ["review-code-change", "implement-minimal-code"],
       "reason": "The user requests implementation of an evidence-backed reduction."
     },
     {
       "id": "simplification-slices-combination",
       "prompt": "分三个独立 commit 清理死代码、重复配置和无用依赖，每个 commit 都等我 review。",
       "expected_skills": ["find-code-simplifications", "reviewable-change-slices"],
-      "forbidden_skills": ["loop-orchestrator"],
+      "forbidden_skills": ["loop-orchestrator", "implement-minimal-code"],
       "reason": "The task combines explicit simplification with staged human review."
     },
     {
       "id": "natural-prose-article-drafting",
       "prompt": "根据这些真实的练琴经历，起草一篇自然、有个人观察的中文生活文章；不要虚构细节，也不要套用“背景—意义—展望”的模板。",
       "expected_skills": ["write-natural-prose"],
-      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "business-solution-architect"],
+      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "business-solution-architect", "implement-minimal-code"],
       "reason": "The request is original personal-article drafting with an explicit natural voice."
     },
     {
       "id": "natural-prose-project-language-doc",
       "prompt": "为 docs/payments/retries.md 起草“重试边界”一节。该文件和同目录文档都使用日文，请沿用现有语言和术语，不要翻译其他页面。",
       "expected_skills": ["write-natural-prose"],
-      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "sync-bilingual-docs", "sync-documentation-site"],
+      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "sync-bilingual-docs", "sync-documentation-site", "implement-minimal-code"],
       "reason": "The target and neighboring documents determine the language in a multilingual project."
     },
     {
       "id": "natural-prose-code-comments",
       "prompt": "给这个锁升级实现补上必要的代码注释，只解释为什么二次检查和失败回滚不可省，并沿用当前源文件的语言；不要改代码。",
       "expected_skills": ["write-natural-prose"],
-      "forbidden_skills": ["review-technical-prose", "review-code-change", "trim-reasoning-leakage"],
+      "forbidden_skills": ["review-technical-prose", "review-code-change", "trim-reasoning-leakage", "implement-minimal-code"],
       "reason": "The task authors focused code comments in the source file's established language."
     },
     {
       "id": "natural-prose-de-ai-rewrite",
       "prompt": "把下面这段技术说明改得像人写的，去掉翻译腔和模板化总结，同时保持事实、限定条件和 API 名称不变。",
       "expected_skills": ["write-natural-prose"],
-      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "trim-reasoning-leakage"],
+      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "trim-reasoning-leakage", "implement-minimal-code"],
       "reason": "Natural rewriting is the goal; preserving content does not make this a contract audit."
     },
     {
       "id": "natural-prose-explicit-language-override",
       "prompt": "这个仓库的文档主要是中文，但这份面向海外用户的故障排查说明必须用英语起草，并保持自然、直接的表达。",
       "expected_skills": ["write-natural-prose"],
-      "forbidden_skills": ["translate-tech-en-zh", "sync-bilingual-docs", "sync-documentation-site"],
+      "forbidden_skills": ["translate-tech-en-zh", "sync-bilingual-docs", "sync-documentation-site", "implement-minimal-code"],
       "reason": "The user's explicit English requirement overrides the repository's usual language."
     },
     {
       "id": "natural-prose-no-context-chinese-fallback",
       "prompt": "There is no target file, neighboring document, or repository language convention, and I am not specifying a language. Draft a natural release note explaining that failed uploads can now be resumed.",
       "expected_skills": ["write-natural-prose"],
-      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh"],
+      "forbidden_skills": ["review-technical-prose", "translate-tech-en-zh", "implement-minimal-code"],
       "reason": "With no language evidence or explicit choice, the skill should use its Chinese fallback despite the prompt language."
     },
     {
       "id": "natural-prose-contract-combination",
       "prompt": "把这份 API 文档重写得自然、清楚，去掉翻译腔；同时逐项保留所有请求字段、默认值、错误条件和兼容性承诺。",
       "expected_skills": ["write-natural-prose", "review-technical-prose"],
-      "forbidden_skills": ["translate-tech-en-zh", "trim-reasoning-leakage"],
+      "forbidden_skills": ["translate-tech-en-zh", "trim-reasoning-leakage", "implement-minimal-code"],
       "reason": "The request explicitly combines natural style rewriting with complete contract preservation."
     },
     {
       "id": "technical-prose-review",
       "prompt": "审查这份 README 的信息放置和重复内容，精简但不要丢失契约。",
       "expected_skills": ["review-technical-prose"],
-      "forbidden_skills": ["write-natural-prose", "review-code-change", "find-code-simplifications", "trim-reasoning-leakage"],
+      "forbidden_skills": ["write-natural-prose", "review-code-change", "find-code-simplifications", "trim-reasoning-leakage", "implement-minimal-code"],
       "reason": "The target is technical-prose review without a natural-voice request."
     },
     {
       "id": "reasoning-leakage-cleanup",
       "prompt": "去掉这些注释里的“本次 PR”“上一版方案”和评审过程表述，让它们只描述当前状态。",
       "expected_skills": ["trim-reasoning-leakage"],
-      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "review-code-change", "find-code-simplifications"],
+      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "review-code-change", "find-code-simplifications", "implement-minimal-code"],
       "reason": "The request names authoring-session and review residue."
     },
     {
       "id": "decision-record-lifecycle",
       "prompt": "审计 ADR，合并重复决策并归档已经被取代的记录。",
       "expected_skills": ["maintain-decision-records"],
-      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "review-code-change"],
+      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "review-code-change", "implement-minimal-code"],
       "reason": "Decision records and their lifecycle are the target."
     },
     {
       "id": "standalone-translation",
       "prompt": "把这篇英文技术文章翻译成中文，保持代码块和结构。",
       "expected_skills": ["translate-tech-en-zh"],
-      "forbidden_skills": ["write-natural-prose", "sync-bilingual-docs", "sync-documentation-site"],
+      "forbidden_skills": ["write-natural-prose", "sync-bilingual-docs", "sync-documentation-site", "implement-minimal-code"],
       "reason": "This is an ordinary one-way translation."
     },
     {
       "id": "bilingual-pair-sync",
       "prompt": "同步仓库中已经配对的中英文文档，只更新英文侧这次变化对应的中文段落。",
       "expected_skills": ["sync-bilingual-docs"],
-      "forbidden_skills": ["write-natural-prose", "translate-tech-en-zh", "sync-documentation-site"],
+      "forbidden_skills": ["write-natural-prose", "translate-tech-en-zh", "sync-documentation-site", "implement-minimal-code"],
       "reason": "The request explicitly maintains both sides of an existing pair."
     },
     {
       "id": "documentation-site-sync",
       "prompt": "把规范 Markdown 的页面移动同步到 Docusaurus 导航、路由和链接，并验证本地构建。",
       "expected_skills": ["sync-documentation-site"],
-      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "sync-bilingual-docs", "translate-tech-en-zh"],
+      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "sync-bilingual-docs", "translate-tech-en-zh", "implement-minimal-code"],
       "reason": "The task projects canonical documentation into a framework-backed site."
     },
     {
       "id": "business-solution-blueprint",
       "prompt": "把这个退款工单 PRD 整理成中文、可直接交给开发的业务实现方案。",
       "expected_skills": ["business-solution-architect"],
-      "forbidden_skills": ["write-natural-prose", "loop-orchestrator", "reviewable-change-slices"],
+      "forbidden_skills": ["write-natural-prose", "loop-orchestrator", "reviewable-change-slices", "implement-minimal-code"],
       "reason": "The requested artifact is an implementation-ready business blueprint."
     },
     {
       "id": "business-negative-isolated-architecture",
       "prompt": "事件总线和消息队列有什么区别？",
       "expected_skills": [],
-      "forbidden_skills": ["business-solution-architect"],
+      "forbidden_skills": ["business-solution-architect", "implement-minimal-code"],
       "reason": "An isolated architecture question is not a business solution blueprint."
     },
     {
       "id": "fact-check-claim",
       "prompt": "查证这张截图里“某城市已经停止供水”的说法是真是假，并给来源。",
       "expected_skills": ["fact-check-debunker"],
-      "forbidden_skills": [],
+      "forbidden_skills": ["implement-minimal-code"],
       "reason": "The request asks for a verdict on a specific factual claim."
     },
     {
       "id": "fact-check-negative-summary",
       "prompt": "总结这个新闻链接的主要内容。",
       "expected_skills": [],
-      "forbidden_skills": ["fact-check-debunker"],
+      "forbidden_skills": ["fact-check-debunker", "implement-minimal-code"],
       "reason": "Summarization without a truth claim is not fact-checking."
     },
     {
       "id": "qwen-provider-explicit",
       "prompt": "用 DashScope Qwen-Image 2.0 生成一张产品概念图并保存到本地。",
       "expected_skills": ["qwen-image-generator"],
-      "forbidden_skills": ["id-photo-maker", "photo-selector"],
+      "forbidden_skills": ["id-photo-maker", "photo-selector", "implement-minimal-code"],
       "reason": "The user explicitly selected the Qwen provider workflow."
     },
     {
       "id": "qwen-negative-generic-image",
       "prompt": "画一张森林里的小屋插画。",
       "expected_skills": [],
-      "forbidden_skills": ["qwen-image-generator", "id-photo-maker", "photo-selector"],
+      "forbidden_skills": ["qwen-image-generator", "id-photo-maker", "photo-selector", "implement-minimal-code"],
       "reason": "A provider-neutral request should route to the runtime's general image capability."
     },
     {
       "id": "id-photo-output",
       "prompt": "把这张照片做成蓝底 2 寸证件照，并排成可打印裁剪的页面。",
       "expected_skills": ["id-photo-maker"],
-      "forbidden_skills": ["qwen-image-generator", "photo-selector"],
+      "forbidden_skills": ["qwen-image-generator", "photo-selector", "implement-minimal-code"],
       "reason": "The target artifact is a printable ID photo."
     },
     {
       "id": "photo-batch-selection",
       "prompt": "从这个本地照片文件夹生成联络表，挑出最值得精修的 20 张。",
       "expected_skills": ["photo-selector"],
-      "forbidden_skills": ["qwen-image-generator", "id-photo-maker"],
+      "forbidden_skills": ["qwen-image-generator", "id-photo-maker", "implement-minimal-code"],
       "reason": "The task is batch curation rather than generation or editing."
     },
     {
       "id": "photo-selector-negative-edit",
       "prompt": "把这张单人照调亮并去掉背景杂物。",
       "expected_skills": [],
-      "forbidden_skills": ["photo-selector", "id-photo-maker", "qwen-image-generator"],
+      "forbidden_skills": ["photo-selector", "id-photo-maker", "qwen-image-generator", "implement-minimal-code"],
       "reason": "Editing one image is not batch selection or an ID-photo workflow."
     },
     {
       "id": "markdown-pdf-export",
       "prompt": "把这份 Markdown 导出成打印效果好的 PDF，并调整页边距和字体。",
       "expected_skills": ["markdown-pdf-export"],
-      "forbidden_skills": ["resume-builder"],
+      "forbidden_skills": ["resume-builder", "implement-minimal-code"],
       "reason": "The requested transformation is Markdown to PDF."
     },
     {
       "id": "resume-artifact",
       "prompt": "根据这些工作经历和职位描述，重写并精简我的英文简历。",
       "expected_skills": ["resume-builder"],
-      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "markdown-pdf-export"],
+      "forbidden_skills": ["write-natural-prose", "review-technical-prose", "markdown-pdf-export", "implement-minimal-code"],
       "reason": "The target artifact is a professional resume."
     },
     {
       "id": "browser-gif-demo",
       "prompt": "录制登录到创建工单的浏览器操作，做成简洁的 GIF 作为 PR 证据。",
       "expected_skills": ["record-browser-gif"],
-      "forbidden_skills": [],
+      "forbidden_skills": ["implement-minimal-code"],
       "reason": "The requested artifact is a browser interaction GIF."
     },
     {
       "id": "stacked-pr-landing",
       "prompt": "验证并合并这组三个同仓库的 stacked PR，后一个 PR 都以前一个分支为 base。",
       "expected_skills": ["merge-stacked-prs"],
-      "forbidden_skills": ["run-pre-push-checks"],
+      "forbidden_skills": ["run-pre-push-checks", "implement-minimal-code"],
       "reason": "The request targets a dependent same-repository PR stack."
     },
     {
       "id": "windows-disk-reclaim",
       "prompt": "C 盘空间不足，扫描可回收空间并告诉我哪些 Windows 文件可以安全清理。",
       "expected_skills": ["windows-reclaim-disk-space"],
-      "forbidden_skills": [],
+      "forbidden_skills": ["implement-minimal-code"],
       "reason": "The target is Windows system-drive storage reclamation."
+    },
+    {
+      "id": "implementation-bugfix-en",
+      "prompt": "Fix the background worker so cancellation stops pending work and releases its resources; add focused regression coverage.",
+      "expected_skills": ["implement-minimal-code"],
+      "forbidden_skills": ["review-code-change", "find-code-simplifications", "reviewable-change-slices", "loop-orchestrator"],
+      "reason": "An English bug-fix request selects implementation guidance without needing minimalism keywords or a separate audit workflow."
+    },
+    {
+      "id": "implementation-specified-dependency",
+      "prompt": "为现有 API 实现请求参数校验，必须使用已经安装的 Zod，并保留项目现有的错误响应格式。",
+      "expected_skills": ["implement-minimal-code"],
+      "forbidden_skills": ["find-code-simplifications", "review-code-change", "reviewable-change-slices"],
+      "reason": "A feature implementation with an explicit dependency choice still selects implementation guidance; it is not dependency removal or code review."
+    },
+    {
+      "id": "implementation-csharp-review-fix-combination",
+      "prompt": "审查这个 C# PR 的正确性和 .NET 生产风险，并直接修复确认的问题，运行相关回归测试。",
+      "expected_skills": ["review-code-change", "csharp-dotnet-code-checklist", "implement-minimal-code"],
+      "forbidden_skills": ["find-code-simplifications", "reviewable-change-slices", "loop-orchestrator"],
+      "reason": "The request explicitly combines general and .NET-specific review with implementation of verified fixes."
+    },
+    {
+      "id": "implementation-slices-combination",
+      "prompt": "按这个计划实现导入功能，每次只交付一个 commit，完成后停下来等我 review。",
+      "expected_skills": ["implement-minimal-code", "reviewable-change-slices"],
+      "forbidden_skills": ["review-code-change", "find-code-simplifications", "loop-orchestrator"],
+      "reason": "The user explicitly requests feature implementation with commit-sized delivery and human checkpoints; waiting for review is not a review task for the agent."
+    },
+    {
+      "id": "simplification-diff-audit",
+      "prompt": "只审计这个 diff 是否引入了不必要的抽象、重复状态和多余依赖，给出有证据的精简候选，不要修改文件。",
+      "expected_skills": ["find-code-simplifications"],
+      "forbidden_skills": ["implement-minimal-code", "review-code-change", "reviewable-change-slices", "loop-orchestrator"],
+      "reason": "The requested diff audit targets overengineering and maintenance reduction rather than correctness review or implementation."
+    },
+    {
+      "id": "simplification-directory-audit",
+      "prompt": "审计 src/services 目录里现有的重复路径和过度设计，只列出可以安全简化的候选与依据，不改代码。",
+      "expected_skills": ["find-code-simplifications"],
+      "forbidden_skills": ["implement-minimal-code", "review-code-change", "reviewable-change-slices", "loop-orchestrator"],
+      "reason": "A directory-scoped code-reduction audit belongs to the existing simplification skill and does not authorize implementation."
+    },
+    {
+      "id": "implementation-negative-diagnosis-only",
+      "prompt": "排查这个支付任务为什么会重复执行，给出原因、证据和建议，但不要修改代码。",
+      "expected_skills": [],
+      "forbidden_skills": ["implement-minimal-code", "review-code-change", "find-code-simplifications", "reviewable-change-slices"],
+      "reason": "Diagnosis without a request to change code is outside implementation guidance and is not review of an existing change."
+    },
+    {
+      "id": "implementation-negative-minimal-architecture",
+      "prompt": "只给现有缓存服务的最简架构方案和取舍，不写代码，也不修改文件。",
+      "expected_skills": [],
+      "forbidden_skills": ["implement-minimal-code", "business-solution-architect", "find-code-simplifications", "review-code-change"],
+      "reason": "Minimalism language does not turn an architecture-only proposal into implementation, a business blueprint, or an existing-code audit."
+    },
+    {
+      "id": "implementation-negative-photo-helper",
+      "prompt": "用 Python 辅助处理这批本地照片，生成联络表并选出最值得精修的 20 张。",
+      "expected_skills": ["photo-selector"],
+      "forbidden_skills": ["implement-minimal-code", "qwen-image-generator", "id-photo-maker"],
+      "reason": "The deliverables are a photo contact sheet and curated selection; helper code does not make the task a software implementation request."
     }
   ]
 }

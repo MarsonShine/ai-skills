@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>酒店预订</title>
+  <script type="module" src="/assets/date-range-picker.js"></script>
+</head>
+<body>
+<form action="/bookings" method="post">
+  <label for="stay">入住与离店日期</label>
+  <date-range-picker id="stay" name="stay" locale="zh-CN" exclude-weekdays="0,6" required></date-range-picker>
+  <label for="guests">旅客人数</label>
+  <input type="number" id="guests" name="guests" min="1" max="6" step="1" required>
+  <button type="submit">提交预订</button>
+</form>
+</body>
+</html>

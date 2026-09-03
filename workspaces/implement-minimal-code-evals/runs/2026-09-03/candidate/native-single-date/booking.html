@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><title>预约</title></head>
+<body>
+<form action="/appointments" method="post">
+  <label for="customer">姓名</label>
+  <input id="customer" name="customer" required>
+  <label for="appointment_date">预约日期</label>
+  <input type="date" id="appointment_date" name="appointment_date" min="2026-10-01" max="2026-12-31" required>
+  <button type="submit">预约</button>
+</form>
+</body>
+</html>

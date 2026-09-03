@@ -24,6 +24,7 @@ Current skills:
 - `fact-check-debunker`
 - `find-code-simplifications`
 - `id-photo-maker`
+- `implement-minimal-code`
 - `loop-orchestrator`
 - `maintain-decision-records`
 - `markdown-pdf-export`
@@ -42,6 +43,8 @@ Current skills:
 - `trim-reasoning-leakage`
 - `windows-reclaim-disk-space`
 - `write-natural-prose`
+
+`implement-minimal-code` is selected on demand for new features, bug fixes, and ordinary implementation refactors. Explicit code-reduction tasks use `find-code-simplifications`. Review-only, planning, documentation, and media tasks do not trigger `implement-minimal-code`.
 
 `windows-reclaim-disk-space` performs a read-only Windows drive audit, ranks reclaimable space, and separates confirmed cleanable targets from conditional and manually forbidden targets. See its anonymized [cleanup report example](skills/windows-reclaim-disk-space/references/report-example.md).
 

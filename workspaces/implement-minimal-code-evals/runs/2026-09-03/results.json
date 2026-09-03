@@ -1,0 +1,1593 @@
+{
+  "date": "2026-09-03",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "ultra",
+  "repetitions_per_case_and_arm": 1,
+  "baseline_commit": "2c8fe01852e8997ff554a5ac88177b5ed1a34bc7",
+  "installed_version": "0.2.0+codex.20260903035726",
+  "method": "Constrained source generation in fresh ephemeral Codex contexts, followed by local checks; not an agentic benchmark.",
+  "isolation": "Both arms temporarily disable the installed ai-skills plugin and receive the respective supplied catalog; candidate receives its entrypoint and reference. No persistent settings change.",
+  "baseline_public_source_verified": true,
+  "installed_discovery": {
+    "skill_present": true,
+    "selected": "ai-skills:implement-minimal-code",
+    "request": "Implement a new ASP.NET Core order endpoint",
+    "tools_used": false
+  },
+  "routing": {
+    "catalog_count": 24,
+    "case_count": 50,
+    "completed": 50,
+    "passed": 50,
+    "results": [
+      {
+        "id": "bilingual-pair-sync",
+        "expected": [
+          "sync-bilingual-docs"
+        ],
+        "selected": [
+          "sync-bilingual-docs"
+        ],
+        "passed": true,
+        "seconds": 10.14,
+        "usage": {
+          "input_tokens": 18715,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 75,
+          "reasoning_output_tokens": 51
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "browser-gif-demo",
+        "expected": [
+          "record-browser-gif"
+        ],
+        "selected": [
+          "record-browser-gif"
+        ],
+        "passed": true,
+        "seconds": 9.23,
+        "usage": {
+          "input_tokens": 18717,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 68,
+          "reasoning_output_tokens": 45
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "business-negative-isolated-architecture",
+        "expected": [],
+        "selected": [],
+        "passed": true,
+        "seconds": 14.84,
+        "usage": {
+          "input_tokens": 18698,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 242,
+          "reasoning_output_tokens": 223
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "business-solution-blueprint",
+        "expected": [
+          "business-solution-architect"
+        ],
+        "selected": [
+          "business-solution-architect"
+        ],
+        "passed": true,
+        "seconds": 9.76,
+        "usage": {
+          "input_tokens": 18711,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 71,
+          "reasoning_output_tokens": 47
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "decision-record-lifecycle",
+        "expected": [
+          "maintain-decision-records"
+        ],
+        "selected": [
+          "maintain-decision-records"
+        ],
+        "passed": true,
+        "seconds": 9.23,
+        "usage": {
+          "input_tokens": 18707,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 68,
+          "reasoning_output_tokens": 43
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "documentation-site-sync",
+        "expected": [
+          "sync-documentation-site"
+        ],
+        "selected": [
+          "sync-documentation-site"
+        ],
+        "passed": true,
+        "seconds": 9.61,
+        "usage": {
+          "input_tokens": 18719,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 95,
+          "reasoning_output_tokens": 72
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "fact-check-claim",
+        "expected": [
+          "fact-check-debunker"
+        ],
+        "selected": [
+          "fact-check-debunker"
+        ],
+        "passed": true,
+        "seconds": 9.66,
+        "usage": {
+          "input_tokens": 18715,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 69,
+          "reasoning_output_tokens": 45
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "fact-check-negative-summary",
+        "expected": [],
+        "selected": [],
+        "passed": true,
+        "seconds": 9.99,
+        "usage": {
+          "input_tokens": 18698,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 93,
+          "reasoning_output_tokens": 75
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "id-photo-output",
+        "expected": [
+          "id-photo-maker"
+        ],
+        "selected": [
+          "id-photo-maker"
+        ],
+        "passed": true,
+        "seconds": 8.81,
+        "usage": {
+          "input_tokens": 18711,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 68,
+          "reasoning_output_tokens": 46
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "implementation-bugfix-en",
+        "expected": [
+          "implement-minimal-code"
+        ],
+        "selected": [
+          "implement-minimal-code"
+        ],
+        "passed": true,
+        "seconds": 8.17,
+        "usage": {
+          "input_tokens": 18709,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 64,
+          "reasoning_output_tokens": 41
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "implementation-csharp-review-fix-combination",
+        "expected": [
+          "review-code-change",
+          "csharp-dotnet-code-checklist",
+          "implement-minimal-code"
+        ],
+        "selected": [
+          "csharp-dotnet-code-checklist",
+          "implement-minimal-code",
+          "review-code-change"
+        ],
+        "passed": true,
+        "seconds": 13.02,
+        "usage": {
+          "input_tokens": 18716,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 131,
+          "reasoning_output_tokens": 96
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "implementation-negative-diagnosis-only",
+        "expected": [],
+        "selected": [],
+        "passed": true,
+        "seconds": 10.83,
+        "usage": {
+          "input_tokens": 18713,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 109,
+          "reasoning_output_tokens": 91
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "implementation-negative-minimal-architecture",
+        "expected": [],
+        "selected": [],
+        "passed": true,
+        "seconds": 9.94,
+        "usage": {
+          "input_tokens": 18713,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 79,
+          "reasoning_output_tokens": 60
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "implementation-negative-photo-helper",
+        "expected": [
+          "photo-selector"
+        ],
+        "selected": [
+          "photo-selector"
+        ],
+        "passed": true,
+        "seconds": 9.16,
+        "usage": {
+          "input_tokens": 18722,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 87,
+          "reasoning_output_tokens": 66
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "implementation-slices-combination",
+        "expected": [
+          "implement-minimal-code",
+          "reviewable-change-slices"
+        ],
+        "selected": [
+          "implement-minimal-code",
+          "reviewable-change-slices"
+        ],
+        "passed": true,
+        "seconds": 10.14,
+        "usage": {
+          "input_tokens": 18711,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 105,
+          "reasoning_output_tokens": 76
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "implementation-specified-dependency",
+        "expected": [
+          "implement-minimal-code"
+        ],
+        "selected": [
+          "implement-minimal-code"
+        ],
+        "passed": true,
+        "seconds": 9.27,
+        "usage": {
+          "input_tokens": 18719,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 73,
+          "reasoning_output_tokens": 50
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "loop-goal-attempts-en",
+        "expected": [
+          "loop-orchestrator"
+        ],
+        "selected": [
+          "loop-orchestrator"
+        ],
+        "passed": true,
+        "seconds": 11.86,
+        "usage": {
+          "input_tokens": 18709,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 146,
+          "reasoning_output_tokens": 123
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "loop-negative-one-off-feature",
+        "expected": [
+          "implement-minimal-code"
+        ],
+        "selected": [
+          "implement-minimal-code"
+        ],
+        "passed": true,
+        "seconds": 9.48,
+        "usage": {
+          "input_tokens": 18704,
+          "cached_input_tokens": 11392,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 70,
+          "reasoning_output_tokens": 47
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "loop-scheduled-monitor-zh",
+        "expected": [
+          "loop-orchestrator"
+        ],
+        "selected": [
+          "loop-orchestrator"
+        ],
+        "passed": true,
+        "seconds": 10.39,
+        "usage": {
+          "input_tokens": 18708,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 101,
+          "reasoning_output_tokens": 78
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "markdown-pdf-export",
+        "expected": [
+          "markdown-pdf-export"
+        ],
+        "selected": [
+          "markdown-pdf-export"
+        ],
+        "passed": true,
+        "seconds": 10.78,
+        "usage": {
+          "input_tokens": 18709,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 62,
+          "reasoning_output_tokens": 39
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "natural-prose-article-drafting",
+        "expected": [
+          "write-natural-prose"
+        ],
+        "selected": [
+          "write-natural-prose"
+        ],
+        "passed": true,
+        "seconds": 11.47,
+        "usage": {
+          "input_tokens": 18730,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 85,
+          "reasoning_output_tokens": 62
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "natural-prose-code-comments",
+        "expected": [
+          "write-natural-prose"
+        ],
+        "selected": [
+          "write-natural-prose"
+        ],
+        "passed": true,
+        "seconds": 12.06,
+        "usage": {
+          "input_tokens": 18725,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 164,
+          "reasoning_output_tokens": 141
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "natural-prose-contract-combination",
+        "expected": [
+          "write-natural-prose",
+          "review-technical-prose"
+        ],
+        "selected": [
+          "review-technical-prose",
+          "write-natural-prose"
+        ],
+        "passed": true,
+        "seconds": 13.78,
+        "usage": {
+          "input_tokens": 18730,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 206,
+          "reasoning_output_tokens": 177
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "natural-prose-de-ai-rewrite",
+        "expected": [
+          "write-natural-prose"
+        ],
+        "selected": [
+          "write-natural-prose"
+        ],
+        "passed": true,
+        "seconds": 11.23,
+        "usage": {
+          "input_tokens": 18722,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 170,
+          "reasoning_output_tokens": 147
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "natural-prose-explicit-language-override",
+        "expected": [
+          "write-natural-prose"
+        ],
+        "selected": [
+          "write-natural-prose"
+        ],
+        "passed": true,
+        "seconds": 14.02,
+        "usage": {
+          "input_tokens": 18723,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 72,
+          "reasoning_output_tokens": 49
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "natural-prose-no-context-chinese-fallback",
+        "expected": [
+          "write-natural-prose"
+        ],
+        "selected": [
+          "write-natural-prose"
+        ],
+        "passed": true,
+        "seconds": 12.41,
+        "usage": {
+          "input_tokens": 18724,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 200,
+          "reasoning_output_tokens": 177
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "natural-prose-project-language-doc",
+        "expected": [
+          "write-natural-prose"
+        ],
+        "selected": [
+          "write-natural-prose"
+        ],
+        "passed": true,
+        "seconds": 14.16,
+        "usage": {
+          "input_tokens": 18731,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 140,
+          "reasoning_output_tokens": 117
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "photo-batch-selection",
+        "expected": [
+          "photo-selector"
+        ],
+        "selected": [
+          "photo-selector"
+        ],
+        "passed": true,
+        "seconds": 8.84,
+        "usage": {
+          "input_tokens": 18709,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 59,
+          "reasoning_output_tokens": 38
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "photo-selector-negative-edit",
+        "expected": [],
+        "selected": [],
+        "passed": true,
+        "seconds": 8.72,
+        "usage": {
+          "input_tokens": 18703,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 67,
+          "reasoning_output_tokens": 49
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "pre-push-negative-ci-repair",
+        "expected": [
+          "implement-minimal-code"
+        ],
+        "selected": [
+          "implement-minimal-code"
+        ],
+        "passed": true,
+        "seconds": 8.91,
+        "usage": {
+          "input_tokens": 18703,
+          "cached_input_tokens": 11392,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 79,
+          "reasoning_output_tokens": 56
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "pre-push-validation",
+        "expected": [
+          "run-pre-push-checks"
+        ],
+        "selected": [
+          "run-pre-push-checks"
+        ],
+        "passed": true,
+        "seconds": 8.94,
+        "usage": {
+          "input_tokens": 18709,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 72,
+          "reasoning_output_tokens": 47
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "qwen-negative-generic-image",
+        "expected": [],
+        "selected": [],
+        "passed": true,
+        "seconds": 8.8,
+        "usage": {
+          "input_tokens": 18706,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 63,
+          "reasoning_output_tokens": 45
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "qwen-provider-explicit",
+        "expected": [
+          "qwen-image-generator"
+        ],
+        "selected": [
+          "qwen-image-generator"
+        ],
+        "passed": true,
+        "seconds": 8.69,
+        "usage": {
+          "input_tokens": 18711,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 54,
+          "reasoning_output_tokens": 31
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "reasoning-leakage-cleanup",
+        "expected": [
+          "trim-reasoning-leakage"
+        ],
+        "selected": [
+          "trim-reasoning-leakage"
+        ],
+        "passed": true,
+        "seconds": 10.28,
+        "usage": {
+          "input_tokens": 18716,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 102,
+          "reasoning_output_tokens": 76
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "resume-artifact",
+        "expected": [
+          "resume-builder"
+        ],
+        "selected": [
+          "resume-builder"
+        ],
+        "passed": true,
+        "seconds": 9.38,
+        "usage": {
+          "input_tokens": 18706,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 84,
+          "reasoning_output_tokens": 63
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "review-csharp-combination",
+        "expected": [
+          "review-code-change",
+          "csharp-dotnet-code-checklist"
+        ],
+        "selected": [
+          "csharp-dotnet-code-checklist",
+          "review-code-change"
+        ],
+        "passed": true,
+        "seconds": 9.41,
+        "usage": {
+          "input_tokens": 18709,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 79,
+          "reasoning_output_tokens": 49
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "review-csharp-prepush-combination",
+        "expected": [
+          "review-code-change",
+          "csharp-dotnet-code-checklist",
+          "run-pre-push-checks"
+        ],
+        "selected": [
+          "csharp-dotnet-code-checklist",
+          "review-code-change",
+          "run-pre-push-checks"
+        ],
+        "passed": true,
+        "seconds": 10.17,
+        "usage": {
+          "input_tokens": 18707,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 125,
+          "reasoning_output_tokens": 88
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "review-general-change",
+        "expected": [
+          "review-code-change"
+        ],
+        "selected": [
+          "review-code-change"
+        ],
+        "passed": true,
+        "seconds": 7.94,
+        "usage": {
+          "input_tokens": 18705,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 62,
+          "reasoning_output_tokens": 40
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "review-negative-implementation",
+        "expected": [
+          "implement-minimal-code"
+        ],
+        "selected": [
+          "implement-minimal-code"
+        ],
+        "passed": true,
+        "seconds": 9.83,
+        "usage": {
+          "input_tokens": 18700,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 91,
+          "reasoning_output_tokens": 68
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "simplification-audit-zh",
+        "expected": [
+          "find-code-simplifications"
+        ],
+        "selected": [
+          "find-code-simplifications"
+        ],
+        "passed": true,
+        "seconds": 10.17,
+        "usage": {
+          "input_tokens": 18710,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 90,
+          "reasoning_output_tokens": 66
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "simplification-diff-audit",
+        "expected": [
+          "find-code-simplifications"
+        ],
+        "selected": [
+          "find-code-simplifications"
+        ],
+        "passed": true,
+        "seconds": 9.86,
+        "usage": {
+          "input_tokens": 18726,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 102,
+          "reasoning_output_tokens": 78
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "simplification-directory-audit",
+        "expected": [
+          "find-code-simplifications"
+        ],
+        "selected": [
+          "find-code-simplifications"
+        ],
+        "passed": true,
+        "seconds": 9.75,
+        "usage": {
+          "input_tokens": 18722,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 85,
+          "reasoning_output_tokens": 61
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "simplification-implementation-en",
+        "expected": [
+          "find-code-simplifications"
+        ],
+        "selected": [
+          "find-code-simplifications"
+        ],
+        "passed": true,
+        "seconds": 10.75,
+        "usage": {
+          "input_tokens": 18702,
+          "cached_input_tokens": 0,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 119,
+          "reasoning_output_tokens": 95
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "simplification-slices-combination",
+        "expected": [
+          "find-code-simplifications",
+          "reviewable-change-slices"
+        ],
+        "selected": [
+          "find-code-simplifications",
+          "reviewable-change-slices"
+        ],
+        "passed": true,
+        "seconds": 10.59,
+        "usage": {
+          "input_tokens": 18715,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 110,
+          "reasoning_output_tokens": 80
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "slices-negative-large-refactor",
+        "expected": [
+          "implement-minimal-code"
+        ],
+        "selected": [
+          "implement-minimal-code"
+        ],
+        "passed": true,
+        "seconds": 8.72,
+        "usage": {
+          "input_tokens": 18703,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 91,
+          "reasoning_output_tokens": 68
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "slices-one-commit-per-review",
+        "expected": [
+          "reviewable-change-slices"
+        ],
+        "selected": [
+          "reviewable-change-slices"
+        ],
+        "passed": true,
+        "seconds": 12.69,
+        "usage": {
+          "input_tokens": 18710,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 164,
+          "reasoning_output_tokens": 140
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "stacked-pr-landing",
+        "expected": [
+          "merge-stacked-prs"
+        ],
+        "selected": [
+          "merge-stacked-prs"
+        ],
+        "passed": true,
+        "seconds": 9.86,
+        "usage": {
+          "input_tokens": 18713,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 102,
+          "reasoning_output_tokens": 78
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "standalone-translation",
+        "expected": [
+          "translate-tech-en-zh"
+        ],
+        "selected": [
+          "translate-tech-en-zh"
+        ],
+        "passed": true,
+        "seconds": 9.89,
+        "usage": {
+          "input_tokens": 18707,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 83,
+          "reasoning_output_tokens": 59
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "technical-prose-review",
+        "expected": [
+          "review-technical-prose"
+        ],
+        "selected": [
+          "review-technical-prose"
+        ],
+        "passed": true,
+        "seconds": 8.69,
+        "usage": {
+          "input_tokens": 18713,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 75,
+          "reasoning_output_tokens": 51
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      },
+      {
+        "id": "windows-disk-reclaim",
+        "expected": [
+          "windows-reclaim-disk-space"
+        ],
+        "selected": [
+          "windows-reclaim-disk-space"
+        ],
+        "passed": true,
+        "seconds": 10.42,
+        "usage": {
+          "input_tokens": 18712,
+          "cached_input_tokens": 15488,
+          "cache_write_input_tokens": 0,
+          "output_tokens": 49,
+          "reasoning_output_tokens": 24
+        },
+        "exit_code": 0,
+        "parse_error": null,
+        "tool_items": []
+      }
+    ]
+  },
+  "behavior": [
+    {
+      "arm": "baseline",
+      "id": "async-clean-shutdown",
+      "passed": true,
+      "seconds": 82.64,
+      "usage": {
+        "input_tokens": 21301,
+        "cached_input_tokens": 20096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 940,
+        "reasoning_output_tokens": 632
+      },
+      "source_lines": 32,
+      "source_bytes": 955,
+      "checks": {
+        "case": "async-clean-shutdown",
+        "passed": true,
+        "checks": [
+          {
+            "name": "cancel, await cleanup, then close resource once",
+            "passed": true
+          },
+          {
+            "name": "empty/completed shutdown and post-close admission",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "baseline/async-clean-shutdown/jobs.py",
+      "source_delta_lines": 15
+    },
+    {
+      "arm": "candidate",
+      "id": "async-clean-shutdown",
+      "passed": true,
+      "seconds": 73.41,
+      "usage": {
+        "input_tokens": 22696,
+        "cached_input_tokens": 21504,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 756,
+        "reasoning_output_tokens": 424
+      },
+      "source_lines": 33,
+      "source_bytes": 1016,
+      "checks": {
+        "case": "async-clean-shutdown",
+        "passed": true,
+        "checks": [
+          {
+            "name": "cancel, await cleanup, then close resource once",
+            "passed": true
+          },
+          {
+            "name": "empty/completed shutdown and post-close admission",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "candidate/async-clean-shutdown/jobs.py",
+      "source_delta_lines": 16
+    },
+    {
+      "arm": "baseline",
+      "id": "injected-csv-interface",
+      "passed": true,
+      "seconds": 29.14,
+      "usage": {
+        "input_tokens": 20326,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 713,
+        "reasoning_output_tokens": 372
+      },
+      "source_lines": 36,
+      "source_bytes": 877,
+      "checks": {
+        "case": "injected-csv-interface",
+        "passed": true,
+        "checks": [
+          {
+            "name": "external sink contract",
+            "passed": true
+          },
+          {
+            "name": "CSV totals, escaping, emptiness and input preservation",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "baseline/injected-csv-interface/report.py",
+      "source_delta_lines": 13
+    },
+    {
+      "arm": "candidate",
+      "id": "injected-csv-interface",
+      "passed": true,
+      "seconds": 40.09,
+      "usage": {
+        "input_tokens": 21719,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1096,
+        "reasoning_output_tokens": 759
+      },
+      "source_lines": 38,
+      "source_bytes": 899,
+      "checks": {
+        "case": "injected-csv-interface",
+        "passed": true,
+        "checks": [
+          {
+            "name": "external sink contract",
+            "passed": true
+          },
+          {
+            "name": "CSV totals, escaping, emptiness and input preservation",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "candidate/injected-csv-interface/report.py",
+      "source_delta_lines": 15
+    },
+    {
+      "arm": "baseline",
+      "id": "native-single-date",
+      "passed": true,
+      "seconds": 19.25,
+      "usage": {
+        "input_tokens": 20247,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 385,
+        "reasoning_output_tokens": 176
+      },
+      "source_lines": 13,
+      "source_bytes": 460,
+      "checks": {
+        "case": "native-single-date",
+        "passed": true,
+        "checks": [
+          {
+            "name": "static HTML form and field contracts",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {
+          "native_date_input": true
+        },
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "baseline/native-single-date/booking.html",
+      "source_delta_lines": 1
+    },
+    {
+      "arm": "candidate",
+      "id": "native-single-date",
+      "passed": true,
+      "seconds": 25.74,
+      "usage": {
+        "input_tokens": 21640,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 567,
+        "reasoning_output_tokens": 354
+      },
+      "source_lines": 13,
+      "source_bytes": 460,
+      "checks": {
+        "case": "native-single-date",
+        "passed": true,
+        "checks": [
+          {
+            "name": "static HTML form and field contracts",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {
+          "native_date_input": true
+        },
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "candidate/native-single-date/booking.html",
+      "source_delta_lines": 1
+    },
+    {
+      "arm": "baseline",
+      "id": "preserve-range-component",
+      "passed": true,
+      "seconds": 22.67,
+      "usage": {
+        "input_tokens": 21570,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 460,
+        "reasoning_output_tokens": 195
+      },
+      "source_lines": 17,
+      "source_bytes": 580,
+      "checks": {
+        "case": "preserve-range-component",
+        "passed": true,
+        "checks": [
+          {
+            "name": "static HTML form and field contracts",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "baseline/preserve-range-component/booking.html",
+      "source_delta_lines": 1
+    },
+    {
+      "arm": "candidate",
+      "id": "preserve-range-component",
+      "passed": true,
+      "seconds": 30.98,
+      "usage": {
+        "input_tokens": 21741,
+        "cached_input_tokens": 11392,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 716,
+        "reasoning_output_tokens": 440
+      },
+      "source_lines": 17,
+      "source_bytes": 580,
+      "checks": {
+        "case": "preserve-range-component",
+        "passed": true,
+        "checks": [
+          {
+            "name": "static HTML form and field contracts",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "candidate/preserve-range-component/booking.html",
+      "source_delta_lines": 1
+    },
+    {
+      "arm": "baseline",
+      "id": "shared-normalization",
+      "passed": true,
+      "seconds": 86.11,
+      "usage": {
+        "input_tokens": 20252,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2610,
+        "reasoning_output_tokens": 1960
+      },
+      "source_lines": 68,
+      "source_bytes": 1815,
+      "checks": {
+        "case": "shared-normalization",
+        "passed": true,
+        "checks": [
+          {
+            "name": "all entrypoints and unseen normalization variants",
+            "passed": true
+          },
+          {
+            "name": "duplicate and empty-label rejection",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "baseline/shared-normalization/labels.py",
+      "source_delta_lines": 50
+    },
+    {
+      "arm": "candidate",
+      "id": "shared-normalization",
+      "passed": true,
+      "seconds": 28.61,
+      "usage": {
+        "input_tokens": 21651,
+        "cached_input_tokens": 15488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 749,
+        "reasoning_output_tokens": 483
+      },
+      "source_lines": 24,
+      "source_bytes": 563,
+      "checks": {
+        "case": "shared-normalization",
+        "passed": true,
+        "checks": [
+          {
+            "name": "all entrypoints and unseen normalization variants",
+            "passed": true
+          },
+          {
+            "name": "duplicate and empty-label rejection",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "candidate/shared-normalization/labels.py",
+      "source_delta_lines": 6
+    },
+    {
+      "arm": "baseline",
+      "id": "tenant-ttl-cache",
+      "passed": true,
+      "seconds": 52.02,
+      "usage": {
+        "input_tokens": 20262,
+        "cached_input_tokens": 15488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1490,
+        "reasoning_output_tokens": 1226
+      },
+      "source_lines": 25,
+      "source_bytes": 674,
+      "checks": {
+        "case": "tenant-ttl-cache",
+        "passed": true,
+        "checks": [
+          {
+            "name": "tenant and composite-key isolation",
+            "passed": true
+          },
+          {
+            "name": "falsey values are valid cache hits",
+            "passed": true
+          },
+          {
+            "name": "expiry boundaries",
+            "passed": true
+          },
+          {
+            "name": "TTL starts when loader completes",
+            "passed": true
+          },
+          {
+            "name": "failure retry and TTL limits",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "baseline/tenant-ttl-cache/cache.py",
+      "source_delta_lines": 12
+    },
+    {
+      "arm": "candidate",
+      "id": "tenant-ttl-cache",
+      "passed": true,
+      "seconds": 41.11,
+      "usage": {
+        "input_tokens": 21659,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1116,
+        "reasoning_output_tokens": 851
+      },
+      "source_lines": 25,
+      "source_bytes": 674,
+      "checks": {
+        "case": "tenant-ttl-cache",
+        "passed": true,
+        "checks": [
+          {
+            "name": "tenant and composite-key isolation",
+            "passed": true
+          },
+          {
+            "name": "falsey values are valid cache hits",
+            "passed": true
+          },
+          {
+            "name": "expiry boundaries",
+            "passed": true
+          },
+          {
+            "name": "TTL starts when loader completes",
+            "passed": true
+          },
+          {
+            "name": "failure retry and TTL limits",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "candidate/tenant-ttl-cache/cache.py",
+      "source_delta_lines": 12
+    },
+    {
+      "arm": "baseline",
+      "id": "verified-note-access",
+      "passed": true,
+      "seconds": 31.7,
+      "usage": {
+        "input_tokens": 20505,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 821,
+        "reasoning_output_tokens": 365
+      },
+      "source_lines": 38,
+      "source_bytes": 1427,
+      "checks": {
+        "case": "verified-note-access",
+        "passed": true,
+        "checks": [
+          {
+            "name": "valid access, ownership and missing-note behavior",
+            "passed": true
+          },
+          {
+            "name": "signature, expiry, format and claims validation",
+            "passed": true
+          },
+          {
+            "name": "existing verifier remains authoritative",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "baseline/verified-note-access/notes.py",
+      "source_delta_lines": 4
+    },
+    {
+      "arm": "candidate",
+      "id": "verified-note-access",
+      "passed": true,
+      "seconds": 33.89,
+      "usage": {
+        "input_tokens": 21904,
+        "cached_input_tokens": 15488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 904,
+        "reasoning_output_tokens": 446
+      },
+      "source_lines": 38,
+      "source_bytes": 1427,
+      "checks": {
+        "case": "verified-note-access",
+        "passed": true,
+        "checks": [
+          {
+            "name": "valid access, ownership and missing-note behavior",
+            "passed": true
+          },
+          {
+            "name": "signature, expiry, format and claims validation",
+            "passed": true
+          },
+          {
+            "name": "existing verifier remains authoritative",
+            "passed": true
+          }
+        ],
+        "status": "passed",
+        "needs_review": false,
+        "observations": {},
+        "limitations": "Static HTML checks only; bounded Python behavior probes; no general quality or savings claim."
+      },
+      "tool_items": [],
+      "artifact": "candidate/verified-note-access/notes.py",
+      "source_delta_lines": 4
+    }
+  ]
+}

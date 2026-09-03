@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "purpose": "Bounded baseline/candidate implementation checks; the model receives only each prompt and starter_files.",
+  "output_contract": {
+    "files": [
+      {
+        "path": "the case output_file",
+        "content": "complete source"
+      }
+    ],
+    "summary": "brief explanation"
+  },
+  "limitations": [
+    "Seven small synthetic requests are regression probes, not a representative cost or quality benchmark.",
+    "Passing checks does not prove general security, production readiness, browser behavior, or lower token/latency/cost.",
+    "Keep functional pass/fail separate from implementation size and measured token, time, and cost metrics."
+  ],
+  "cases": [
+    {
+      "id": "native-single-date",
+      "prompt": "修改 booking.html，为预约表单增加一个必填的单日日期字段。字段提交名称为 appointment_date，有可访问的“预约日期”标签，日期范围为 2026-10-01 至 2026-12-31；保留现有表单 action、method、姓名字段和提交按钮。页面需要离线可用，没有日期范围选择、禁用部分日期或定制弹层需求。\n只返回 JSON 对象 {\"files\":[{\"path\":\"booking.html\",\"content\":\"完整源码\"}],\"summary\":\"简短说明\"}。仅输出 booking.html，保留未要求改变的公开接口。",
+      "starter_files": {
+        "booking.html": "<!doctype html>\n<html lang=\"zh-CN\">\n<head><meta charset=\"utf-8\"><title>预约</title></head>\n<body>\n<form action=\"/appointments\" method=\"post\">\n  <label for=\"customer\">姓名</label>\n  <input id=\"customer\" name=\"customer\" required>\n  <!-- 在此添加预约日期 -->\n  <button type=\"submit\">预约</button>\n</form>\n</body>\n</html>\n"
+      },
+      "output_file": "booking.html",
+      "checks": {
+        "command": "python -X utf8 checks.py --case native-single-date --directory DIR",
+        "criteria": [
+          "单日字段遵循必填、范围及可访问标签契约；原生日期输入作为观察值。",
+          "现有表单提交与姓名字段保留，不加载额外脚本或样式。"
+        ],
+        "limitations": [
+          "仅解析 HTML 静态契约；不验证浏览器渲染、交互和无障碍树。自定义日期输入需要浏览器复核，不计为自动通过或失败。"
+        ]
+      }
+    },
+    {
+      "id": "preserve-range-component",
+      "prompt": "修改 booking.html，为已有酒店预订表单增加一个必填旅客人数字段，提交名称 guests，整数范围 1 到 6，有可访问的“旅客人数”标签。产品明确指定继续使用已经安装的 date-range-picker 组件：保留其 name=stay、locale=zh-CN、exclude-weekdays=0,6、required 契约和原有 /assets/date-range-picker.js 模块入口。组件通过表单关联自定义元素提交日期范围，周末不可入住；不要用普通日期输入替换它。保留 POST /bookings 与原有提交按钮。\n只返回 JSON 对象 {\"files\":[{\"path\":\"booking.html\",\"content\":\"完整源码\"}],\"summary\":\"简短说明\"}。仅输出 booking.html，保留未要求改变的公开接口。",
+      "starter_files": {
+        "booking.html": "<!doctype html>\n<html lang=\"zh-CN\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>酒店预订</title>\n  <script type=\"module\" src=\"/assets/date-range-picker.js\"></script>\n</head>\n<body>\n<form action=\"/bookings\" method=\"post\">\n  <label for=\"stay\">入住与离店日期</label>\n  <date-range-picker id=\"stay\" name=\"stay\" locale=\"zh-CN\" exclude-weekdays=\"0,6\" required></date-range-picker>\n  <!-- 在此添加旅客人数 -->\n  <button type=\"submit\">提交预订</button>\n</form>\n</body>\n</html>\n"
+      },
+      "output_file": "booking.html",
+      "checks": {
+        "command": "python -X utf8 checks.py --case preserve-range-component --directory DIR",
+        "criteria": [
+          "保留已有范围组件的提交、区域和排除日期契约及模块依赖。",
+          "旅客人数使用整数、必填、范围及标签契约；提交地址不变。"
+        ],
+        "limitations": [
+          "组件实现在评估中视为现有外部契约；仅检查标记及加载配置，不验证组件运行时。"
+        ]
+      }
+    },
+    {
+      "id": "tenant-ttl-cache",
+      "prompt": "实现 cache.py 的 TenantCache.get。缓存键由 tenant 和 key 共同决定；命中时返回原值，包括 None、False、0 和空容器。每条记录从 loader 成功返回的时刻起有效 ttl 秒；当前时刻等于到期时刻即失效。未命中/已过期时调用无参数 loader，异常直接向上传递且不能缓存失败。ttl=0 表示每次重新加载，负 ttl 必须拒绝。保留可注入 clock 的公开构造接口，不增加外部依赖。\n只返回 JSON 对象 {\"files\":[{\"path\":\"cache.py\",\"content\":\"完整源码\"}],\"summary\":\"简短说明\"}。仅输出 cache.py，保留未要求改变的公开接口。",
+      "starter_files": {
+        "cache.py": "from time import monotonic\n\n\nclass TenantCache:\n    def __init__(self, ttl, clock=monotonic):\n        if ttl < 0:\n            raise ValueError(\"ttl must be non-negative\")\n        self.ttl = ttl\n        self.clock = clock\n        self.entries = {}\n\n    def get(self, tenant, key, loader):\n        raise NotImplementedError\n"
+      },
+      "output_file": "cache.py",
+      "checks": {
+        "command": "python -X utf8 checks.py --case tenant-ttl-cache --directory DIR",
+        "criteria": [
+          "同 key 不同租户与可混淆分隔符组合独立；falsey 值有效缓存。",
+          "到期前、精确到期、ttl=0、加载耗时和加载失败后重试符合契约。"
+        ],
+        "limitations": [
+          "单线程本地缓存；不评估并发、跨进程、容量控制和持久化。"
+        ]
+      }
+    },
+    {
+      "id": "injected-csv-interface",
+      "prompt": "实现 report.py 的 export_totals(rows, sink)，按 category 汇总整数 amount_cents，分类按字符串升序输出，CSV 首行为 category,total_cents。分类可能包含逗号、引号和换行，必须正确转义；空输入仍输出表头。把完整报告通过 sink.write 交给调用方，返回数据行数，不修改输入。ReportSink 是外部插件与测试替身的注入契约；即使本仓库只有 CsvBuffer 一个实现，也必须保留这个公开抽象类和 CsvBuffer.getvalue 接口，不能在导出函数中自行替换调用方传入的 sink。不新增依赖。\n只返回 JSON 对象 {\"files\":[{\"path\":\"report.py\",\"content\":\"完整源码\"}],\"summary\":\"简短说明\"}。仅输出 report.py，保留未要求改变的公开接口。",
+      "starter_files": {
+        "report.py": "from abc import ABC, abstractmethod\n\n\nclass ReportSink(ABC):\n    @abstractmethod\n    def write(self, text):\n        \"\"\"Receive CSV text.\"\"\"\n        raise NotImplementedError\n\n\nclass CsvBuffer(ReportSink):\n    def __init__(self):\n        self.parts = []\n\n    def write(self, text):\n        self.parts.append(text)\n\n    def getvalue(self):\n        return \"\".join(self.parts)\n\n\ndef export_totals(rows, sink: ReportSink):\n    raise NotImplementedError\n"
+      },
+      "output_file": "report.py",
+      "checks": {
+        "command": "python -X utf8 checks.py --case injected-csv-interface --directory DIR",
+        "criteria": [
+          "公开抽象契约和外部注入替身可用；报告发送到传入 sink。",
+          "CSV 汇总、排序、转义、空输入、负数/零值及输入不变。"
+        ],
+        "limitations": [
+          "只覆盖声明的整数金额和字符串分类契约，不扩展为通用报表系统。"
+        ]
+      }
+    },
+    {
+      "id": "shared-normalization",
+      "prompt": "修复 labels.py：导入接口把 'Alpha\\tBeta' 与 'alpha beta' 当成不同标签，导致重复。保持现有公开 key 契约以及预览、导入入口兼容。import_label 对重复 key 抛 ValueError，成功时才加入 seen 并返回 key；不要修改调用方已存在的其他 key。\n只返回 JSON 对象 {\"files\":[{\"path\":\"labels.py\",\"content\":\"完整源码\"}],\"summary\":\"简短说明\"}。仅输出 labels.py，保留未要求改变的公开接口。",
+      "starter_files": {
+        "labels.py": "def normalize_key(label):\n    \"\"\"Apply Unicode NFKC, then casefold; trim and collapse Unicode whitespace to '-'.\n\n    Raise ValueError when the resulting key is empty.\n    \"\"\"\n    return label.strip().lower().replace(\" \", \"-\")\n\n\ndef preview_key(label):\n    return normalize_key(label)\n\n\ndef import_label(label, seen):\n    key = normalize_key(label)\n    if key in seen:\n        raise ValueError(\"duplicate label\")\n    seen.add(key)\n    return key\n"
+      },
+      "output_file": "labels.py",
+      "checks": {
+        "command": "python -X utf8 checks.py --case shared-normalization --directory DIR",
+        "criteria": [
+          "三个公开入口均覆盖原报告、全角字符、Unicode 空白、德语 casefold 与空标签。",
+          "重复导入不改变集合；正常导入保留已有 key。"
+        ],
+        "limitations": [
+          "检查各公开入口的行为，不以源码结构或固定搜索词判定是否修复共享层。"
+        ]
+      }
+    },
+    {
+      "id": "verified-note-access",
+      "prompt": "实现 notes.py 的 read_note(token, note_id, notes, secret, now)。现有 verify_token 是凭证验证的唯一策略入口，已经处理 HMAC、过期和声明校验；新入口必须调用它并遵守其拒绝结果，不能只解析 token 或另写一套验证。notes 为 note_id 到 {'owner': 用户 ID, 'text': 正文} 的映射。只有验证后的 sub 等于目标笔记 owner 才返回 text；未知笔记、其他用户笔记或凭证失败均抛 AccessDenied，不修改笔记。保持 verify_token 的公开接口与现有验证行为。\n只返回 JSON 对象 {\"files\":[{\"path\":\"notes.py\",\"content\":\"完整源码\"}],\"summary\":\"简短说明\"}。仅输出 notes.py，保留未要求改变的公开接口。",
+      "starter_files": {
+        "notes.py": "import base64\nimport hashlib\nimport hmac\nimport json\n\n\nclass AccessDenied(Exception):\n    pass\n\n\ndef verify_token(token, secret, now):\n    try:\n        payload_part, signature_part = token.split(\".\")\n        signature = base64.urlsafe_b64decode(signature_part + \"=\" * (-len(signature_part) % 4))\n        expected = hmac.new(secret, payload_part.encode(\"ascii\"), hashlib.sha256).digest()\n        if not hmac.compare_digest(signature, expected):\n            raise AccessDenied(\"invalid token\")\n        payload = json.loads(base64.urlsafe_b64decode(payload_part + \"=\" * (-len(payload_part) % 4)))\n        if not isinstance(payload, dict):\n            raise AccessDenied(\"invalid claims\")\n        if not isinstance(payload.get(\"sub\"), str) or not payload[\"sub\"]:\n            raise AccessDenied(\"invalid subject\")\n        expiry = payload.get(\"exp\")\n        if isinstance(expiry, bool) or not isinstance(expiry, (int, float)) or now >= expiry:\n            raise AccessDenied(\"expired token\")\n        return payload\n    except AccessDenied:\n        raise\n    except (ValueError, TypeError, UnicodeError, KeyError) as error:\n        raise AccessDenied(\"invalid token\") from error\n\n\ndef read_note(token, note_id, notes, secret, now):\n    raise NotImplementedError\n"
+      },
+      "output_file": "notes.py",
+      "checks": {
+        "command": "python -X utf8 checks.py --case verified-note-access --directory DIR",
+        "criteria": [
+          "正常本人访问成功；伪造载荷/签名、精确过期、格式错误、越权和未知笔记拒绝。",
+          "现有 verifier 新增的拒绝策略能传递到新入口，确保统一验证边界有效。"
+        ],
+        "limitations": [
+          "合成 HMAC 凭证，只测试此已声明格式；不代表通用认证安全评估。"
+        ]
+      }
+    },
+    {
+      "id": "async-clean-shutdown",
+      "prompt": "实现 jobs.py 的 JobRunner.close。关闭时取消尚未完成的后台任务，等待每个任务的异步 finally 清理全部结束，然后才 await resource.aclose()；后台任务的 CancelledError 是正常关闭，不应使 close 失败。正常完成的任务不必再次取消。重复调用 close 不得重复关闭资源；资源关闭后 start 必须抛 RuntimeError，并关闭被拒绝传入的 coroutine，避免未等待警告。不改变 start 返回 asyncio.Task 的约定，不增加外部依赖。\n只返回 JSON 对象 {\"files\":[{\"path\":\"jobs.py\",\"content\":\"完整源码\"}],\"summary\":\"简短说明\"}。仅输出 jobs.py，保留未要求改变的公开接口。",
+      "starter_files": {
+        "jobs.py": "import asyncio\n\n\nclass JobRunner:\n    def __init__(self, resource):\n        self.resource = resource\n        self._tasks = set()\n        self._closed = False\n\n    def start(self, coroutine):\n        task = asyncio.create_task(coroutine)\n        self._tasks.add(task)\n        task.add_done_callback(self._tasks.discard)\n        return task\n\n    async def close(self):\n        raise NotImplementedError\n"
+      },
+      "output_file": "jobs.py",
+      "checks": {
+        "command": "python -X utf8 checks.py --case async-clean-shutdown --directory DIR",
+        "criteria": [
+          "多个任务取消后均完成带 await 的清理，资源在全部清理之后关闭一次。",
+          "空任务、已完成任务、重复 close 和关闭后 start 均遵循约定。"
+        ],
+        "limitations": [
+          "检查顺序性与顺序重复关闭；不声明支持多个并发 close、任意任务失败或资源关闭失败。"
+        ]
+      }
+    }
+  ]
+}

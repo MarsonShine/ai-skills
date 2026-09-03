@@ -1,0 +1,7 @@
+interface:
+  display_name: "Minimal Code Implementation"
+  short_description: "Implement complete behavior with less maintenance cost"
+  default_prompt: "Use $implement-minimal-code to implement this change with the simplest approach that fully satisfies its requirements."
+
+policy:
+  allow_implicit_invocation: true
