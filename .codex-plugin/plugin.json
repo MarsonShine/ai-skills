@@ -1,6 +1,6 @@
 {
   "name": "ai-skills",
-  "version": "0.2.0+codex.20260903054446",
+  "version": "0.2.0+codex.20260907013930",
   "description": "A local Codex plugin that bundles reusable AI agent skills for minimal code implementation, natural prose writing, review, repository maintenance, automation, documents, images, and workflow orchestration.",
   "author": {
     "name": "marsonshine",

@@ -24,7 +24,7 @@ ai-skills/
 ## Creating Or Updating A Skill
 
 1. Create or edit a folder under `skills/<skill-name>/`.
-2. Keep `SKILL.md` short: trigger, first action, resource routing, output contract, and hard prohibitions.
+2. Keep discovery descriptions concise and discriminating. Keep `SKILL.md` focused on the trigger, useful first action, conditional resource routing, output contract, and essential constraints.
 3. Move long examples, policies, matrices, and checklists to `references/`.
 4. Move deterministic repeated work to `scripts/`.
 5. Put reusable templates, images, fonts, or static examples in `assets/`.
@@ -47,13 +47,13 @@ Run these checks from the repository root:
 ```powershell
 $repo = (Get-Location).Path
 $codexHome = Join-Path $env:USERPROFILE ".codex"
-python (Join-Path $codexHome "skills\.system\plugin-creator\scripts\validate_plugin.py") $repo
-python (Join-Path $codexHome "skills\.system\skill-creator\scripts\quick_validate.py") (Join-Path $repo "skills\<skill-name>")
+python -X utf8 (Join-Path $codexHome "skills\.system\plugin-creator\scripts\validate_plugin.py") $repo
+python -X utf8 (Join-Path $codexHome "skills\.system\skill-creator\scripts\quick_validate.py") (Join-Path $repo "skills\<skill-name>")
 $absolutePathPattern = @('C:' + '\\Users', '[A-Z]:' + '\\', '/' + 'Users/', '/' + 'home/') -join '|'
 rg -n $absolutePathPattern skills docs .codex-plugin .agents AGENTS.md .github
 ```
 
-For script-backed skills, also run the representative script command with a small local fixture.
+For changed scripts or invocation contracts, run a representative safe command with a small local fixture. Instruction-only edits need structural and relevant behavioral checks, not every media/API workflow. After description changes, use `workspaces/skill-routing-evals/` to check discovery boundaries; distinguish manual contract review from fresh model runs. Reuse valid passing checks.
 
 ## Local Marketplace Workflow
 

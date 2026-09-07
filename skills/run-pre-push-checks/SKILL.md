@@ -1,6 +1,6 @@
 ---
 name: run-pre-push-checks
-description: Choose and run local validation for an outgoing Git change before push or pull-request readiness. Use for 提交或推送前检查, pre-push validation, and post-rebase or stack-sync revalidation. Do not use for code review, general debugging, CI repair, or pushing itself.
+description: "Select and run local validation for an outgoing Git change before push or PR readiness, including post-rebase checks. Not for code review, CI repair, or pushing itself."
 ---
 
 # Run Pre-Push Checks

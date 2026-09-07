@@ -30,4 +30,4 @@ default_output_dir: ./generated-images/
 
 1. Explicit user request wins
 2. `EXTEND.md` wins over built-in defaults
-3. If a required parameter is still missing, ask the user only for that missing field
+3. Use the built-in defaults for remaining optional settings; ask only for an unresolved value that materially changes the requested result

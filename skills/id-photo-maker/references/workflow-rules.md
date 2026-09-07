@@ -4,9 +4,9 @@
 
 ### Text only
 
-- Collect `size`, `background`, and `framing`.
-- Confirm that the user really wants AI generation.
-- If yes, obtain Liblib credentials.
+- Resolve `size` and `background` from the request; default ordinary ID-photo `framing` to `standard`.
+- An explicit generation request establishes intent; ask only when it is unclear whether the user wants generation or real-photo processing.
+- For generation, use configured Liblib credentials or request local configuration when missing.
 - Translate the request into concise English before calling Liblib.
 - After Liblib returns an image, process it into the final ID photo and render the print pages.
 
@@ -21,16 +21,9 @@
 - Download it locally for normal photo processing.
 - Only pass it into Liblib `img2img` when the user explicitly wants generation.
 
-## 2. Ask missing questions in this order
+## 2. Resolve only material gaps
 
-1. `size`
-2. `background`
-3. `framing`
-4. `need_generation`
-5. `AccessKey / SecretKey`
-6. `save_credentials`
-
-Keep the flow tight. If one answer naturally provides the next field, do not re-ask it.
+Use the request, supplied specifications, and documented defaults. Ask together for unresolved size/background or ambiguous generation intent; ask about framing only when the requested composition cannot be inferred. Do not repeat supplied answers or make optional credential persistence a prerequisite. Check credentials only on generation paths and retain existing authorization to save them.
 
 ## 3. Liblib prompt rules
 
@@ -69,12 +62,12 @@ Avoid overloaded art prompts such as `masterpiece, best quality, 8k, ultra detai
 ## 6. Print rendering rules
 
 - Generate static HTML using true physical units in `mm`.
-- Produce print-safe pages for `A4` and `6inch` unless the user explicitly limits the output.
+- Produce print-safe pages for `A4` and `6inch` by default; omit printing when only an upload image is requested.
 - Tell the user to print at `100% scale` with no browser shrink-to-fit.
 
 ## 7. Failure handling
 
-- If Liblib credentials are missing, stop and ask the user.
+- If Liblib credentials are missing, prepare the prompt/settings and request local credential configuration before submission. Do not expose secrets in chat.
 - If photo dependencies are missing (`Pillow`, `rembg`), surface the exact install command.
 - If the user asks for local-file `img2img` without a public URL, do not invent an upload workflow.
 - If the user requests `full-body`, explain that it is a custom layout rather than a conventional ID-photo standard.

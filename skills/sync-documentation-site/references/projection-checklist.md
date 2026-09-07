@@ -30,7 +30,7 @@ Do not add internal documents merely because they exist under a documentation di
 
 - Discover whether locales use sibling files, locale directories, generated translations, or a manifest.
 - Keep source layout separate from public route layout when the pipeline does so.
-- Use `../sync-bilingual-docs/SKILL.md` only when the user explicitly requests synchronization of an existing bilingual pair.
+- Use `../../sync-bilingual-docs/SKILL.md` only when the user explicitly requests synchronization of an existing bilingual pair.
 
 ## Validation Evidence
 

@@ -1,159 +1,41 @@
 ---
 name: id-photo-maker
-description: "制作可打印裁剪的证件照，包括报名照、护照照、1寸/2寸、背景换色和打印排版。仅在目标产物是证件照时使用；不要用于普通人像生成、修图、相册挑片或通用图片编辑。"
+description: "制作报名用或可打印裁剪的证件照，支持尺寸、背景换色和打印排版。不用于普通人像修图或批量挑片。"
 ---
 
 # ID Photo Maker
 
-把证件照制作变成稳定、可重复的执行流程：先判断输入来源，再收集缺失参数，然后按需走 Liblib 生图或本地照片处理，最后输出可直接打印裁剪的静态排版页。
+从现有照片制作标准尺寸成片和可打印裁剪页；仅在用户需要 AI 生成时调用 Liblib。
 
-## Compatibility
+## 参数与路由
 
-Works best with bash and Python 3.11+. Liblib API calls use only Python stdlib. Photo processing needs Pillow and rembg, ideally inside this skill's local `.venv`.
+- 先用请求和现有资料确定尺寸、底色、构图。尺寸与底色无法确定时合并询问缺口；普通证件照构图默认 `standard`，已有明确生成请求时不再确认是否生图。
+- 本地照片或普通图片 URL 走本地处理，不索取 Liblib 凭证。URL 由处理脚本下载。
+- 只有文字且没有照片时，区分用户要生成形象还是处理真实照片；意图不明才询问。
+- Liblib 图生图需要公网图片 URL。没有 URL 时说明缺口，不擅自上传本地照片，也不静默改用其他生成服务。
+- 默认交付成片与 A4、6 寸打印页；用户只要报名上传图或指定一种打印页时，按其要求交付。
 
-## Default operating mode
+## 执行
 
-- 默认优先使用用户已有照片。
-- 只有用户没有可用照片，或明确说“帮我生一张 / 图生图 / AI 生成”时，才调用 Liblib。
-- 用户提供本地照片时，不要擅自走 Liblib 图生图。
-- 用户提供公网图片 URL 时，先下载到本地；除非用户明确要求图生图，否则仍按本地照片流程处理。
-- 如果用户想用本地照片做 Liblib 图生图，先明确告知：Liblib 需要公网可访问 URL。没有公网 URL 时，不要私自上传到第三方图床。
-- 输出默认是可打印裁剪页，不是只给单张图。能做时，优先同时生成 `A4` 和 `6寸` 两种打印页。
+使用可用的 Python 3.11+；本地处理依赖 Pillow、rembg，见 `requirements.txt`。下列路径中的 `{baseDir}` 是当前技能目录，不是固定的用户安装目录。
 
-## Information to collect
-
-必须收集：
-
-- 证件照尺寸 / 规格
-- 背景色
-- 构图范围
-
-按需收集：
-
-- 是否真的需要 AI 生图
-- 是否要使用参考图控制构图
-- 是否已有 Liblib `AccessKey` / `SecretKey`
-- 是否同意把 AK / SK 保存到本地 `.env.local`
-
-如果缺少这些信息，主动追问。优先一问一答，不要一口气抛太多问题。
-
-## Decision flow
-
-1. **文字描述，没有现成照片**
-   - 询问尺寸、底色、构图范围。
-   - 确认是否需要 AI 生图。对纯文字输入，通常答案是“需要”。
-   - 如需 Liblib，检查 AK / SK；缺失就向用户要，并询问是否保存到本地。
-   - 将中文需求整理为简洁英文 prompt，再运行：
-     - `scripts/generate_via_liblib.py text2img ...`
-   - 生图完成后，再运行：
-     - `scripts/process_local_photo.py ...`
-     - `scripts/render_print_sheet.py ...`
-
-2. **本地照片**
-   - 默认直接做照片处理，不要先问 AK / SK。
-   - 运行：
-     - `scripts/process_local_photo.py ...`
-     - `scripts/render_print_sheet.py ...`
-   - 只有当用户明确要求 Liblib 图生图时，才继续确认是否有公网图片 URL；没有就建议改回本地处理流程。
-
-3. **公网图片 URL**
-   - 如果用户只是想做证件照：下载到本地后直接走照片处理。
-   - 如果用户明确要求 Liblib 图生图：可把这个 URL 直接作为 `sourceImage` 传给 Liblib，成功后再做后处理和排版。
-
-## Prompt construction rules for Liblib
-
-- Liblib 的 `prompt` 使用纯英文。
-- 先保留用户的真实意图，再转成简洁英文，不要塞太多花哨画风词。
-- 对证件照场景，默认强调：
-  - `clean studio lighting`
-  - `front-facing person`
-  - `realistic face`
-  - `formal ID photo`
-  - `centered composition`
-  - `plain background`
-  - `high detail`
-  - `no watermark`
-- 如果用户给了参考图或想保持姿态 / 构图，再按需加：
-  - `controlType: depth | pose | line | IPAdapter`
-  - `controlImage: <public URL>`
-
-## Credential handling
-
-- 只在需要调用 Liblib 时才检查凭证。
-- 优先从以下位置读取：
-  1. 命令行参数
-  2. `~/.copilot/skills/id-photo-maker/.env.local`
-  3. 当前 shell 环境变量
-- 如果仍缺失：
-  - 向用户索要 `AccessKey` 与 `SecretKey`
-  - 只有在用户明确同意时，才以 `LIBLIB_ACCESS_KEY=...` / `LIBLIB_SECRET_KEY=...` 的形式写入 `.env.local`
-- 不要在普通输出里回显 `SecretKey`。
-
-## Recommended commands
-
-如果 skill 目录有 `.venv/bin/python`，优先用它；否则用 `python3`。
-
-### 文生图
-
-```bash
-python3 ~/.copilot/skills/id-photo-maker/scripts/generate_via_liblib.py \
-  text2img \
-  --prompt "front-facing young woman, formal chinese id photo, clean studio light, realistic face, centered composition, plain background, high detail, no watermark" \
-  --aspect-ratio portrait \
-  --output-dir /tmp/id-photo-run/generated
+```text
+python "{baseDir}/scripts/process_local_photo.py" "<photo-path-or-url>" --size 1寸 --background white --framing standard --output-dir "<processed-dir>"
+python "{baseDir}/scripts/render_print_sheet.py" --photo "<processed-dir>/id-photo.png" --size 1寸 --pages a4,6inch --output-dir "<print-dir>"
 ```
 
-### 图生图
+参数示例应替换为用户规格。需要自定义尺寸或构图时，读取 `references/size-presets.md`；需要生成、特殊路由或打印细节时，读取 `references/workflow-rules.md`。
 
-```bash
-python3 ~/.copilot/skills/id-photo-maker/scripts/generate_via_liblib.py \
-  img2img \
-  --prompt "formal id photo, realistic face, centered composition, clean studio light, no watermark" \
-  --source-image-url "https://example.com/reference.png" \
-  --output-dir /tmp/id-photo-run/generated
-```
+生成入口为 `scripts/generate_via_liblib.py text2img` 或 `img2img`，运行 `--help` 获取参数。用简洁英文 prompt 保留用户需求，生成后继续处理与排版。
 
-### 照片处理
+## 凭证
 
-```bash
-python3 ~/.copilot/skills/id-photo-maker/scripts/process_local_photo.py \
-  /tmp/id-photo-run/generated/liblib-1.png \
-  --size 1寸 \
-  --background white \
-  --framing standard \
-  --output-dir /tmp/id-photo-run/processed
-```
+只在调用 Liblib 时检查凭证是否配置，不输出密钥值。生成脚本依次使用显式参数、`--env-file` 指定的文件（默认当前技能根目录 `.env.local`）、环境变量 `LIBLIB_ACCESS_KEY` / `LIBLIB_SECRET_KEY`。
 
-### 打印排版
+缺失时请用户通过本地环境或凭证配置入口补齐；不要把密钥写入示例、日志或报告。仅在用户要求保存凭证时使用 `scripts/credential_store.py` 的保存功能或 `--save-credentials`；已存在的保存授权无需再次询问。只有排查签名或请求问题才读取 `references/liblib-auth.md`。
 
-```bash
-python3 ~/.copilot/skills/id-photo-maker/scripts/render_print_sheet.py \
-  --photo /tmp/id-photo-run/processed/id-photo.png \
-  --size 1寸 \
-  --pages a4,6inch \
-  --output-dir /tmp/id-photo-run/print
-```
+## 交付与验证
 
-## Output expectations
+检查成片尺寸、底色、裁切，以及打印页的物理尺寸与排版。标准产物为 `id-photo.png`、`metadata.json`，以及所选打印页 `print-a4.html`、`print-6inch.html` 和 `index.html`；报告实际生成的文件。打印时使用 100% 比例，关闭浏览器缩放适配。
 
-默认交付：
-
-- `id-photo.png`：标准尺寸成片
-- `metadata.json`：尺寸、背景、构图、来源与导出信息
-- `print-a4.html`
-- `print-6inch.html`
-- `index.html`：打印页入口
-
-## Resources in this skill
-
-- `scripts/id_photo_common.py` - shared size presets, color parsing, and download helpers
-- `scripts/credential_store.py` - `.env.local` credential read/write
-- `scripts/liblib_client.py` - Liblib API signing, request, polling, and download
-- `scripts/generate_via_liblib.py` - CLI for text2img / img2img
-- `scripts/process_local_photo.py` - local / URL photo processing, background replacement, and export
-- `scripts/render_print_sheet.py` - A4 / 6寸 printable HTML sheet generation
-- `references/size-presets.md` - supported presets and physical dimensions
-- `references/workflow-rules.md` - routing, prompt, and questioning rules
-- `references/liblib-auth.md` - AK/SK signing model and request rules
-- `assets/print.css` - print-safe stylesheet
-- `requirements.txt` - Python dependencies
+保留源照片；不声称通用预设已满足某个报名系统的专门要求。无法完成时说明实际失败步骤与缺失条件，保留已完成的结果。

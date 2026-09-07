@@ -12,7 +12,7 @@ If there are information gaps, put these two sections first and omit them only w
 - 只列真正影响范围、成本、边界、权限、风控、计费或一致性的缺口
 - 高风险问题补一句“风险与影响”
 
-Then use this structure:
+Use the relevant sections below as a coverage guide. Follow a user-specified format, combine overlapping sections, and omit inapplicable ones. Do not invent capabilities to fill the template:
 
 ## 1. 需求理解
 

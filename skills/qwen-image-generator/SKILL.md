@@ -1,6 +1,6 @@
 ---
 name: qwen-image-generator
-description: Generate and save images through DashScope Qwen-Image 2.0. Use when the user explicitly requests Qwen, DashScope, or this repository's Qwen image workflow. Do not use for provider-neutral image generation, ID-photo processing, image editing, or requests already assigned to another image generator.
+description: "Generate and save images when the user explicitly chooses Qwen, DashScope, or this Qwen image workflow. Not for provider-neutral generation, image editing, or ID photos."
 ---
 
 # Qwen Image Generator
@@ -18,7 +18,7 @@ Works best with PowerShell, Node.js 22+, environment variables, and file tools. 
 | `scripts/generate_qwen_image.ps1` | Windows entrypoint |
 | `scripts/generate_qwen_image.ts` | DashScope client, polling, downloads, JSON output |
 | `references/config/extend-schema.md` | `EXTEND.md` keys |
-| `references/config/first-time-setup.md` | blocking first-run setup |
+| `references/config/first-time-setup.md` | optional saved-preference setup |
 | `references/prompting.md` | style presets, prompt shaping, flashcard rules |
 
 ## Credentials
@@ -30,7 +30,7 @@ Resolve credentials in this order:
 
 Optional: `DASHSCOPE_BASE_URL`
 
-If no key exists, stop with the credential error. Do not pretend generation succeeded.
+If no key exists, prepare the prompt and effective settings, report the missing credential, and ask the user to configure it locally. Do not submit generation or claim success until a key is available.
 
 ## Preferences
 
@@ -40,7 +40,7 @@ Check for `EXTEND.md` in this order:
 2. `$XDG_CONFIG_HOME/baoyu-skills/qwen-image-generator/EXTEND.md`
 3. `$HOME/.baoyu-skills/qwen-image-generator/EXTEND.md`
 
-If none exists, run the blocking setup in `references/config/first-time-setup.md`, save the file, then continue the image task.
+If none exists, use the built-in defaults below and continue. Read `references/config/first-time-setup.md` only when the user wants to save or change persistent defaults; an image request does not require a preference file.
 
 Built-in defaults when neither the request nor `EXTEND.md` overrides them:
 
@@ -55,7 +55,7 @@ Built-in defaults when neither the request nor `EXTEND.md` overrides them:
 ## Working rules
 
 1. Parse the request for subject, style, size, visible text, and output path.
-2. Fill missing values from `EXTEND.md`.
+2. Fill missing values from `EXTEND.md`, then built-in defaults. Explicit request values take precedence.
 3. Ask only for still-missing values that materially change the result.
 4. Write the final prompt in English.
 5. Prefer project batch wrappers when they already handle reruns or selective regeneration. Otherwise run `scripts/generate_qwen_image.ps1`.

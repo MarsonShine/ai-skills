@@ -67,12 +67,7 @@ Make dependencies explicit. A later slice may depend on an earlier one, but the 
 
 The defaults are at most 8 production files and roughly 400 changed lines of non-generated production code. Tests, docs, lockfiles, migrations, and generated files still count toward human review even when excluded from that numeric production-code signal.
 
-When either limit is likely to be crossed:
-
-1. stop before editing;
-2. split by the responsibility rules above;
-3. choose the smallest ready slice;
-4. if no safe split exists, explain the coupling and ask the user to approve the larger slice.
+When either default is likely to be crossed, look for a coherent split using the responsibility rules above. If no safe split exists, explain the coupling and finish the authorized slice. Pause for approval only when exceeding an explicit user or repository limit, not these default review signals.
 
 Do not game the budget by compressing code, moving changes into generated output, or hiding unrelated edits in a mechanical rewrite.
 

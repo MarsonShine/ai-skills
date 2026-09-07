@@ -1,11 +1,11 @@
 ---
 name: windows-reclaim-disk-space
-description: Audit or clean Windows system-drive storage with ranked, safety-classified candidates. Use for C 盘清理, low disk space, reclaiming Windows storage, deletion checklists, or deciding which system files are safe to remove. Do not use for non-Windows systems, arbitrary file deletion, or general performance troubleshooting.
+description: "Audit or clean Windows system-drive storage using evidence-backed cleanup candidates. Use for C 盘清理 or reclaiming disk space; not arbitrary deletion or performance troubleshooting."
 ---
 
 # Windows Reclaim Disk Space
 
-Audit first and default to reporting only. Treat every deletion as a separate, explicit permission boundary.
+Audit first and default to reporting only. Execute only within the exact cleanup scope and consequences already authorized by the user; one approved batch does not require confirmation for each file. New targets or additional data/feature loss need their own authorization.
 
 ## Workflow
 

@@ -1,6 +1,6 @@
 ---
 name: review-technical-prose
-description: Review or edit durable technical prose—Markdown, API docs, JSDoc, comments, prompts, diagnostics, and user-visible strings—while preserving complete contracts. Use for 文档审查, 精简注释, information placement, deduplication, or concision. Do not use for program behavior review, translation, documentation-site synchronization, decision-record lifecycle work, or specialized authoring-session and PR/review residue cleanup.
+description: "Review or edit technical prose for complete contracts, placement, duplication, and concision. Not for translation, code review, document synchronization, or authoring-session residue alone."
 ---
 
 # Review Technical Prose

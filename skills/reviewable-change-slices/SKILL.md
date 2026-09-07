@@ -1,6 +1,6 @@
 ---
 name: reviewable-change-slices
-description: Plan or deliver software work as commit-sized slices with a human checkpoint after each slice. Use when the user explicitly asks for one-slice-per-turn delivery, commit-by-commit review, staged implementation, or a slice ledger. Do not use for ordinary implementation, refactoring, analysis, code review, or a coherent multi-file change.
+description: "Plan or deliver commit-sized slices with human checkpoints when explicitly requested. Not for ordinary implementation or refactoring merely because it spans multiple files."
 ---
 
 # Reviewable Change Slices
@@ -41,12 +41,12 @@ Read [references/slicing-rules.md](references/slicing-rules.md) when the boundar
 
 ## Review Budget
 
-Unless repository rules or the user define a smaller limit, split again before editing when a slice is likely to exceed either:
+Unless repository rules or the user set a different budget, consider splitting when a slice is likely to exceed either:
 
 - 8 production files; or
 - roughly 400 changed lines of non-generated production code.
 
-These limits are review signals, not permission to split tightly coupled code from its tests or leave the repository unbuildable. If an indivisible safe change must exceed them, explain why and ask before proceeding.
+These are review signals, not approval gates. Keep tightly coupled code and tests together. If no safe split exists, explain the coupling and complete the authorized slice; ask only if it would exceed an explicit user or repository limit.
 
 ## Review Corrections
 

@@ -14,7 +14,7 @@ If primary sources are missing, use reliable secondary reporting that still poin
 
 ## Cross-check rules
 
-Use at least 2-3 genuinely independent sources for major claims. Check:
+For major or disputed claims, seek independent corroboration proportional to the uncertainty. A decisive primary record can settle a narrow claim; do not keep searching just to reach a source quota. Check:
 
 - time
 - place
@@ -85,7 +85,7 @@ Rules:
 
 ## Verdict labels
 
-- **真实**: core claims supported by multiple high-quality sources with no major contradiction
+- **真实**: core claims supported by sufficient direct evidence with no material unresolved contradiction; seek independent corroboration for major or disputed events
 - **基本真实**: main facts hold, but some details remain lightly uncertain
 - **部分真实**: some parts hold, but key numbers, causality, background, or detail are wrong or missing
 - **存疑**: evidence is thin or conflicting
@@ -93,14 +93,13 @@ Rules:
 - **虚假**: the core claim is disproven by reliable evidence, or the content is clearly fabricated
 - **暂无足够证据**: current public evidence is not strong enough for a stable conclusion
 
-## Output skeleton
+## Optional output skeleton
+
+Use relevant fields for a complex claim; simple claims need only a verdict, linked evidence, and material limits. Do not emit a numerical confidence score unless requested with a stated method.
 
 ```text
 【结论】
 <真实 / 基本真实 / 部分真实 / 存疑 / 误导性表述 / 虚假 / 暂无足够证据>
-
-【可信度评分】
-<0-100>
 
 【信息更新时间】
 <YYYY-MM-DD HH:mm TZ>

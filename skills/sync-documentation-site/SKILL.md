@@ -1,6 +1,6 @@
 ---
 name: sync-documentation-site
-description: Synchronize canonical repository Markdown with a generated or framework-backed documentation site. Use for VitePress, Docusaurus, MkDocs, or custom site projections involving pages, navigation, routes, links, moves, or removals. Do not use for ordinary documentation editing, translation, deployment, or hosting changes.
+description: "Synchronize canonical Markdown with a documentation site, including navigation, routes, links, and generated projections. Not for ordinary prose editing, translation, or deployment."
 ---
 
 # Synchronize a Documentation Site
@@ -26,7 +26,7 @@ Read `references/projection-checklist.md` before changing a custom manifest, loc
 
 ## Validate
 
-Run the repository's focused projection or docs check, link and fragment validation, site build, and diff checks. Preview the affected routes when the change is visible or navigation-sensitive.
+Choose checks for the affected projection, links/fragments, or build behavior and run repository-required gates. Preview visible or navigation-sensitive route changes. Reuse passing results while their inputs remain unchanged; do not run the full site build solely for an isolated prose edit unless repository rules require it.
 
 Report canonical files changed, public routes affected, generated files intentionally left untouched, and exact checks run.
 

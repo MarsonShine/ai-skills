@@ -1,21 +1,22 @@
 # AGENTS.md
 
-## Repository Purpose
+This repository is the source of a Codex plugin containing small, task-focused, reusable agent skills.
 
-This repository contains reusable AI agent skills. A skill should be small, task-focused, easy for agents to load, and deterministic where possible.
+## Scope and Completion
 
-## Core Principle
+Follow the user's task, format, and existing authorization over skill defaults, within the active runtime's permissions. Continue authorized work through implementation and relevant validation; a skill's optional template or suggested budget must not create an extra approval gate. Preserve explicitly requested review checkpoints.
 
-Do not choose a scripting language by habit. Choose it by the responsibility of the code.
+Read applicable instructions and the files or contracts relevant to the affected path. Load reference material when it resolves a concrete question; do not require a full repository survey for every edit.
 
-Use Markdown for agent-facing judgment and workflow rules.
-Use Python for local file, image, PDF, Excel, data-processing, and batch automation scripts.
-Use TypeScript for API clients, schema validation, structured tool interfaces, MCP/tooling layers, web/HTML pipelines, and long-lived engineering code.
-Use PowerShell or Shell only as thin OS-specific wrappers, not as the place for complex business logic.
+If a skill rule blocks otherwise requested work, identify the exact file and rule, explain what remains blocked, and complete independent authorized work. Ask only for missing decisions or authorization that materially affect the result.
 
-## Skill Structure
+## Plugin and Skill Layout
 
-Prefer this structure:
+- Keep `.codex-plugin/plugin.json` at the repository root, skills under `skills/`, and the local marketplace entry at `.agents/plugins/marketplace.json`.
+- Only installable skills belong directly under `skills/`. Put evaluations, benchmark workspaces, experiments, and generated review artifacts in repository-level `workspaces/` or `docs/`.
+- Install or reinstall the plugin instead of maintaining copies in user profile skill folders. See `docs/skill-development-guide.md` when packaging or installation is part of the task.
+
+Use only the directories needed by a skill:
 
 ```text
 skill-name/
@@ -26,171 +27,36 @@ skill-name/
   assets/
 ```
 
-`SKILL.md` should stay short. It should explain:
+Keep `SKILL.md` a short entrypoint: precise trigger, useful first action, resource routing, output contract, and essential constraints. Names and descriptions are always discoverable; keep descriptions concise and distinguish likely neighboring tasks. Put substantial conditional guidance in `references/`, and read it only when relevant. Do not add scripts or reference routers to reasoning-only skills without a concrete benefit.
 
-- When the skill should be used
-- What the agent should do first
-- Which script or reference file to use
-- What output format is expected
-- What must not be done
+## Choose Languages by Responsibility
 
-Move long checklists, examples, policies, and domain knowledge into `references/`.
+| Responsibility | Language |
+| --- | --- |
+| Agent judgment, reviews, translation, plans, workflow rules | Markdown |
+| Local file, image, PDF, Office, Excel/CSV, OCR, data transformation, batch processing | Python |
+| API clients, schemas, structured tool contracts, MCP, long-lived CLIs, web/HTML/CSS/browser orchestration | TypeScript |
+| Runtime discovery, argument forwarding, environment setup, OS entrypoints | Thin PowerShell or Shell wrappers |
 
-Move deterministic or repeatable operations into `scripts/`.
+For example, photo processing stays Python; DashScope integration and Markdown/HTML/browser-to-PDF orchestration use TypeScript. .NET repository inspection can use TypeScript or C#; use Python only for simple local text scanning. Do not move parsing, API response handling, or business logic into shell wrappers.
 
-## Plugin Layout
+When introducing a script language, explain the responsibility-based choice briefly in the PR or commit message. Avoid unrelated language migrations.
 
-This repository is a Codex plugin source. Keep `.codex-plugin/plugin.json` at the repository root and expose reusable skills through `skills/`.
+## Script Contracts
 
-Only real skills belong directly under `skills/`. Evaluation output, benchmark workspaces, experiments, and generated review artifacts belong under repository-level folders such as `workspaces/` or `docs/`, because the plugin validator treats every direct child of `skills/` as an installable skill.
+- Accept explicit command-line arguments and use structured output, preferably JSON, when useful.
+- Fail with clear errors; no hidden network calls or hard-coded secrets.
+- Change only intended files and remain usable by both humans and agents.
+- Split clients, schemas, and CLI entrypoints, or local processing and shared helpers, only when the responsibilities warrant it.
 
-Use `.agents/plugins/marketplace.json` as the local marketplace entry for this repository. Do not copy maintained skills into user profile skill folders as a long-term workflow; install or reinstall the plugin instead.
+## Bug Fixes and Validation
 
-## Language Selection Rules
+Treat a reported failure as evidence of a failure class. Trace the relevant implementation/data path and distinguish facts from hypotheses. Establish the evidence-backed cause, violated invariant, representative variants, and lowest appropriate shared owner before editing. Explain the proposed behavior change and material risks briefly.
 
-### Use Python when the script mainly does local processing
+Restore the invariant at that owner. Do not add special-case values or narrow conditionals unless they encode a real domain, security, or compatibility rule with regression coverage. Do not refactor unrelated code or generalize beyond evidence.
 
-Choose Python for:
+For a bug fix, add or update focused regression evidence using an appropriate test, evaluation, fixture, or validator. Cover the reported case, representative unseen variants and boundaries, inverse cases when applicable, normal paths, and regression-sensitive behavior. If related variants still fail, reassess the cause and fix layer instead of stacking patches.
 
-- Image processing
-- PDF parsing
-- Office document processing
-- Excel or CSV processing
-- Batch file operations
-- Local data transformation
-- OCR or media-related processing
-- Small one-off automation scripts
+Run checks appropriate to affected behavior and required repository gates. Reuse passing results while their inputs remain valid; broaden or repeat only for new changes, failures, or unresolved risks. Do not add tests that merely mirror wording or implementation for reversible, low-impact edits.
 
-Examples in this repository:
-
-- `id-photo-maker`: keep image processing scripts in Python
-- `photo-selector`: keep contact sheet and image inspection scripts in Python
-- `resume-builder`: keep PDF text extraction in Python
-
-### Use TypeScript when the script mainly handles structured software integration
-
-Choose TypeScript for:
-
-- HTTP API clients
-- JSON request and response models
-- Configuration validation
-- Tool schema definitions
-- MCP/tool protocol code
-- Long-lived CLI tools
-- Web, HTML, CSS, browser, or headless-Chromium workflows
-- Agent-facing structured input/output contracts
-
-Examples in this repository:
-
-- `qwen-image-generator`: prefer TypeScript for the DashScope/Qwen API client and response handling
-- `markdown-pdf-export`: prefer TypeScript for Markdown/HTML/CSS/browser/PDF orchestration if the tool becomes cross-platform
-- `csharp-dotnet-code-checklist`: use TypeScript or C# for repository inspection; avoid Python unless doing simple text scanning
-
-### Use Markdown only when no deterministic script is needed
-
-Keep a skill as Markdown-only when the main work is reasoning, reviewing, translating, planning, or checking.
-
-Examples:
-
-- `business-solution-architect`
-- `fact-check-debunker`
-- `translate-tech-en-zh`
-- checklist-only review skills
-
-Do not add scripts just to make a skill look more technical.
-
-## Token and Context Rules
-
-Keep `SKILL.md` concise. Treat it as a router, not a full manual.
-
-Prefer:
-
-```text
-SKILL.md       = short trigger + workflow + output contract
-references/   = long guidance loaded only when needed
-scripts/      = deterministic work executed by tools
-```
-
-Avoid:
-
-- Long duplicated explanations in every skill
-- Putting large examples directly in `SKILL.md`
-- Repeating the same language-selection rules inside every skill
-- Large always-loaded instruction files
-
-## Script Design Rules
-
-Every script should:
-
-- Accept explicit command-line arguments
-- Print structured output when useful, preferably JSON
-- Fail with clear error messages
-- Avoid hidden network calls unless the skill clearly requires them
-- Avoid hard-coded secrets
-- Avoid changing unrelated files
-- Be usable by both humans and agents
-
-For API scripts, prefer:
-
-```text
-scripts/
-  client.ts
-  schema.ts
-  cli.ts
-```
-
-For local-processing scripts, prefer:
-
-```text
-scripts/
-  process_file.py
-  common.py
-```
-
-## Wrapper Rules
-
-PowerShell, Bash, or batch files may be used for platform compatibility.
-
-They should only:
-
-- Locate runtimes
-- Pass arguments
-- Set environment variables
-- Call Python or TypeScript entrypoints
-
-They should not contain complex parsing, API response handling, or business logic.
-
-## When Editing Existing Skills
-
-Before adding or changing scripts, decide:
-
-1. Is this a reasoning-only skill? Keep it Markdown.
-2. Is the task local file/media/data processing? Use Python.
-3. Is the task API/schema/tooling/web integration? Use TypeScript.
-4. Is it OS-specific startup glue? Use PowerShell or Shell as a thin wrapper.
-5. Can long instructions be moved from `SKILL.md` into `references/`?
-
-Explain this choice briefly in the PR or commit message when adding a new script language.
-
-## Bug Fixes
-
-Treat a reported failure as evidence of a failure class, not just an example to make pass. Before editing, trace the relevant implementation or data path and available evidence. Briefly distinguish facts from hypotheses and state the evidence-backed cause, violated invariant, likely variants, the lowest appropriate layer that owns the invariant and is shared by affected paths, the proposed fix, and expected impact and risks.
-
-Restore the invariant there. Do not add hard-coded values or narrow conditionals unless they encode a genuine business, domain, security, or compatibility rule and have regression coverage. Do not generalize beyond evidence or refactor unrelated code.
-
-Add or update a focused regression check that captures the invariant, using an appropriate test, evaluation, fixture-backed assertion, or validator. Cover the reported failure, representative unseen variants and boundaries, inverse cases when applicable, normal paths, and regression-sensitive behavior; run focused and appropriate broader checks. If a related variant fails, stop stacking patches and reassess the diagnosis and fix layer.
-
-Report the cause, invariant and owner, behavior change, validation, and remaining uncertainty.
-
-## Quality Bar
-
-A good skill should be:
-
-- Small
-- Predictable
-- Easy to inspect
-- Easy to run
-- Low-token
-- Clear about what the agent should and should not do
-
-Do not optimize for language uniformity. Optimize for maintainability, determinism, and agent readability.
+Report the resulting behavior, validation performed, and material uncertainty. For bug fixes, also state the cause, invariant, and owner. Structural skill validation is not evidence of improved model behavior or reduced API cost.

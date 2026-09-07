@@ -1,0 +1,192 @@
+{
+  "baseline_commit": "16f105b1f7d9789450f9a159a635ce07cebadecc",
+  "measurement": "Unicode characters after universal-newline decoding; not tokens or API cost",
+  "skill_count": 24,
+  "totals": {
+    "description_characters_before": 7314,
+    "description_characters_after": 3623,
+    "entrypoint_characters_before": 72637,
+    "entrypoint_characters_after": 59385
+  },
+  "agents_characters": {
+    "before": 6842,
+    "after": 4904
+  },
+  "agents_lines": {
+    "before": 196,
+    "after": 62
+  },
+  "local_references_checked": 55,
+  "routing_case_integrity_count": 50,
+  "model_routing_execution": "not run; case integrity is not routing accuracy",
+  "skills": [
+    {
+      "skill": "business-solution-architect",
+      "description_characters_before": 307,
+      "description_characters_after": 62,
+      "entrypoint_characters_before": 1159,
+      "entrypoint_characters_after": 937
+    },
+    {
+      "skill": "csharp-dotnet-code-checklist",
+      "description_characters_before": 268,
+      "description_characters_after": 164,
+      "entrypoint_characters_before": 2935,
+      "entrypoint_characters_after": 2003
+    },
+    {
+      "skill": "fact-check-debunker",
+      "description_characters_before": 314,
+      "description_characters_after": 53,
+      "entrypoint_characters_before": 1167,
+      "entrypoint_characters_after": 577
+    },
+    {
+      "skill": "find-code-simplifications",
+      "description_characters_before": 435,
+      "description_characters_after": 210,
+      "entrypoint_characters_before": 3540,
+      "entrypoint_characters_after": 3371
+    },
+    {
+      "skill": "id-photo-maker",
+      "description_characters_before": 78,
+      "description_characters_after": 46,
+      "entrypoint_characters_before": 4453,
+      "entrypoint_characters_after": 1611
+    },
+    {
+      "skill": "implement-minimal-code",
+      "description_characters_before": 547,
+      "description_characters_after": 209,
+      "entrypoint_characters_before": 3864,
+      "entrypoint_characters_after": 3526
+    },
+    {
+      "skill": "loop-orchestrator",
+      "description_characters_before": 357,
+      "description_characters_after": 169,
+      "entrypoint_characters_before": 4029,
+      "entrypoint_characters_after": 3843
+    },
+    {
+      "skill": "maintain-decision-records",
+      "description_characters_before": 294,
+      "description_characters_after": 174,
+      "entrypoint_characters_before": 2312,
+      "entrypoint_characters_after": 2194
+    },
+    {
+      "skill": "markdown-pdf-export",
+      "description_characters_before": 287,
+      "description_characters_after": 161,
+      "entrypoint_characters_before": 2168,
+      "entrypoint_characters_after": 2305
+    },
+    {
+      "skill": "merge-stacked-prs",
+      "description_characters_before": 260,
+      "description_characters_after": 167,
+      "entrypoint_characters_before": 2682,
+      "entrypoint_characters_after": 2591
+    },
+    {
+      "skill": "photo-selector",
+      "description_characters_before": 69,
+      "description_characters_after": 47,
+      "entrypoint_characters_before": 3331,
+      "entrypoint_characters_after": 1234
+    },
+    {
+      "skill": "qwen-image-generator",
+      "description_characters_before": 298,
+      "description_characters_after": 169,
+      "entrypoint_characters_before": 2825,
+      "entrypoint_characters_after": 2981
+    },
+    {
+      "skill": "record-browser-gif",
+      "description_characters_before": 272,
+      "description_characters_after": 163,
+      "entrypoint_characters_before": 3184,
+      "entrypoint_characters_after": 3077
+    },
+    {
+      "skill": "resume-builder",
+      "description_characters_before": 297,
+      "description_characters_after": 181,
+      "entrypoint_characters_before": 6984,
+      "entrypoint_characters_after": 2854
+    },
+    {
+      "skill": "review-code-change",
+      "description_characters_before": 321,
+      "description_characters_after": 170,
+      "entrypoint_characters_before": 2245,
+      "entrypoint_characters_after": 2159
+    },
+    {
+      "skill": "review-technical-prose",
+      "description_characters_before": 416,
+      "description_characters_after": 189,
+      "entrypoint_characters_before": 2172,
+      "entrypoint_characters_after": 1947
+    },
+    {
+      "skill": "reviewable-change-slices",
+      "description_characters_before": 337,
+      "description_characters_after": 172,
+      "entrypoint_characters_before": 4496,
+      "entrypoint_characters_after": 4347
+    },
+    {
+      "skill": "run-pre-push-checks",
+      "description_characters_before": 257,
+      "description_characters_after": 168,
+      "entrypoint_characters_before": 1840,
+      "entrypoint_characters_after": 1753
+    },
+    {
+      "skill": "sync-bilingual-docs",
+      "description_characters_before": 275,
+      "description_characters_after": 163,
+      "entrypoint_characters_before": 2467,
+      "entrypoint_characters_after": 2357
+    },
+    {
+      "skill": "sync-documentation-site",
+      "description_characters_before": 320,
+      "description_characters_after": 181,
+      "entrypoint_characters_before": 2159,
+      "entrypoint_characters_after": 2156
+    },
+    {
+      "skill": "translate-tech-en-zh",
+      "description_characters_before": 289,
+      "description_characters_after": 44,
+      "entrypoint_characters_before": 1543,
+      "entrypoint_characters_after": 644
+    },
+    {
+      "skill": "trim-reasoning-leakage",
+      "description_characters_before": 295,
+      "description_characters_after": 164,
+      "entrypoint_characters_before": 2375,
+      "entrypoint_characters_after": 2366
+    },
+    {
+      "skill": "windows-reclaim-disk-space",
+      "description_characters_before": 318,
+      "description_characters_after": 180,
+      "entrypoint_characters_before": 4407,
+      "entrypoint_characters_after": 4436
+    },
+    {
+      "skill": "write-natural-prose",
+      "description_characters_before": 403,
+      "description_characters_after": 217,
+      "entrypoint_characters_before": 4300,
+      "entrypoint_characters_after": 4116
+    }
+  ]
+}

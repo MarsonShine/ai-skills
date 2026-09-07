@@ -1,145 +1,28 @@
 ---
 name: resume-builder
-description: "Create, rewrite, tailor, condense, localize, or polish a professional resume or CV. Use when the target artifact is a resume built from notes, existing documents, job history, evidence, or a job posting. Do not use for general biography writing, portfolio sites, or unrelated PDF/document editing."
+description: "Create, rewrite, tailor, translate, or condense a professional resume/CV from work history and job requirements. Not for biographies, portfolio sites, or unrelated document editing."
 ---
 
 # Resume Builder
 
-Turn incomplete source material into a strong, believable, application-ready resume. Default to doing the work end-to-end: inspect files, infer the user's target role, enrich details carefully, quantify achievements conservatively, and write polished markdown output instead of stopping at advice.
+Produce an application-ready resume from the user's materials. Improve emphasis and wording while keeping every claim supported.
 
-## Compatibility
+## Workflow
 
-Works best with file viewing/search tools and PowerShell so you can inspect source files, extract PDF text, and create final markdown deliverables in the working directory.
+1. Inspect the supplied resume, notes, job description, and relevant source files. Search nearby files only when needed to locate the requested materials. Use `scripts/extract_pdf_text.py` for PDF source text.
+2. Establish the target role, language, length, and deliverable from the request and evidence. Continue with a reasonable draft when routine choices are unspecified; ask only for facts or choices that materially change it.
+3. Select `assets/resume-detailed-template.md` or `assets/resume-compact-template.md` when a starting structure helps. Adapt sections to the target role and available evidence. Produce additional variants only when requested.
+4. Write experience bullets around supported scope, action, and result. Read `references/industry-playbook.md` for unfamiliar industry vocabulary, and `references/quantification-guide.md` when using or calculating metrics.
+5. Check the draft against sources, remove unsupported claims, and write the requested file. Default to Markdown when no format is specified; for a requested PDF, use `../markdown-pdf-export/SKILL.md` when available or an available document exporter.
 
-## Default operating mode
+## Evidence Boundaries
 
-- Prefer execution over consultation. If the user gives materials and a target file, produce the file.
-- Preserve truth. Upgrade wording and structure, but do not invent employers, dates, degrees, certificates, or exact figures that have no basis.
-- Use evidence aggressively. Mine existing resumes, PDFs, photos, job descriptions, filenames, and surrounding project files for clues.
-- If the user does not want the current resume overwritten, keep the current file untouched and create sibling outputs such as `_compact`, `_tailored`, `_english`, or `_final`.
-- Match the user's language. If the materials are mostly Chinese-language materials, write in Chinese unless explicitly asked otherwise.
+- Do not invent employers, dates, qualifications, responsibilities, achievements, or figures. A plausible range or qualitative improvement is still a factual claim and needs evidence. Job titles and industry norms do not establish personal performance.
+- Use supplied figures or calculations from supplied data; preserve units, time periods, and whether values are estimates. With no metric evidence, describe supported responsibilities and deliverables without a number. Missing metrics need not block a useful draft.
+- Filenames, timestamps, and work photos can help locate or understand material but do not prove the person's role, team size, leadership, certification, or performance. Do not infer sensitive personal data or regulated qualifications from appearance.
+- Include supplied work photos only when requested or when the chosen portfolio format calls for evidence images. Keep ID cards, customer data, and unrelated personal images out of the deliverable.
+- Preserve an existing file when the user requests a sibling version; use a clear output name when none is provided.
 
-## Workflow decision tree
+## Output
 
-1. Classify the request:
-   - **Create from scratch** from notes, files, or evidence
-   - **Rewrite or enrich** an existing resume
-   - **Tailor** a resume to a target role or company
-   - **Compress** into a concise or one-page version
-
-2. Gather evidence before writing:
-   - Search the current working directory for obvious resume materials: `.md`, `.txt`, `.pdf`, image files, job descriptions, certificates, or project notes.
-   - If a PDF contains the source resume, extract text with `scripts/extract_pdf_text.py`.
-   - Inspect work photos when they help establish job scope, equipment familiarity, team leadership, project environment, or service context.
-
-3. Infer the professional context:
-   - Identify the likely industry, target title, seniority, and proof points.
-   - Read `references/industry-playbook.md` when the role is outside generic office work or when you need better domain vocabulary.
-
-4. Draft the strongest truthful version:
-   - Use the detailed template for the primary resume unless the user explicitly wants only a concise version.
-   - Create a concise version as well when the user asks for one, when the source is too long, or when a frontline/service role would benefit from a fast-scanning version.
-
-5. Quantify impact carefully:
-   - Read `references/quantification-guide.md`.
-   - Prefer conservative ranges, stable performance bands, or cycle-time improvements over fake precision.
-
-6. Finalize:
-   - Ensure the final markdown is clean, structured, and ready for export.
-   - If the user also wants a PDF, keep the markdown export-ready and then use the `markdown-pdf-export` skill.
-
-## Evidence collection rules
-
-- Read enough context before editing so the final resume does not contradict the source materials.
-- Treat filenames, timestamps, and visual cues as supporting evidence, not as permission to invent unsupported facts.
-- For work photos, infer only what is visibly defensible:
-  - team coordination or morning briefings
-  - equipment operation
-  - field environment
-  - layout, dispatch, inspection, or onsite management
-- Do not infer sensitive personal data, licenses, or regulated qualifications from appearance alone.
-
-## Resume writing rules
-
-### Default structure for a detailed resume
-
-Use this structure unless the user's target format clearly requires a different one:
-
-1. Name and contact block
-2. Target role / objective
-3. Professional summary
-4. Core strengths
-5. Work experience
-6. Selected achievements or representative highlights
-7. Professional skills
-8. Education / certificates / training if available
-9. Optional evidence section such as work photos or project snapshots
-
-### Default structure for a concise resume
-
-Use this structure for fast-scanning delivery:
-
-1. Name and contact block
-2. One short positioning summary
-3. Four to six core strengths
-4. Condensed work history
-5. Key quantified wins
-
-### Bullet-writing standard
-
-For each bullet, aim for:
-
-- **Scope**: what area, team, project, customer group, or asset base was involved
-- **Action**: what the user actually organized, improved, delivered, or operated
-- **Result**: what became faster, better, cleaner, safer, cheaper, more stable, or more compliant
-
-Prefer strong, specific verbs:
-
-- Led, coordinated, scheduled, maintained, trained, inspected, optimized, standardized, reduced, improved, delivered, supported, handled
-
-## Quantification rules
-
-- Only quantify what can be reasonably inferred from the role, files, or visible evidence.
-- Prefer ranges and soft qualifiers such as `about`, `nearly`, `stable at`, `20-30 people`, `97%-98%`, or `within 24 hours`.
-- Good categories to quantify:
-  - team size
-  - service coverage
-  - pass rate or quality score
-  - complaint response and closure
-  - cost or material savings
-  - onboarding speed
-  - on-time rate
-  - output volume
-  - defect or error reduction
-- Avoid false precision such as `97.43%` unless the exact figure exists in the source.
-
-## Photos and supporting evidence
-
-Default recommendation:
-
-- **Frontline, operations, service, property, logistics, construction, hospitality, or manufacturing roles**: include one to four strong work photos when they increase credibility.
-- **Corporate, finance, legal, HR, or knowledge-worker resumes**: omit photos unless they function as portfolio or project evidence.
-
-When including images:
-
-- Add a small section such as `Work Scenes`, `Project Site`, or `Representative Work Scenes`.
-- Use concise captions that support the resume story.
-- Never expose ID cards, private customer data, or irrelevant personal images.
-
-## Output expectations
-
-- Write the actual resume file(s), not just suggestions, when a target path or filename is available.
-- Keep markdown readable and export-friendly:
-  - clean headings
-  - short paragraphs
-  - compact bullet lists
-  - consistent punctuation
-- If the user gave no filename, create one that matches the content and keep sibling variants clearly named.
-
-## Resources in this skill
-
-- `references/industry-playbook.md` - how to emphasize the right strengths by industry
-- `references/quantification-guide.md` - how to add credible metrics without crossing into fabrication
-- `assets/resume-detailed-template.md` - reusable detailed structure
-- `assets/resume-compact-template.md` - reusable concise structure
-- `scripts/extract_pdf_text.py` - helper for extracting source text from PDF resumes
+Deliver the resume file, briefly identify material missing facts, and report any export limitation. Keep the resume itself free of drafting commentary; place unresolved questions outside the finished artifact.

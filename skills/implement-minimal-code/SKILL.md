@@ -1,6 +1,6 @@
 ---
 name: implement-minimal-code
-description: "Implement requested software features, bug fixes, and ordinary refactors with the least maintenance cost that satisfies the requirements. Use when the requested deliverable is implementation code: adding a feature, fixing a failure, or refactoring existing code. Normal coding requests do not need to mention minimalism. Do not use for review-only or diagnosis-only requests, planning-only business or architecture work, explicit code-reduction tasks owned by find-code-simplifications, or document/media deliverables that merely need helper code."
+description: "Implement software features, bug fixes, and ordinary refactors with minimal maintenance cost. Not for review/diagnosis-only requests, planning, explicit code-reduction audits, or document/media helper scripts."
 ---
 
 # Implement Minimal Code

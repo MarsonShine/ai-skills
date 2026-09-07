@@ -22,7 +22,9 @@ Use the user's exact style when they give one. Otherwise prefer one of these:
 - Ask follow-ups only for details that materially change the result, usually style, size, text policy, or output path.
 - Ask in the smallest possible set. Do not make the user restate the whole prompt.
 
-## Two-pass prompt building
+## Prompt building for complex scenes
+
+Use the fields below only when they help organize a complex request. A simple scene can go directly to a concrete prompt without a separate field-extraction pass.
 
 ### Pass 1: extract scene semantics
 

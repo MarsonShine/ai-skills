@@ -1,6 +1,6 @@
 ---
 name: trim-reasoning-leakage
-description: Remove authoring-session, plan, PR/review, or private-reasoning residue from durable repository prose. Use for 去掉评审或过程性表述, stale “this PR/previous version” wording, unexplained plan ordinals, or text that must stand alone. Do not use for general copyediting, code review, or code simplification.
+description: "Remove authoring-session, plan, or PR/review residue from durable prose so it stands alone. Not for general copyediting, correctness review, or code simplification."
 ---
 
 # Trim Reasoning Leakage
@@ -11,7 +11,7 @@ Durable prose should be verifiable from the repository and its intentional exter
 
 Ask whether a reader at the current repository state can resolve every reference and verify every claim without the authoring session. If not, preserve each factual clause in repository terms and remove the transcript around it. Delete a passage outright only when it contains no useful proposition.
 
-Use `../review-technical-prose/SKILL.md` for the complete-proposition rule. Read `references/leakage-patterns.md` for the taxonomy and search probes, and `references/rewrite-examples.md` before making a borderline edit.
+The workflow below preserves complete propositions without loading another skill. Read `references/leakage-patterns.md` when taxonomy or search probes help, and `references/rewrite-examples.md` for borderline edits. Use `../review-technical-prose/SKILL.md` only when the request also needs broader contract or information-placement review.
 
 ## Workflow
 

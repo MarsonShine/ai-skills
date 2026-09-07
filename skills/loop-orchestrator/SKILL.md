@@ -1,6 +1,6 @@
 ---
 name: loop-orchestrator
-description: Design bounded execution loops for recurring, scheduled, monitored, event-driven, or repeated-attempt work. Use when cadence, measurable stop conditions, retry limits, or cost boundaries matter. Do not use for one-off coding, review, planning, validation, or human-gated commit/slice delivery unless a separate schedule, monitor, or retry loop is requested.
+description: "Design bounded retry, scheduled, monitored, or event-driven workflows with cadence and stop conditions. Not for one-off multistep work or human review checkpoints alone."
 ---
 
 # Loop Orchestrator

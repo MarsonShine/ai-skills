@@ -1,6 +1,6 @@
 ---
 name: review-code-change
-description: Review an existing code change—PR, commit, patch, diff, branch, or changed files—for concrete defects and regressions. Use for code review, 看看这次改动, 检查这个提交, or asking whether a change is safe and correct. Do not use for implementation, architecture design from requirements, whole-repository audits, or style-only cleanup.
+description: "Review an existing PR, commit, patch, diff, or changed files for concrete defects and regressions. Not for implementation, whole-repository audits, or style-only cleanup."
 ---
 
 # Review Code Changes
@@ -10,7 +10,7 @@ Review the actual change against its repository, not against a generic style gui
 ## Workflow
 
 1. Establish the exact scope: live base, exact head, dirty files, and any retargeting or rebasing since the request began.
-2. Read applicable repository instructions, architecture records, public contracts, and testing policy before judging the diff.
+2. Read applicable repository instructions and the contracts or testing rules relevant to the changed path. Load architecture records only when they bear on a suspected defect or constraint.
 3. Inspect the changed lines plus enough callers, callees, schemas, configuration, and tests to understand the behavior.
 4. Trace important paths end to end, including failures, cancellation, cleanup, concurrency, persistence, and alternate entry points.
 5. Verify claims with focused tests, static checks, logs, or reproducible reasoning from the code. Do not assume a green test suite proves semantic correctness.

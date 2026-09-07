@@ -1,6 +1,6 @@
 ---
 name: business-solution-architect
-description: "Create a Chinese, implementation-ready business solution blueprint from a high-level requirement or PRD. Use for 业务实现方案, PRD转实现, or turning an incomplete business process into an engineering plan. Do not use for direct code implementation, review of an existing change, or an isolated architecture question."
+description: "将高层需求或 PRD 转成中文、可交给开发的业务实现方案。用于业务流程补齐与 PRD 转实现；不用于直接编码或孤立架构问答。"
 ---
 
 # 业务实现方案架构师
@@ -35,7 +35,7 @@ Works well in chat-only mode, and even better with file reading/search tools whe
 1. 默认全程使用中文。
 2. 除非缺失信息会让主流程无法成立，否则不要停在追问阶段。
 3. 需要补常见工程默认值时，优先读取 `references/common-defaults.md`。
-4. 起草最终方案时，严格按 `references/output-template.md` 的结构和深度输出。
+4. 起草方案时参考 `references/output-template.md`，按任务规模选择相关部分；用户指定格式优先，不为填满模板增加功能或空章节。
 
 ## 禁止事项
 

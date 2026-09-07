@@ -1,6 +1,6 @@
 ---
 name: maintain-decision-records
-description: Maintain repository decision records such as ADRs, RFCs, and Agent Notes. Use when the records themselves must be added, reviewed, consolidated, archived, restored, or pruned under local lifecycle rules. Do not use for code review, general documentation editing, or production behavior changes.
+description: "Maintain ADRs, RFCs, and Agent Notes through consolidation, archival, restoration, or pruning under repository lifecycle rules. Not for general documentation or code changes."
 ---
 
 # Maintain Decision Records

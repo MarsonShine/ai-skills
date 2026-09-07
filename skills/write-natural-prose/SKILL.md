@@ -1,6 +1,6 @@
 ---
 name: write-natural-prose
-description: Draft or rewrite articles, technical explanations, documentation, and code comments in the language and voice established by their context. Use for 写文章, 写文档, 写注释, 去 AI 味, natural prose, or making writing sound native. Do not use for ordinary translation, bilingual-document synchronization, contract-focused prose review, or specialist deliverables unless the user explicitly asks to adjust their voice.
+description: "Draft or rewrite articles, documentation, explanations, and code comments in a natural contextual voice. Not for translation or contract audits; combine with specialist artifacts only for an explicit voice adjustment."
 ---
 
 # Write Natural Prose

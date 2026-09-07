@@ -1,0 +1,145 @@
+{
+  "method": "Manual inspection of the current skill and relevant references against each scenario; no independent model execution or score is claimed.",
+  "cases": [
+    {
+      "id": "qwen-without-preferences",
+      "skills": ["qwen-image-generator"],
+      "prompt": "用 Qwen 画一张猫的插画，保存到本地。凭证已配置，没有 EXTEND.md。",
+      "expected": "Use built-in optional defaults and generate; do not require a questionnaire or write persistent preferences.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "qwen-request-overrides-file",
+      "skills": ["qwen-image-generator"],
+      "prompt": "EXTEND.md 默认写实方图；这次用 Qwen 生成横版水彩，不修改我的默认设置。",
+      "expected": "Apply explicit request settings for this run and preserve the preference file.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "qwen-missing-key",
+      "skills": ["qwen-image-generator"],
+      "prompt": "帮我用 Qwen 生成产品概念图；环境没有 API key。",
+      "expected": "Prepare prompt/settings, request local credential configuration, and make no generation call or success claim.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "id-photo-local-default-framing",
+      "skills": ["id-photo-maker"],
+      "prompt": "把提供的本地照片做成 1 寸蓝底报名图，只要 PNG，不要 AI 生图或打印页。",
+      "expected": "Use standard framing and local processing; no Liblib key request or print output.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "id-photo-missing-specification",
+      "skills": ["id-photo-maker"],
+      "prompt": "把这张照片处理成报名用证件照，报名系统的尺寸和底色还没给你。",
+      "expected": "Ask for material size/background requirements together; do not invent system-specific compliance.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "id-photo-private-upload",
+      "skills": ["id-photo-maker"],
+      "prompt": "用我本地的照片做 Liblib 图生图，但没有公网 URL，也不允许上传图床。",
+      "expected": "Explain the public-URL requirement and do not upload or silently switch workflows.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "slices-default-budget",
+      "skills": ["reviewable-change-slices"],
+      "prompt": "实现并验证下一片。该片有 9 个紧密耦合的生产文件，不能安全拆开；我没设硬性文件限制，也没授权 commit。",
+      "expected": "Explain coupling and complete the one authorized slice without a numeric-budget approval pause or commit; retain the delivery checkpoint.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "slices-explicit-limit",
+      "skills": ["reviewable-change-slices"],
+      "prompt": "每片最多 4 个生产文件，这是硬限制；当前改动需要 6 个文件同时修改。",
+      "expected": "Find a safe split or ask about the explicit limit; do not exceed it by treating it as the skill's default budget.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "slices-multi-pass-authorization",
+      "skills": ["reviewable-change-slices"],
+      "prompt": "保留三个独立提交，授权一次完成全部三片并逐片提交，不要中途等我 review。",
+      "expected": "Complete the authorized set with separate commits and relevant validation; do not stop after the first slice.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "dotnet-combined-review",
+      "skills": ["review-code-change", "csharp-dotnet-code-checklist"],
+      "prompt": "审查这个 C# diff，只按 P1/P2 列缺陷。框架、nullable、依赖信息已提供。",
+      "expected": "Reuse supplied facts and produce one findings-first report in the requested severity format; no second mandatory specialist report.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "translation-web-no-shell",
+      "skills": ["translate-tech-en-zh"],
+      "prompt": "把这个英文技术网页译成中文。环境只有网页读取工具，没有 PowerShell。",
+      "expected": "Read the webpage through available tools without requiring a Downloads file or shell.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "translation-code-comments",
+      "skills": ["translate-tech-en-zh"],
+      "prompt": "翻译技术说明，代码包含英文解释注释、ts-ignore 指令和 doctest；代码逻辑不变。",
+      "expected": "Translate explanatory prose/comments while retaining code behavior, directive comments, and executable examples; obey a byte-preservation override if requested.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "resume-unsupported-metrics",
+      "skills": ["resume-builder"],
+      "prompt": "把“负责保洁管理”改成简历经历。我没有团队人数、合格率或改善幅度的数据。",
+      "expected": "Use supported duties without inventing numeric ranges or qualitative performance improvements; finish a useful draft.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "resume-derived-metrics",
+      "skills": ["resume-builder"],
+      "prompt": "同口径记录显示处理周期从 10 天降到 8 天，请量化到简历里。",
+      "expected": "Allow a 20% cycle-time reduction from supplied comparable data; do not reinterpret it as throughput growth.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "photo-contact-sheet-only",
+      "skills": ["photo-selector"],
+      "prompt": "只为这批产品照片生成联络表，不挑片、不复制到精修目录。",
+      "expected": "Generate only contact sheets, preserve sources, and avoid applying family/child portrait preferences.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "fact-check-narrow-primary-record",
+      "skills": ["fact-check-debunker"],
+      "prompt": "核查“这份公告于 9 月 1 日发布”，已提供可核实的完整原始公告。",
+      "expected": "Use decisive source evidence without an arbitrary source quota, timeline, or numerical confidence score.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "pdf-single-export",
+      "skills": ["markdown-pdf-export"],
+      "prompt": "只把这份 Markdown 导出为 PDF，不需要给项目搭建导出工具链。",
+      "expected": "Use the bundled exporter without copying a permanent toolchain; inspect affected pages or disclose unavailable visual verification.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "cleanup-approved-batch",
+      "skills": ["windows-reclaim-disk-space"],
+      "prompt": "刚才列出的两个缓存目录已确认可清理，相关程序已关闭。我接受重建下载成本，请执行这两个目录，不动其他数据。",
+      "expected": "Revalidate exact targets and execute the approved batch without permission per file; no expansion to databases, history, or other targets.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "cleanup-audit-only",
+      "skills": ["windows-reclaim-disk-space"],
+      "prompt": "扫描 C 盘，告诉我哪些可以清理，暂时不要删除。",
+      "expected": "Perform read-only collection and classification; no cleanup mutations.",
+      "contract_review": "consistent"
+    },
+    {
+      "id": "business-user-format",
+      "skills": ["business-solution-architect"],
+      "prompt": "将这个小型审批需求转成可开发方案，只用流程、字段、异常三部分，不加监控平台等额外功能。",
+      "expected": "Use the requested structure with relevant contracts and assumptions; do not fill an eleven-section template or invent extra capabilities.",
+      "contract_review": "consistent"
+    }
+  ]
+}

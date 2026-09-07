@@ -1,0 +1,42 @@
+{
+  "checks": [
+    {
+      "command": [
+        "pwsh",
+        "-File",
+        "skills/photo-selector/scripts/make_contact_sheets.ps1",
+        "<repo>\\.codex-tmp\\astra-fixtures\\photos",
+        "<repo>\\.codex-tmp\\astra-fixtures\\sheets",
+        "4",
+        "4",
+        "480",
+        "360"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "node",
+        "--no-warnings",
+        "--experimental-strip-types",
+        "skills/csharp-dotnet-code-checklist/scripts/inspect_dotnet_repo.ts",
+        "--self-check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "earlier_passed_commands": [
+    "process_local_photo.py with --size 1-inch --background white --skip-background-removal",
+    "render_print_sheet.py with --size 1-inch --pages a4,6inch"
+  ],
+  "assertions": [
+    "1-inch output is 295x413 pixels",
+    "A4 and 6-inch HTML plus index exist",
+    "source photo checksum unchanged"
+  ],
+  "environment": "PHOTO_SELECTOR_PYTHON set to the available Windows Python; the initial wrapper invocation failed by selecting an existing non-Windows .venv/bin/python.",
+  "limitations": [
+    "Synthetic images test invocation contracts only, not aesthetic quality.",
+    "Background removal, external generation, and PDF rendering were not exercised."
+  ]
+}

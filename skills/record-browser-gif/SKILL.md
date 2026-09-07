@@ -1,6 +1,6 @@
 ---
 name: record-browser-gif
-description: Record a browser or Web UI interaction as a concise, verified animated GIF. Use for browser workflow demos or visual pull-request evidence. Do not use for static screenshots, general video editing, non-browser capture, or publishing the result unless separately requested.
+description: "Record a browser workflow as a verified animated GIF for demos or PR evidence. Not for static screenshots, general video editing, or publication without a request."
 ---
 
 # Record Browser GIF
