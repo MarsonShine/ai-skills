@@ -37,8 +37,15 @@ Treat the examples as illustrations, not phrases to repeat.
 ## Adapt to the Artifact
 
 - For personal or opinion writing, use only experiences the user supplied. First person, contrast, and light self-deprecation are optional tools, not a house style; never invent personal details.
-- For technical articles and documentation, normally progress from the problem through a constraint or distinction, reasoning, an example, and the boundary of the conclusion. This is a thought sequence, not a required set of headings.
-- For code comments, match the current file's language and comment style. Explain only non-obvious reasons, preconditions, or consequences; do not narrate what the code already says.
+- For technical articles and documentation, establish the intended reader and prerequisite knowledge. Explain unfamiliar concepts before relying on them, connect them to the actual implementation, and use a small input/output example or diagram when it clarifies the mechanism. Then develop the problem, reasoning, tradeoffs, and limits; this is a thought sequence, not a required set of headings. Add only the background that reader needs, rather than a general subject tutorial.
+
+## Technical Documentation And Comments
+
+- **README:** Help users get a working result with the feature's purpose, setup, usage examples, parameters, and necessary limitations. Prefer examples and tables when they make lookup faster. Keep deployment prerequisites and constraints that change how callers must use the API visible here.
+- **Technical design documentation:** Explain the implementation for maintainers: concepts needed to follow the code, data flow, algorithms, error handling, boundaries, and technical choices. Keep substantial implementation detail in the repository's technical documentation location, normally `docs/`, and link to it from the README. Do not repeat the usage tutorial or create a separate document for a trivial explanation.
+- **Public API/XML comments:** Briefly describe purpose, parameters, and key constraints. Keep `summary` to one or two sentences; use parameter, return, exception, or remarks documentation when callers need more contract detail. Put extended algorithms and processing walkthroughs in technical documentation.
+- **Internal comments:** Match the file's language and style, and explain only non-obvious reasons, invariants, or consequences. Do not narrate the code or paste a design document into comments.
+- Keep all surfaces accurate: concision must not hide a material limitation, and completeness does not justify unrelated background, test narratives in a README, or unnecessary files. Apply these distinctions within the requested scope; a local edit does not authorize rewriting all repository documentation.
 
 ## Boundaries
 

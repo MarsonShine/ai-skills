@@ -23,11 +23,12 @@ Remove adjectives, repetition, and narration only when those clauses remain clea
 
 ## Coverage by Surface
 
-- **Public API docs:** returns, distinctions, failures, side effects, ownership, timing, cancellation, and durability.
-- **Internal comments:** non-local invariants, race ordering, ownership, security, and surprising failure behavior.
-- **Module docs:** role, responsibilities, dependencies, and non-obvious architecture choices.
+- **READMEs:** user-facing purpose and behavior, deployment prerequisites, working examples, parameters, relevant extension points, and necessary limitations, including user/model-visible effects. Prefer examples and tables where useful. Keep constraints that change correct use visible; move extended algorithms, extreme-case analysis, and test detail to design documentation.
+- **Technical design docs:** maintainer-facing responsibilities, dependencies, implementation principles, data flow, algorithms, errors, boundaries, and tradeoffs. Explain prerequisites needed to follow that implementation, connect terminology to code, and link to the README instead of duplicating its usage tutorial. Follow the repository's location, normally `docs/`; do not split a trivial explanation into another file.
+- **Public API/XML docs:** brief purpose, parameters, key distinctions, and constraints. Keep `summary` to one or two sentences. Preserve needed return, failure, ownership, timing, cancellation, and durability contracts in appropriate tags or remarks; extended implementation walkthroughs belong in design docs.
+- **Internal comments:** non-obvious invariants, reasons, race ordering, ownership, security, and surprising failure behavior. Do not restate code or turn comments into an implementation article.
+- **Technical articles:** establish the intended reader, explain needed concepts before relying on them, and connect mechanisms to concrete examples and their limits. A general subject tutorial is unnecessary when a short definition and example suffice.
 - **Tests:** only non-obvious fixture, entry-path, platform, or observation rationale.
-- **READMEs:** configuration, behavior, limitations, failures, extension points, and user/model-visible effects.
 - **Decision records:** unique rationale, alternatives, consequences, verification evidence, and known gaps.
 - **Prompts and visible strings:** exact wording is behavior; inspect rendered or model-visible output.
 - **Diagnostics:** failing subject, violated rule, and corrective action.
@@ -35,6 +36,8 @@ Remove adjectives, repetition, and narration only when those clauses remain clea
 ## Duplication and Length
 
 Search distinctive phrases and keep one home for extended explanation. Replace duplicates with links when the local reader can still use the interface safely. Treat word budgets as discovery and design constraints, never as permission to delete obligations.
+
+Check prerequisite knowledge as well as completeness. An explanation that starts with specialized terms the intended reader cannot interpret is missing context even when its facts are correct. Add only the definitions, component relationships, or input/output example needed to understand the mechanism; retain precise technical names rather than replacing them with vague language.
 
 ## Calibration Examples
 
