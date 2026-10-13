@@ -12,10 +12,13 @@ Complete the requested behavior with a small, coherent implementation. Judge sim
 1. Read the task, repository instructions, relevant contracts, and the code on the affected path. Identify the behavior to deliver and the constraints it must preserve before choosing a solution.
 2. Look for existing code and patterns, standard-library facilities, native platform features, and installed dependencies before adding an implementation. This is a search order, not a ranking that overrides semantics. Compare suitable options by behavior, supported environments, adapters, lifecycle ownership, and maintenance cost.
 3. Implement the smallest coherent change that meets those requirements. Add custom code or a dependency when the existing options fall short; avoid speculative extension points and unrelated cleanup. Resolve routine choices within the user's authorization; ask only when an unresolved choice would materially change the required behavior or scope.
-4. For a bug fix, establish the cause and violated invariant, inspect affected callers, and restore the invariant at the lowest appropriate shared layer. Cover representative variants and boundaries rather than patching only the reported input or caller.
-5. Validate the affected behavior using the repository's existing checks and conventions. Choose checks by risk and shared impact, including regression evidence for bug fixes. A short implementation can still require several checks; routine low-impact edits need no new tests merely to mirror the code.
+4. For a bug fix, establish the cause and violated invariant, inspect affected callers, and restore the invariant at the lowest appropriate shared layer. Select relevant variants and boundaries from that failure mechanism and shared impact.
+5. Choose the smallest sufficient verification that can detect errors in the affected behavior. Reuse existing checks and still-valid results; establish credible regression evidence for bug fixes. Separately decide whether new or extended automated tests fill a concrete protection gap worth maintaining. Preserve explicit testing requirements, established TDD workflows, and required repository gates; neither patch size nor a fixed test count determines sufficient evidence.
+6. Stop when required gates pass and affected behavior has sufficient evidence. Broaden or repeat checks only for changes that invalidate evidence, failures, or unresolved material risks. Keep recovery from verification-tool failures proportional to the changed behavior's risk; do not turn a low-impact edit into building or debugging a replacement test harness. When validation is unavailable, report the gap rather than substituting an unrelated passing check.
 
 Read `references/implementation-choices.md` when reuse, a platform replacement, an abstraction, or a short alternative has a non-obvious semantic tradeoff.
+
+Read `references/verification-strategy.md` when evidence sufficiency, test persistence, platform limitations, or the scope of additional checks is uncertain.
 
 ## Boundaries
 
@@ -28,4 +31,4 @@ Read `references/implementation-choices.md` when reuse, a platform replacement, 
 
 ## Output
 
-Report the resulting behavior, any material choice or accepted limitation, and the validation actually performed. Match the explanation to the user's request. Do not claim token or cost savings without a comparable measured baseline.
+Briefly report the resulting behavior, validation actually performed, why tests were added or existing evidence was sufficient, and material unverified risks. Do not create a separate verification report by default. Match the explanation to the user's request. Do not claim token or cost savings without a comparable measured baseline.

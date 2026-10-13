@@ -13,8 +13,4 @@ Compare alternatives against the actual contract. A shorter spelling or familiar
 | Simplify lifecycle state | Merge state only when it represents the same fact with the same owner and transitions. | Cancellation, completion, publication rollback, and disposal can protect different outcomes. Cleanup must still wait for owned work to stop before releasing resources. |
 | Fix shared behavior | If several entrypoints share a broken normalization rule, fix the common owner and exercise the entrypoints. | A smaller patch in one caller can leave siblings broken. Preserve distinct caller policies where their contracts actually differ. |
 
-## Choosing Evidence
-
-Use the project's current test framework, fixtures, and executable checks where they protect the changed contract. Check normal behavior, the reported failure, representative unseen variants, and relevant boundaries. Expand validation only for a concrete shared risk or a required repository gate.
-
 For a platform replacement, exercise the interactions and supported environments that matter to the request. For an abstraction or dependency change, inspect consumers and residual adapters before concluding that maintenance cost fell. Report unresolved evidence as a limitation rather than treating a successful happy-path check as proof of equivalence.
