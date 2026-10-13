@@ -13,7 +13,7 @@ Use only dimensions relevant to the diff. This is a recall aid, not a quota.
 
 - Look for work published before initialization succeeds, cancellation during awaited setup, multiple terminal outcomes, callback exceptions, incomplete detach, and disposal that returns before workers stop.
 - Identify the owner of each process, timer, listener, worker, handle, and mutable state transition.
-- Require cleanup tests for new registrations or long-lived resources.
+- Verify cleanup evidence for new registrations or long-lived resources, including affected failure and cancellation paths. Existing checks may suffice if they exercise those paths.
 
 ## Enforcement and Security
 
@@ -30,7 +30,7 @@ Use only dimensions relevant to the diff. This is a recall aid, not a quota.
 ## Tests and Real Entry Paths
 
 - Prefer assertions on external state, events, logs, responses, or durable output over restating implementation steps.
-- Check that a test fails for the intended regression and includes a negative control where practical.
+- Check that a test would fail for the intended regression; use a negative control when it resolves uncertainty about that claim.
 - Exercise the shipped loader, binary, worker, transport, framework bootstrap, or generated artifact when configuration or packaging is part of the behavior.
 - Treat snapshots and expected-output changes as behavior changes requiring semantic review.
 

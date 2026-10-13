@@ -29,3 +29,5 @@ Read `references/review-dimensions.md` when the change touches concurrency, dura
 Lead with findings ordered by impact. For each finding, state the location, defect, consequence, evidence, and smallest credible correction. If no findings survive verification, say so and list residual risks or checks you could not perform.
 
 Do not report style nits already enforced by a passing formatter or linter unless they conceal a behavioral problem.
+
+Report a verification gap only when a concrete behavior risk or required gate lacks credible evidence; the absence of new tests alone is not a defect.

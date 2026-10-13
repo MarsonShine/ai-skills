@@ -13,9 +13,9 @@ Match evidence to the outgoing change. Avoid reflexively running the full reposi
 2. Inspect committed, staged, unstaged, and untracked changes against the verified base.
 3. Read repository instructions, scripts, CI workflows, package manifests, and affected tests to discover the supported checks.
 4. Map each affected behavior or artifact to the narrowest test, build, static gate, snapshot, documentation check, or real-entry smoke that would fail for its regression.
-5. Run each selected check once. Add broader checks only when shared or cross-cutting impact makes narrower evidence unreliable.
+5. Reuse passing results while relevant source, dependencies, configuration, and execution conditions remain valid; run each remaining selected check once. Add broader checks only when shared or cross-cutting impact makes narrower evidence unreliable.
 6. Stop on failure, diagnose it, and rerun only checks invalidated by the repair.
-7. Report commands run, results, untested risks, and what CI still owns.
+7. Stop when affected behavior has sufficient evidence and required local gates pass. Report commands run, reused results, untested risks, and what CI still owns.
 
 Read `references/evidence-selection.md` for a change-to-check matrix and history-rewrite rules.
 

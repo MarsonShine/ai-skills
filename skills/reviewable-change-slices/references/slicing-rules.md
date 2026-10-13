@@ -26,10 +26,9 @@ A useful slice has one sentence explaining why it exists without joining unrelat
 
 Do not split:
 
-- an implementation from the tests that prove the same behavior;
+- an implementation or bug fix from the necessary validation evidence, including any test changes that prove the same behavior;
 - a compile-time contract change from the minimum caller updates needed to build;
 - a schema change from the minimum mapping or migration needed to apply it safely;
-- a bug fix from its regression test;
 - required documentation from the behavior it documents when users would otherwise receive an incomplete change.
 
 Avoid artificial commits that only create a broken intermediate state.

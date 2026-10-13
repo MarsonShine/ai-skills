@@ -2,6 +2,8 @@
 
 ## Change-to-Check Matrix
 
+Select checks that address the actual affected risks; the entries are options, not a requirement to create every listed test or fixture. Preserve repository-mandated gates.
+
 - **Package or module behavior:** focused owning unit/integration tests; include affected source in coverage when the repository supports scoped coverage.
 - **Shared interface or schema:** tests for providers and consumers, typecheck, compatibility fixtures, and migration or serialization checks.
 - **Public exports, package manifests, build config, workers, bins, or generated bundles:** build plus the real built-artifact smoke and relevant package hygiene.

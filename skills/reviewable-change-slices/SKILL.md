@@ -25,7 +25,7 @@ Once activated, default to one validated slice per turn. If the user explicitly 
 ## Workflow
 
 1. Read the repository instructions and inspect the relevant code, tests, current diff, and user-provided plan.
-2. Separate the work by responsibility, observable behavior, dependency order, and rollback boundary. Keep code and the tests that prove it in the same slice.
+2. Separate the work by responsibility, observable behavior, dependency order, and rollback boundary. Keep code and its necessary validation evidence in the same slice, including any test changes needed to establish that evidence.
 3. Present a compact slice ledger for the overall request. For every slice, state its purpose, proposed commit title, acceptance check, and dependencies. Expand only the next slice unless the user authorized a multi-slice pass.
 4. Select exactly one ready slice. State its included scope, explicit exclusions, validation, and review budget before editing.
 5. Implement only that slice. Do not absorb adjacent cleanup, formatting, renames, dependency upgrades, or another backlog item.
