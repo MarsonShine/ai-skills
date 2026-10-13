@@ -22,4 +22,4 @@ An empty `expected_skills` array means the repository plugin should not claim th
 4. Pass when the selected repository skills exactly match `expected_skills` and none appear in `forbidden_skills`.
 5. Record the runtime, model, date, and unexpected selection for any failure.
 
-Run the full corpus after metadata changes and again from a new Codex task after plugin reinstall. Do not weaken a near-miss case merely to increase aggregate recall; adjust the conflicting descriptions and rerun the complete catalog.
+Run the full corpus after discovery metadata changes. After reinstalling unchanged discovery metadata, verify the affected skills' installed content and availability in a fresh context; reinstall alone does not require repeating the full corpus. Do not weaken a near-miss case merely to increase aggregate recall; adjust the conflicting descriptions and rerun the complete catalog.

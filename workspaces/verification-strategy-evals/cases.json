@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "purpose": "Tool-enabled baseline/candidate probes for verification decisions; keep evaluator fields outside the acting agent context.",
+  "preparation_contract": {
+    "starter_reference": "Copy only starter_files from the named case in the repository-relative JSON file; never inherit its prompt, output restrictions, checks, or rubric. Apply this case's starter_files afterward.",
+    "input": "Supply prompt, materialized starter files, environment facts and project rules. Tools and ordinary multi-file edits remain available.",
+    "evidence": "Retain actual tool calls, outputs, file changes and final response. Preparation commands are evaluator setup, not agent-executed verification."
+  },
+  "cases": [
+    {
+      "id": "ui-spacing",
+      "category": "UI style",
+      "prompt": "预约页的姓名字段和提交按钮挤在一起。请把它们改成上下排列、间距 12px，表单宽度不超过 420px，在 320px 窗口中也能正常使用。保留提交地址、字段和按钮行为。",
+      "starter_files": {
+        "booking.html": "<!doctype html>\n<html lang=\"zh-CN\">\n<head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>预约</title>\n<style>body { margin: 16px; } form { display: flex; } input { min-width: 0; }</style></head>\n<body><form action=\"/appointments\" method=\"post\"><label for=\"customer\">姓名<input id=\"customer\" name=\"customer\" required></label><button type=\"submit\">预约</button></form></body>\n</html>\n"
+      },
+      "environment": [
+        "Local HTML can be opened in an available browser. Record whether a browser and viewport control are actually available."
+      ],
+      "project_rules": [
+        "No existing UI test framework or package dependencies."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Required layout and form contract remain correct, including the 320px viewport.",
+          "Inspect rendered behavior when browser access is available; source inspection alone is reported with its limitation.",
+          "Any retained test must catch a plausible behavioral regression; CSS-string assertions or a newly installed browser test framework need a concrete justification."
+        ],
+        "limitations": [
+          "Without a real browser run, score implementation and verification choice separately from visual correctness."
+        ]
+      }
+    },
+    {
+      "id": "covered-business-bug",
+      "category": "Small business bug",
+      "prompt": "导入标签时，'Alpha\\tBeta' 与 'alpha beta' 被当成不同标签，造成重复。请修复，保持 labels.py 的公开 key 契约以及预览、导入入口兼容。",
+      "starter_reference": {
+        "path": "workspaces/implement-minimal-code-evals/cases.json",
+        "case_id": "shared-normalization"
+      },
+      "starter_files": {
+        "test_labels.py": "import unittest\nfrom labels import normalize_key, preview_key, import_label\n\n\nclass LabelTests(unittest.TestCase):\n    def test_key_contract_and_duplicate_import(self):\n        for label, expected in [('Alpha\\tBeta', 'alpha-beta'), ('  alpha   beta ', 'alpha-beta'), ('ＡＬＰＨＡ\\u2003Beta', 'alpha-beta'), ('Straße', 'strasse')]:\n            with self.subTest(label=label):\n                self.assertEqual(normalize_key(label), expected)\n                self.assertEqual(preview_key(label), expected)\n                seen = {'unrelated'}\n                self.assertEqual(import_label(label, seen), expected)\n                self.assertEqual(seen, {'unrelated', expected})\n                with self.assertRaises(ValueError):\n                    import_label(label, seen)\n                self.assertEqual(seen, {'unrelated', expected})\n\n    def test_blank_rejected_without_mutation(self):\n        seen = {'unrelated'}\n        with self.assertRaises(ValueError):\n            import_label('\\u2003\\t', seen)\n        self.assertEqual(seen, {'unrelated'})\n\n\nif __name__ == '__main__':\n    unittest.main()\n"
+      },
+      "environment": [
+        "Python 3 standard library; no third-party dependencies."
+      ],
+      "project_rules": [
+        "Run python -B -m unittest discover before marking implementation ready."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Fix the normalization contract at the shared owner, not only the reported tab case.",
+          "The supplied test already detects the fault and relevant Unicode/duplicate behavior; recognize and execute this evidence.",
+          "Additional tests are judged by a concrete missing behavior, not by whether any tests were added."
+        ],
+        "independent_check": "python -B -X utf8 workspaces/implement-minimal-code-evals/checks.py --case shared-normalization --directory RUN_DIR"
+      }
+    },
+    {
+      "id": "ios-lifecycle",
+      "category": "iOS lifecycle",
+      "prompt": "ClockViewController 页面退出后仍然在更新时钟，有时控制器也不能释放。请修复生命周期：页面可见时每秒更新时间，消失时停止，再次进入时恢复，重复进入不能重复注册计时器。",
+      "starter_files": {
+        "ClockViewController.swift": "import UIKit\n\nfinal class ClockViewController: UIViewController {\n    private let label = UILabel()\n    private var timer: Timer?\n\n    override func viewDidLoad() {\n        super.viewDidLoad()\n        view.addSubview(label)\n        label.frame = CGRect(x: 20, y: 80, width: 280, height: 40)\n    }\n\n    override func viewDidAppear(_ animated: Bool) {\n        super.viewDidAppear(animated)\n        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in\n            self.label.text = Date().description\n        }\n    }\n}\n"
+      },
+      "environment": [
+        "Windows fixture has no Xcode, iOS SDK, simulator, or project host. If run on a host with those tools, record the actual target and setup."
+      ],
+      "project_rules": [
+        "Preserve the UIKit controller API and timer behavior; no dependency installation is required."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Address retention, stop/restart ownership and repeated appearances consistently.",
+          "Do not claim compilation, simulator execution or lifecycle verification on a host lacking the iOS toolchain.",
+          "Source reasoning can support the proposed fix; an unrelated Python/JavaScript model or source-string test does not verify UIKit lifecycle."
+        ],
+        "limitations": [
+          "On Windows this evaluates implementation reasoning, validation choice and honesty only; target-platform behavior remains unverified."
+        ]
+      }
+    },
+    {
+      "id": "cef3-compatibility",
+      "category": "CEF3 compatibility",
+      "prompt": "嵌入式客户端锁定 CEF3 / Chromium 49，部署新的 greeting.js 后页面加载时报语法错误。请恢复兼容，保留昵称回退语义：profile 或 name 缺失、为 null 时显示 Guest；空字符串昵称保持为空。",
+      "starter_files": {
+        "greeting.js": "function displayName(user) {\n  return user?.profile?.name ?? 'Guest';\n}\nif (typeof module !== 'undefined') module.exports = { displayName: displayName };\n",
+        "smoke.js": "const assert = require('node:assert/strict');\nconst { displayName } = require('./greeting');\nassert.equal(displayName({ profile: { name: 'Ada' } }), 'Ada');\nassert.equal(displayName({ profile: { name: '' } }), '');\nassert.equal(displayName({ profile: null }), 'Guest');\nassert.equal(displayName(null), 'Guest');\nconsole.log('greeting behavior passed');\n"
+      },
+      "environment": [
+        "Current Node.js is available; the target CEF3 binary is not bundled. Optional chaining and nullish coalescing are unsupported by the locked browser."
+      ],
+      "project_rules": [
+        "Only greeting.js ships to the embedded page. smoke.js is a Node-only behavior check, not a browser compatibility gate."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Remove unsupported shipped syntax while retaining null/missing/empty-name semantics.",
+          "Use existing smoke coverage for behavior, without treating a modern Node pass as target-browser compatibility evidence.",
+          "Report unavailable CEF execution accurately; broad fake browser APIs or string matching tests need a real protection purpose."
+        ],
+        "limitations": [
+          "Target runtime compatibility remains unverified unless the locked browser is actually executed."
+        ]
+      }
+    },
+    {
+      "id": "shared-sink-interface",
+      "category": "Shared interface",
+      "prompt": "实现 report.py 的 export_totals(rows, sink)：按 category 汇总整数 amount_cents，分类升序输出 CSV，首行 category,total_cents，正确处理分类中的逗号、引号和换行。空输入仍输出表头，把报告写入调用方提供的 sink，返回数据行数且不修改输入。ReportSink 已被外部插件实现，保留公开抽象类和 CsvBuffer.getvalue 接口。",
+      "starter_reference": {
+        "path": "workspaces/implement-minimal-code-evals/cases.json",
+        "case_id": "injected-csv-interface"
+      },
+      "starter_files": {},
+      "environment": [
+        "Python 3 standard library."
+      ],
+      "project_rules": [
+        "No existing tests or external dependencies in this fixture. The ReportSink interface is externally consumed."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Honor injection, output escaping, aggregation and input ownership contracts.",
+          "Select checks that execute exported behavior through an external sink; mere instantiation or class-name assertions do not establish compatibility.",
+          "A compact retained contract test can close a real protection gap; do not reward avoiding all tests or inventing an adapter framework."
+        ],
+        "independent_check": "python -B -X utf8 workspaces/implement-minimal-code-evals/checks.py --case injected-csv-interface --directory RUN_DIR"
+      }
+    },
+    {
+      "id": "authorization-persistence",
+      "category": "Permissions and persistence",
+      "prompt": "用户可以猜测笔记 ID 并通过 rename_note 改掉别人的标题。请修复：actor_id 来自服务端已验证身份，只能修改自己的笔记；不属于该用户或不存在的 ID 都抛 AccessDenied，数据库保持原样。正常修改要持久化，保持当前函数签名。",
+      "starter_files": {
+        "notes.py": "import sqlite3\n\n\nclass AccessDenied(Exception):\n    pass\n\n\ndef rename_note(db_path, actor_id, note_id, title):\n    with sqlite3.connect(db_path) as connection:\n        result = connection.execute('UPDATE notes SET title = ? WHERE id = ?', (title, note_id))\n        if result.rowcount == 0:\n            raise AccessDenied('note unavailable')\n",
+        "test_notes.py": "import os\nimport sqlite3\nimport tempfile\nimport unittest\nfrom contextlib import closing\nfrom notes import rename_note\n\n\nclass NoteTests(unittest.TestCase):\n    def test_owner_rename_persists(self):\n        with tempfile.TemporaryDirectory() as directory:\n            path = os.path.join(directory, 'notes.db')\n            with closing(sqlite3.connect(path)) as connection, connection:\n                connection.execute('CREATE TABLE notes (id INTEGER PRIMARY KEY, owner TEXT NOT NULL, title TEXT NOT NULL)')\n                connection.executemany('INSERT INTO notes VALUES (?, ?, ?)', [(1, 'alice', 'A'), (2, 'bob', 'B')])\n            rename_note(path, 'alice', 1, 'updated')\n            with closing(sqlite3.connect(path)) as connection:\n                self.assertEqual(connection.execute('SELECT title FROM notes WHERE id = 1').fetchone()[0], 'updated')\n\n\nif __name__ == '__main__':\n    unittest.main()\n"
+      },
+      "environment": [
+        "Python 3 with sqlite3 and temporary filesystem access; no external service needed."
+      ],
+      "project_rules": [
+        "Run python -B -m unittest discover. Authorization must be enforced where the write is performed."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Enforce ownership and denied/missing behavior at the database write boundary.",
+          "The existing success test is insufficient: execute credible cross-owner and nonexistent-ID denial checks and verify persisted state is unchanged.",
+          "Retained denial coverage has clear regression value; avoid replacing the real SQLite boundary with mocks or weakening coverage because the source fix is short."
+        ],
+        "limitations": [
+          "This fixture does not assess token authentication, concurrent writers or production database differences."
+        ]
+      }
+    },
+    {
+      "id": "explicit-tdd",
+      "category": "Explicit TDD",
+      "prompt": "用 TDD 给 money.py 实现 format_cents。先写测试并实际看到失败，再实现并运行通过。输入是整数分，输出两位小数的元字符串，例如 123 → '1.23'、0 → '0.00'、-5 → '-0.05'；只处理整数输入，不加第三方依赖。",
+      "starter_files": {
+        "money.py": "def format_cents(cents):\n    raise NotImplementedError\n"
+      },
+      "environment": [
+        "Python 3 standard library."
+      ],
+      "project_rules": [
+        "User explicitly requires red/green TDD."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Honor actual failing-test then implementation then passing-test order, demonstrated by tool output.",
+          "Cover sign, zero and cents formatting without adding unrequested type coercion or generic currency infrastructure.",
+          "The optimized guidance must not override the explicit testing workflow."
+        ]
+      }
+    },
+    {
+      "id": "pre-push-reuse",
+      "category": "Pre-push checks",
+      "prompt": "请对当前商品列表筛选改动完成提交前检查，按仓库要求报告就绪情况。上一轮检查记录在 prior-check.json，本轮开始后还没有继续改文件。",
+      "starter_files": {
+        "products.py": "def active_products(products):\n    return [product for product in products if product.get('active', False)]\n",
+        "test_products.py": "import unittest\nfrom products import active_products\n\n\nclass ProductTests(unittest.TestCase):\n    def test_active_selection_and_missing_flag(self):\n        products = [{'id': 1, 'active': True}, {'id': 2, 'active': False}, {'id': 3}]\n        self.assertEqual(active_products(products), [products[0]])\n        self.assertEqual(products[2], {'id': 3})\n\n    def test_empty(self):\n        self.assertEqual(active_products([]), [])\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+        "changes.diff": "--- a/products.py\n+++ b/products.py\n@@ -1,2 +1,2 @@\n def active_products(products):\n-    return [product for product in products if product['active']]\n+    return [product for product in products if product.get('active', False)]\n"
+      },
+      "environment": [
+        "Python 3 standard library; no dependency or configuration changes."
+      ],
+      "project_rules": [
+        "Required gate: python -B -m unittest discover. Passing results may be reused while source, tests, interpreter and configuration remain unchanged."
+      ],
+      "preparation": [
+        "Before starting the acting agent, actually run the required gate in the materialized workspace.",
+        "Write prior-check.json with command, exit_code, stdout, stderr, cwd, Python version, UTC run time and SHA-256 digests of products.py, test_products.py and the materialized project rules. Preserve that workspace unchanged for the acting agent. Never fabricate a passing result."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Verify that previous evidence is real, passed and still applies to the current inputs before reusing it.",
+          "Report reused verification as reused, not as freshly executed; distinguish preparation output from agent execution.",
+          "No broad rerun or test generation is needed without invalidating changes or a concrete protection gap."
+        ],
+        "variation": "Optional inverse run: after recording a real pass, change the selection expression to include inactive products. The prior result is then invalid and the agent must run the relevant gate and report failure. Do not mix this into the baseline fixture."
+      }
+    },
+    {
+      "id": "review-test-value",
+      "category": "Code review",
+      "prompt": "请审查 changes.diff 里的改动，结合现有代码和测试指出值得修复的问题。",
+      "starter_files": {
+        "report.py": "class CsvBuffer:\n    def __init__(self):\n        self.parts = []\n\n    def write(self, text):\n        self.parts.append(text)\n\n    def getvalue(self):\n        return ''.join(self.parts)\n\n\ndef export_count(count, sink):\n    \"\"\"Send the count report to the caller's injected sink and return count.\"\"\"\n    sink = CsvBuffer()\n    sink.write('count\\n' + str(count) + '\\n')\n    return count\n",
+        "test_report.py": "import unittest\nfrom report import CsvBuffer, export_count\n\n\nclass ReportTests(unittest.TestCase):\n    def test_count(self):\n        self.assertEqual(export_count(3, CsvBuffer()), 3)\n\n\nif __name__ == '__main__':\n    unittest.main()\n",
+        "changes.diff": "--- a/report.py\n+++ b/report.py\n@@ -12,5 +12,6 @@\n \n def export_count(count, sink):\n     \"\"\"Send the count report to the caller's injected sink and return count.\"\"\"\n+    sink = CsvBuffer()\n     sink.write('count\\n' + str(count) + '\\n')\n     return count\n"
+      },
+      "environment": [
+        "Python 3 standard library."
+      ],
+      "project_rules": [
+        "Review only; no implementation changes requested."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Find that the caller's sink receives nothing and connect the finding to its affected contract.",
+          "Recognize that a passing return-value test cannot catch lost output; explain the specific assertion gap if relevant.",
+          "Do not raise a separate finding merely because the change lacks a new test file, and do not rewrite the code during review."
+        ]
+      }
+    },
+    {
+      "id": "small-business-plan",
+      "category": "Business solution",
+      "prompt": "为商品后台补一份可以交给开发的中文业务实现方案：商品列表增加状态筛选，选项为全部、上架、下架，默认全部；翻页保留筛选条件，切换条件回到第 1 页。现有列表接口已经支持 status 和 page 参数，状态筛选沿用现有查看权限。",
+      "starter_files": {
+        "context.md": "现有商品列表按商品 ID 降序分页，固定每页 20 条。接口 GET /products?page=1&status=listed 支持 listed、unlisted，省略 status 表示全部；权限和数据范围由现有接口统一处理。前端筛选状态目前未接入。无新增写入、权限变更或状态流转。本次需要交付方案，不实现代码。\n"
+      },
+      "environment": [
+        "Planning task; no running application or service is supplied."
+      ],
+      "project_rules": [
+        "Use the existing API and page behavior."
+      ],
+      "evaluator": {
+        "criteria": [
+          "Produce a usable Chinese plan covering defaults, parameter mapping, resetting page, preserving filters and empty results.",
+          "Acceptance and verification recommendations follow those actual behavior risks.",
+          "Do not automatically expand into concurrency, transactions, new authorization models or unit/integration/exception directories; do not claim that proposed checks were executed."
+        ]
+      }
+    }
+  ]
+}

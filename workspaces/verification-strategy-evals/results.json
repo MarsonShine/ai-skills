@@ -1,0 +1,657 @@
+{
+  "date": "2026-10-13",
+  "source_commit": "24530dad185e84d0fd5c7ef7a87e58dfc83e0da9",
+  "runtime": "codex-cli 0.162.0-alpha.17.2",
+  "configured_model": "gpt-6-astra",
+  "configured_reasoning_effort": "ultra",
+  "protocol": "Fresh ephemeral context per case and arm; explicit local skill selection; conditional reference loading; tools enabled; original installed ai-skills disabled for the probes; fixture project rules identical. At most three concurrent runs.",
+  "limitations": [
+    "Single sample per case and arm; elapsed time and token usage are observations, not evidence of general cost savings.",
+    "Source-repository AGENTS.md was structurally reviewed, not injected as a global downstream instruction.",
+    "iOS and locked CEF target runtimes unavailable.",
+    "The initial UI candidate timed out after repeated browser-tool recovery; retained as a failure. The recovery-only guidance refinement receives a targeted clean UI rerun. Unchanged successful behavior paths reuse prior evidence.",
+    "Original authorization fixture had SQLite connection cleanup interference on Windows. Both arms corrected it while adding real denial coverage; the reusable fixture was then corrected. No causal cost comparison is made for this case.",
+    "Full raw traces are retained locally in ignored outputs/; this file retains resulting diffs, outputs and instruction hashes."
+  ],
+  "records": [
+    {
+      "id": "ui-spacing",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 575.022,
+      "usage": {
+        "input_tokens": 724192,
+        "cached_input_tokens": 691200,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6819,
+        "reasoning_output_tokens": 2841
+      },
+      "completed": true,
+      "scenario_id": "ui-spacing",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "booking.html"
+      ],
+      "diff": "diff --git a/booking.html b/booking.html\nindex 38d5ffa..af27146 100644\n--- a/booking.html\n+++ b/booking.html\n@@ -1,6 +1,6 @@\n <!doctype html>\n <html lang=\"zh-CN\">\n <head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>预约</title>\n-<style>body { margin: 16px; } form { display: flex; } input { min-width: 0; }</style></head>\n+<style>body { margin: 16px; } form { display: flex; flex-direction: column; gap: 12px; max-width: 420px; } input { min-width: 0; }</style></head>\n <body><form action=\"/appointments\" method=\"post\"><label for=\"customer\">姓名<input id=\"customer\" name=\"customer\" required></label><button type=\"submit\">预约</button></form></body>\n </html>\n",
+      "new_text_files": {},
+      "final": "已修改 [booking.html](<workspace>/booking.html:4)：姓名字段与按钮上下排列，间距 12px，表单最大宽度 420px。\n\nEdge 浏览器及视口控制可用，已实测 320px 视口无横向溢出。提交地址、字段和按钮行为保持不变，必填校验及提交事件验证通过。未发布或推送。",
+      "local_trace": "outputs/baseline/ui-spacing/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "ui-spacing",
+      "arm": "candidate",
+      "code": null,
+      "signal": "SIGTERM",
+      "seconds": 900.055,
+      "usage": null,
+      "completed": false,
+      "scenario_id": "ui-spacing",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "booking.html"
+      ],
+      "diff": "diff --git a/booking.html b/booking.html\nindex 38d5ffa..af27146 100644\n--- a/booking.html\n+++ b/booking.html\n@@ -1,6 +1,6 @@\n <!doctype html>\n <html lang=\"zh-CN\">\n <head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>预约</title>\n-<style>body { margin: 16px; } form { display: flex; } input { min-width: 0; }</style></head>\n+<style>body { margin: 16px; } form { display: flex; flex-direction: column; gap: 12px; max-width: 420px; } input { min-width: 0; }</style></head>\n <body><form action=\"/appointments\" method=\"post\"><label for=\"customer\">姓名<input id=\"customer\" name=\"customer\" required></label><button type=\"submit\">预约</button></form></body>\n </html>\n",
+      "new_text_files": {},
+      "final": null,
+      "local_trace": "outputs/candidate/ui-spacing/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "covered-business-bug",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 268.627,
+      "usage": {
+        "input_tokens": 325194,
+        "cached_input_tokens": 305152,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2127,
+        "reasoning_output_tokens": 579
+      },
+      "completed": true,
+      "scenario_id": "covered-business-bug",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "labels.py"
+      ],
+      "diff": "diff --git a/labels.py b/labels.py\nindex 2ab8143..2179a09 100644\n--- a/labels.py\n+++ b/labels.py\n@@ -1,9 +1,15 @@\n+import unicodedata\n+\n+\n def normalize_key(label):\n     \"\"\"Apply Unicode NFKC, then casefold; trim and collapse Unicode whitespace to '-'.\n \n     Raise ValueError when the resulting key is empty.\n     \"\"\"\n-    return label.strip().lower().replace(\" \", \"-\")\n+    key = \"-\".join(unicodedata.normalize(\"NFKC\", label).casefold().split())\n+    if not key:\n+        raise ValueError(\"empty label\")\n+    return key\n \n \n def preview_key(label):\n",
+      "new_text_files": {},
+      "final": "已修复 [labels.py](/<workspace>/labels.py)：按公开契约执行 NFKC、casefold，并将连续 Unicode 空白折叠为 `-`，空 key 抛出 `ValueError`。\n\n`'Alpha\\tBeta'` 与 `'alpha beta'` 现在均生成 `alpha-beta`，重复导入会被拒绝。预览、导入接口保持兼容。\n\n`python -B -m unittest discover` 全部通过；额外的跨写法去重、空值不修改集合及归一化顺序检查也通过。仅修改 `labels.py`，未发布或推送。",
+      "local_trace": "outputs/baseline/covered-business-bug/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "covered-business-bug",
+      "arm": "candidate",
+      "code": 0,
+      "signal": null,
+      "seconds": 258.724,
+      "usage": {
+        "input_tokens": 287301,
+        "cached_input_tokens": 264320,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1703,
+        "reasoning_output_tokens": 329
+      },
+      "completed": true,
+      "scenario_id": "covered-business-bug",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "labels.py"
+      ],
+      "diff": "diff --git a/labels.py b/labels.py\nindex 2ab8143..e0ae0ed 100644\n--- a/labels.py\n+++ b/labels.py\n@@ -1,9 +1,15 @@\n+import unicodedata\n+\n+\n def normalize_key(label):\n     \"\"\"Apply Unicode NFKC, then casefold; trim and collapse Unicode whitespace to '-'.\n \n     Raise ValueError when the resulting key is empty.\n     \"\"\"\n-    return label.strip().lower().replace(\" \", \"-\")\n+    key = \"-\".join(unicodedata.normalize(\"NFKC\", label).casefold().split())\n+    if not key:\n+        raise ValueError(\"empty label key\")\n+    return key\n \n \n def preview_key(label):\n",
+      "new_text_files": {},
+      "final": "已修复 `labels.py`：按公开契约执行 NFKC、casefold 和 Unicode 空白折叠，并拒绝空 key。`Alpha\\tBeta` 与 `alpha beta` 现在均生成 `alpha-beta`，预览和导入接口保持兼容。\n\n复用现有覆盖，未新增重复测试。`python -B -m unittest discover` 全部通过；另验证了两种导入顺序均拒绝重复，且拒绝时不修改 `seen`。未发布或推送。",
+      "local_trace": "outputs/candidate/covered-business-bug/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "ios-lifecycle",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 265.891,
+      "usage": {
+        "input_tokens": 431550,
+        "cached_input_tokens": 418048,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2163,
+        "reasoning_output_tokens": 481
+      },
+      "completed": true,
+      "scenario_id": "ios-lifecycle",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "ClockViewController.swift"
+      ],
+      "diff": "diff --git a/ClockViewController.swift b/ClockViewController.swift\nindex 3d738e1..d0eb5eb 100644\n--- a/ClockViewController.swift\n+++ b/ClockViewController.swift\n@@ -12,8 +12,19 @@ final class ClockViewController: UIViewController {\n \n     override func viewDidAppear(_ animated: Bool) {\n         super.viewDidAppear(animated)\n-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in\n-            self.label.text = Date().description\n+        guard timer == nil else { return }\n+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in\n+            self?.label.text = Date().description\n         }\n     }\n+\n+    override func viewDidDisappear(_ animated: Bool) {\n+        super.viewDidDisappear(animated)\n+        timer?.invalidate()\n+        timer = nil\n+    }\n+\n+    deinit {\n+        timer?.invalidate()\n+    }\n }\n",
+      "new_text_files": {},
+      "final": "已修复 [ClockViewController.swift](<workspace>/ClockViewController.swift)：\n\n- 页面显示后每秒更新，防止重复注册计时器。\n- 页面消失时停止并清空，再次进入时恢复。\n- 回调使用弱引用，并在控制器释放时清理计时器。\n\n静态复核和 `git diff --check` 通过。当前环境没有 Xcode/iOS SDK，未进行编译或运行验证。未发布或推送。",
+      "local_trace": "outputs/baseline/ios-lifecycle/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "ios-lifecycle",
+      "arm": "candidate",
+      "code": 0,
+      "signal": null,
+      "seconds": 250.862,
+      "usage": {
+        "input_tokens": 314539,
+        "cached_input_tokens": 299136,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2170,
+        "reasoning_output_tokens": 736
+      },
+      "completed": true,
+      "scenario_id": "ios-lifecycle",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "ClockViewController.swift"
+      ],
+      "diff": "diff --git a/ClockViewController.swift b/ClockViewController.swift\nindex 3d738e1..d0eb5eb 100644\n--- a/ClockViewController.swift\n+++ b/ClockViewController.swift\n@@ -12,8 +12,19 @@ final class ClockViewController: UIViewController {\n \n     override func viewDidAppear(_ animated: Bool) {\n         super.viewDidAppear(animated)\n-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in\n-            self.label.text = Date().description\n+        guard timer == nil else { return }\n+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in\n+            self?.label.text = Date().description\n         }\n     }\n+\n+    override func viewDidDisappear(_ animated: Bool) {\n+        super.viewDidDisappear(animated)\n+        timer?.invalidate()\n+        timer = nil\n+    }\n+\n+    deinit {\n+        timer?.invalidate()\n+    }\n }\n",
+      "new_text_files": {},
+      "final": "已修复 [ClockViewController.swift](<workspace>/ClockViewController.swift)：\n\n- 显示时启动每秒更新，防止重复注册。\n- 消失时停止并清空计时器，再次进入时恢复。\n- 回调使用弱引用，控制器释放时也会清理计时器。\n\n已完成源码检查，`git diff --check` 通过。因没有 iOS 测试工程及 Xcode/SDK，未新增测试或执行编译、运行验证；实际计时和释放行为仍需在 iOS 环境确认。",
+      "local_trace": "outputs/candidate/ios-lifecycle/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "cef3-compatibility",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 357.52,
+      "usage": {
+        "input_tokens": 474449,
+        "cached_input_tokens": 449408,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3409,
+        "reasoning_output_tokens": 1311
+      },
+      "completed": true,
+      "scenario_id": "cef3-compatibility",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "greeting.js",
+        "smoke.js"
+      ],
+      "diff": "diff --git a/greeting.js b/greeting.js\nindex 780c0a7..91a5fc7 100644\n--- a/greeting.js\n+++ b/greeting.js\n@@ -1,4 +1,6 @@\n function displayName(user) {\n-  return user?.profile?.name ?? 'Guest';\n+  var profile = user == null ? undefined : user.profile;\n+  var name = profile == null ? undefined : profile.name;\n+  return name == null ? 'Guest' : name;\n }\n if (typeof module !== 'undefined') module.exports = { displayName: displayName };\ndiff --git a/smoke.js b/smoke.js\nindex aee4bf3..29e9652 100644\n--- a/smoke.js\n+++ b/smoke.js\n@@ -2,6 +2,14 @@ const assert = require('node:assert/strict');\n const { displayName } = require('./greeting');\n assert.equal(displayName({ profile: { name: 'Ada' } }), 'Ada');\n assert.equal(displayName({ profile: { name: '' } }), '');\n+assert.equal(displayName({ profile: { name: 0 } }), 0);\n+assert.equal(displayName({ profile: { name: false } }), false);\n+assert.equal(displayName({ profile: { name: null } }), 'Guest');\n+assert.equal(displayName({ profile: { name: undefined } }), 'Guest');\n+assert.equal(displayName({ profile: {} }), 'Guest');\n+assert.equal(displayName({ profile: undefined }), 'Guest');\n assert.equal(displayName({ profile: null }), 'Guest');\n+assert.equal(displayName({}), 'Guest');\n assert.equal(displayName(null), 'Guest');\n+assert.equal(displayName(), 'Guest');\n console.log('greeting behavior passed');\n",
+      "new_text_files": {},
+      "final": "已修复 greeting.js：将 `?.` 和 `??` 替换为 ES5 兼容写法。profile 或 name 缺失、为 null 时返回 `Guest`，空字符串保持为空。\n\n补充的 smoke.js 行为检查、ES5 语法解析和 `git diff --check` 均通过。未在实际 CEF3 中运行验证（环境未提供二进制）。未发布或推送。",
+      "local_trace": "outputs/baseline/cef3-compatibility/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "cef3-compatibility",
+      "arm": "candidate",
+      "code": 0,
+      "signal": null,
+      "seconds": 325.507,
+      "usage": {
+        "input_tokens": 434073,
+        "cached_input_tokens": 416128,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3280,
+        "reasoning_output_tokens": 1386
+      },
+      "completed": true,
+      "scenario_id": "cef3-compatibility",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "greeting.js"
+      ],
+      "diff": "diff --git a/greeting.js b/greeting.js\nindex 780c0a7..91a5fc7 100644\n--- a/greeting.js\n+++ b/greeting.js\n@@ -1,4 +1,6 @@\n function displayName(user) {\n-  return user?.profile?.name ?? 'Guest';\n+  var profile = user == null ? undefined : user.profile;\n+  var name = profile == null ? undefined : profile.name;\n+  return name == null ? 'Guest' : name;\n }\n if (typeof module !== 'undefined') module.exports = { displayName: displayName };\n",
+      "new_text_files": {},
+      "final": "已修复 greeting.js：将 `?.` 和 `??` 替换为兼容旧浏览器的判空语法。profile/name 缺失或为 null 时返回 `Guest`，空字符串昵称保持为空。\n\n验证通过：现有 smoke、补充边界检查、ES5 语法解析及 diff 检查。复用现有测试并做临时验证，未新增测试文件。\n\n目标 CEF3 未提供，尚未实机验证。仅修改 greeting.js，未发布或推送。",
+      "local_trace": "outputs/candidate/cef3-compatibility/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "shared-sink-interface",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 227.264,
+      "usage": {
+        "input_tokens": 322108,
+        "cached_input_tokens": 296576,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2215,
+        "reasoning_output_tokens": 388
+      },
+      "completed": true,
+      "scenario_id": "shared-sink-interface",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "report.py"
+      ],
+      "diff": "diff --git a/report.py b/report.py\nindex e01a6e9..92f6bf3 100644\n--- a/report.py\n+++ b/report.py\n@@ -1,4 +1,5 @@\n from abc import ABC, abstractmethod\n+import csv\n \n \n class ReportSink(ABC):\n@@ -20,4 +21,13 @@ class CsvBuffer(ReportSink):\n \n \n def export_totals(rows, sink: ReportSink):\n-    raise NotImplementedError\n+    totals = {}\n+    for row in rows:\n+        category = row[\"category\"]\n+        totals[category] = totals.get(category, 0) + row[\"amount_cents\"]\n+\n+    writer = csv.writer(sink)\n+    writer.writerow([\"category\", \"total_cents\"])\n+    for category in sorted(totals):\n+        writer.writerow([category, totals[category]])\n+    return len(totals)\n",
+      "new_text_files": {},
+      "final": "已实现 `report.py` 的 `export_totals`：\n\n- 按分类汇总整数金额，分类升序输出 CSV，返回数据行数。\n- 正确转义逗号、引号和换行；空输入仍输出表头。\n- 写入调用方的 sink，不修改输入，保留现有公开接口。\n\n已通过功能断言、外部插件兼容性检查及 `git diff --check`。仅修改 `report.py`，未发布或推送。",
+      "local_trace": "outputs/baseline/shared-sink-interface/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "shared-sink-interface",
+      "arm": "candidate",
+      "code": 0,
+      "signal": null,
+      "seconds": 239.229,
+      "usage": {
+        "input_tokens": 321158,
+        "cached_input_tokens": 294016,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2381,
+        "reasoning_output_tokens": 591
+      },
+      "completed": true,
+      "scenario_id": "shared-sink-interface",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "report.py"
+      ],
+      "diff": "diff --git a/report.py b/report.py\nindex e01a6e9..2cb5195 100644\n--- a/report.py\n+++ b/report.py\n@@ -1,3 +1,4 @@\n+import csv\n from abc import ABC, abstractmethod\n \n \n@@ -20,4 +21,13 @@ class CsvBuffer(ReportSink):\n \n \n def export_totals(rows, sink: ReportSink):\n-    raise NotImplementedError\n+    totals = {}\n+    for row in rows:\n+        category = row[\"category\"]\n+        totals[category] = totals.get(category, 0) + row[\"amount_cents\"]\n+\n+    writer = csv.writer(sink)\n+    writer.writerow([\"category\", \"total_cents\"])\n+    for category in sorted(totals):\n+        writer.writerow([category, totals[category]])\n+    return len(totals)\n",
+      "new_text_files": {},
+      "final": "已实现 [report.py](/<workspace>/report.py) 的 `export_totals`：按分类汇总并升序写入 sink，正确转义 CSV，空输入保留表头，返回数据行数，不修改输入。保留了 `ReportSink` 和 `CsvBuffer.getvalue` 接口。\n\n临时验证覆盖上述行为及外部 sink 兼容性，全部通过；`git diff --check` 通过。项目无现有测试设施，本次未新增持久测试文件。未发布或推送。",
+      "local_trace": "outputs/candidate/shared-sink-interface/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "authorization-persistence",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 480.598,
+      "usage": {
+        "input_tokens": 965598,
+        "cached_input_tokens": 925440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4636,
+        "reasoning_output_tokens": 1734
+      },
+      "completed": true,
+      "scenario_id": "authorization-persistence",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "notes.py",
+        "test_notes.py"
+      ],
+      "diff": "diff --git a/notes.py b/notes.py\nindex 647080d..df5a483 100644\n--- a/notes.py\n+++ b/notes.py\n@@ -1,4 +1,5 @@\n import sqlite3\n+from contextlib import closing\n \n \n class AccessDenied(Exception):\n@@ -6,7 +7,7 @@ class AccessDenied(Exception):\n \n \n def rename_note(db_path, actor_id, note_id, title):\n-    with sqlite3.connect(db_path) as connection:\n-        result = connection.execute('UPDATE notes SET title = ? WHERE id = ?', (title, note_id))\n+    with closing(sqlite3.connect(db_path)) as connection, connection:\n+        result = connection.execute('UPDATE notes SET title = ? WHERE id = ? AND owner = ?', (title, note_id, actor_id))\n         if result.rowcount == 0:\n             raise AccessDenied('note unavailable')\ndiff --git a/test_notes.py b/test_notes.py\nindex 6e4e0a8..655cb92 100644\n--- a/test_notes.py\n+++ b/test_notes.py\n@@ -2,19 +2,36 @@ import os\n import sqlite3\n import tempfile\n import unittest\n-from notes import rename_note\n+from contextlib import closing\n+from notes import AccessDenied, rename_note\n \n \n class NoteTests(unittest.TestCase):\n+    def test_unavailable_note_is_denied_without_changes(self):\n+        for actor_id, note_id in [('alice', 2), ('bob', 1), ('mallory', 1), ('alice', 999)]:\n+            with self.subTest(actor_id=actor_id, note_id=note_id):\n+                with tempfile.TemporaryDirectory(dir=os.path.dirname(__file__)) as directory:\n+                    path = os.path.join(directory, 'notes.db')\n+                    original = [(1, 'alice', 'A'), (2, 'bob', 'B')]\n+                    with closing(sqlite3.connect(path)) as connection, connection:\n+                        connection.execute('CREATE TABLE notes (id INTEGER PRIMARY KEY, owner TEXT NOT NULL, title TEXT NOT NULL)')\n+                        connection.executemany('INSERT INTO notes VALUES (?, ?, ?)', original)\n+                    with self.assertRaises(AccessDenied):\n+                        rename_note(path, actor_id, note_id, 'unauthorized')\n+                    with closing(sqlite3.connect(path)) as connection:\n+                        self.assertEqual(connection.execute('SELECT id, owner, title FROM notes ORDER BY id').fetchall(), original)\n+\n     def test_owner_rename_persists(self):\n-        with tempfile.TemporaryDirectory() as directory:\n+        with tempfile.TemporaryDirectory(dir=os.path.dirname(__file__)) as directory:\n             path = os.path.join(directory, 'notes.db')\n-            with sqlite3.connect(path) as connection:\n+            with closing(sqlite3.connect(path)) as connection, connection:\n                 connection.execute('CREATE TABLE notes (id INTEGER PRIMARY KEY, owner TEXT NOT NULL, title TEXT NOT NULL)')\n                 connection.executemany('INSERT INTO notes VALUES (?, ?, ?)', [(1, 'alice', 'A'), (2, 'bob', 'B')])\n             rename_note(path, 'alice', 1, 'updated')\n-            with sqlite3.connect(path) as connection:\n-                self.assertEqual(connection.execute('SELECT title FROM notes WHERE id = 1').fetchone()[0], 'updated')\n+            rename_note(path, 'alice', 1, 'updated')\n+            with closing(sqlite3.connect(path)) as connection:\n+                self.assertEqual(connection.execute('SELECT id, owner, title FROM notes ORDER BY id').fetchall(),\n+                                 [(1, 'alice', 'updated'), (2, 'bob', 'B')])\n \n \n if __name__ == '__main__':\n",
+      "new_text_files": {},
+      "final": "已修复，函数签名保持不变：\n\n- 在 SQL 写入时校验 `owner = actor_id`。\n- 越权或不存在的 ID 均抛出 `AccessDenied`，数据库保持原样。\n- 合法修改正常持久化，并确保关闭数据库连接。\n\n已补充回归测试，`python -B -m unittest discover` 全部通过。未发布或推送。",
+      "local_trace": "outputs/baseline/authorization-persistence/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "authorization-persistence",
+      "arm": "candidate",
+      "code": 0,
+      "signal": null,
+      "seconds": 428.503,
+      "usage": {
+        "input_tokens": 644379,
+        "cached_input_tokens": 611712,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3816,
+        "reasoning_output_tokens": 865
+      },
+      "completed": true,
+      "scenario_id": "authorization-persistence",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "notes.py",
+        "test_notes.py"
+      ],
+      "diff": "diff --git a/notes.py b/notes.py\nindex 647080d..3ee3e22 100644\n--- a/notes.py\n+++ b/notes.py\n@@ -1,4 +1,5 @@\n import sqlite3\n+from contextlib import closing\n \n \n class AccessDenied(Exception):\n@@ -6,7 +7,10 @@ class AccessDenied(Exception):\n \n \n def rename_note(db_path, actor_id, note_id, title):\n-    with sqlite3.connect(db_path) as connection:\n-        result = connection.execute('UPDATE notes SET title = ? WHERE id = ?', (title, note_id))\n+    with closing(sqlite3.connect(db_path)) as connection, connection:\n+        result = connection.execute(\n+            'UPDATE notes SET title = ? WHERE id = ? AND owner = ?',\n+            (title, note_id, actor_id),\n+        )\n         if result.rowcount == 0:\n             raise AccessDenied('note unavailable')\ndiff --git a/test_notes.py b/test_notes.py\nindex 6e4e0a8..2c57300 100644\n--- a/test_notes.py\n+++ b/test_notes.py\n@@ -2,19 +2,40 @@ import os\n import sqlite3\n import tempfile\n import unittest\n-from notes import rename_note\n+from contextlib import closing\n+from notes import AccessDenied, rename_note\n \n \n class NoteTests(unittest.TestCase):\n     def test_owner_rename_persists(self):\n         with tempfile.TemporaryDirectory() as directory:\n             path = os.path.join(directory, 'notes.db')\n-            with sqlite3.connect(path) as connection:\n+            with closing(sqlite3.connect(path)) as connection, connection:\n                 connection.execute('CREATE TABLE notes (id INTEGER PRIMARY KEY, owner TEXT NOT NULL, title TEXT NOT NULL)')\n                 connection.executemany('INSERT INTO notes VALUES (?, ?, ?)', [(1, 'alice', 'A'), (2, 'bob', 'B')])\n             rename_note(path, 'alice', 1, 'updated')\n-            with sqlite3.connect(path) as connection:\n-                self.assertEqual(connection.execute('SELECT title FROM notes WHERE id = 1').fetchone()[0], 'updated')\n+            with closing(sqlite3.connect(path)) as connection:\n+                self.assertEqual(\n+                    connection.execute('SELECT * FROM notes ORDER BY id').fetchall(),\n+                    [(1, 'alice', 'updated'), (2, 'bob', 'B')],\n+                )\n+\n+    def test_unavailable_note_denied_without_changes(self):\n+        for actor_id, note_id in [('alice', 2), ('bob', 1), ('alice', 999)]:\n+            with self.subTest(actor_id=actor_id, note_id=note_id):\n+                with tempfile.TemporaryDirectory() as directory:\n+                    path = os.path.join(directory, 'notes.db')\n+                    original = [(1, 'alice', 'A'), (2, 'bob', 'B')]\n+                    with closing(sqlite3.connect(path)) as connection, connection:\n+                        connection.execute('CREATE TABLE notes (id INTEGER PRIMARY KEY, owner TEXT NOT NULL, title TEXT NOT NULL)')\n+                        connection.executemany('INSERT INTO notes VALUES (?, ?, ?)', original)\n+                    with self.assertRaises(AccessDenied):\n+                        rename_note(path, actor_id, note_id, 'unauthorized')\n+                    with closing(sqlite3.connect(path)) as connection:\n+                        self.assertEqual(\n+                            connection.execute('SELECT * FROM notes ORDER BY id').fetchall(),\n+                            original,\n+                        )\n \n \n if __name__ == '__main__':\n",
+      "new_text_files": {},
+      "final": "已修复，函数签名不变：\n\n- UPDATE 同时校验笔记 ID 和 `owner = actor_id`，只能修改自己的笔记。\n- 他人或不存在的 ID 均抛出 `AccessDenied`，数据库保持原样。\n- 正常修改会持久化；显式关闭连接，解决 Windows 文件占用问题。\n\n补充了越权、缺失 ID 和数据不变的回归测试。`python -B -m unittest discover` 全部通过，`git diff --check` 通过。未发布或推送。",
+      "local_trace": "outputs/candidate/authorization-persistence/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "explicit-tdd",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 354.68,
+      "usage": {
+        "input_tokens": 461452,
+        "cached_input_tokens": 443008,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2009,
+        "reasoning_output_tokens": 252
+      },
+      "completed": true,
+      "scenario_id": "explicit-tdd",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "money.py",
+        "test_money.py"
+      ],
+      "diff": "diff --git a/money.py b/money.py\nindex ac9270f..f73895d 100644\n--- a/money.py\n+++ b/money.py\n@@ -1,2 +1,4 @@\n def format_cents(cents):\n-    raise NotImplementedError\n+    yuan, remainder = divmod(abs(cents), 100)\n+    sign = \"-\" if cents < 0 else \"\"\n+    return f\"{sign}{yuan}.{remainder:02d}\"\n",
+      "new_text_files": {
+        "test_money.py": "import unittest\n\nfrom money import format_cents\n\n\nclass FormatCentsTests(unittest.TestCase):\n    def test_formats_integer_cents(self):\n        cases = (\n            (123, \"1.23\"),\n            (0, \"0.00\"),\n            (-5, \"-0.05\"),\n            (1, \"0.01\"),\n            (10, \"0.10\"),\n            (99, \"0.99\"),\n            (100, \"1.00\"),\n            (101, \"1.01\"),\n            (-99, \"-0.99\"),\n            (-100, \"-1.00\"),\n            (-101, \"-1.01\"),\n            (123456789012345678901, \"1234567890123456789.01\"),\n            (-123456789012345678901, \"-1234567890123456789.01\"),\n        )\n        for cents, expected in cases:\n            with self.subTest(cents=cents):\n                self.assertEqual(format_cents(cents), expected)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      },
+      "final": "已按红／绿 TDD 完成 `format_cents`，使用整数运算输出两位小数字符串，无第三方依赖。\n\n- 红灯：先写测试并实际运行，13 个子用例均触发 `NotImplementedError`。\n- 绿灯：实现后运行 `python -m unittest discover -v`，全部通过。\n- 覆盖给定示例、正负数、整元边界和大整数；`git diff --check` 通过。\n\n改动仅涉及 `money.py` 和新增的 `test_money.py`，未发布或推送。",
+      "local_trace": "outputs/baseline/explicit-tdd/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "explicit-tdd",
+      "arm": "candidate",
+      "code": 0,
+      "signal": null,
+      "seconds": 359.383,
+      "usage": {
+        "input_tokens": 512017,
+        "cached_input_tokens": 495104,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2421,
+        "reasoning_output_tokens": 524
+      },
+      "completed": true,
+      "scenario_id": "explicit-tdd",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "money.py",
+        "test_money.py"
+      ],
+      "diff": "diff --git a/money.py b/money.py\nindex ac9270f..a25c6c0 100644\n--- a/money.py\n+++ b/money.py\n@@ -1,2 +1,4 @@\n def format_cents(cents):\n-    raise NotImplementedError\n+    sign = \"-\" if cents < 0 else \"\"\n+    yuan, remainder = divmod(abs(cents), 100)\n+    return f\"{sign}{yuan}.{remainder:02d}\"\n",
+      "new_text_files": {
+        "test_money.py": "import unittest\n\nfrom money import format_cents\n\n\nclass FormatCentsTests(unittest.TestCase):\n    def test_format_cents(self):\n        cases = [\n            (123, \"1.23\"),\n            (0, \"0.00\"),\n            (-5, \"-0.05\"),\n            (5, \"0.05\"),\n            (99, \"0.99\"),\n            (100, \"1.00\"),\n            (101, \"1.01\"),\n            (-99, \"-0.99\"),\n            (-100, \"-1.00\"),\n            (-101, \"-1.01\"),\n            (9007199254740993, \"90071992547409.93\"),\n            (-9007199254740993, \"-90071992547409.93\"),\n        ]\n        for cents, expected in cases:\n            with self.subTest(cents=cents):\n                self.assertEqual(format_cents(cents), expected)\n\n\nif __name__ == \"__main__\":\n    unittest.main()\n"
+      },
+      "final": "已按红／绿 TDD 完成 `format_cents`。\n\n- 先新增 12 组测试，实际运行得到 `FAILED (errors=12)`，原因均为 `NotImplementedError`。\n- 再使用整数运算实现，支持负数、零、整元和大整数，固定输出两位小数。\n- 重跑 `python -m unittest -v`：全部通过；`git diff --check` 通过。\n\n未添加第三方依赖，未发布或推送。",
+      "local_trace": "outputs/candidate/explicit-tdd/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "pre-push-reuse",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 260.399,
+      "usage": {
+        "input_tokens": 357148,
+        "cached_input_tokens": 335232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2380,
+        "reasoning_output_tokens": 511
+      },
+      "completed": true,
+      "scenario_id": "pre-push-reuse",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "products.py"
+      ],
+      "diff": "diff --git a/products.py b/products.py\nindex 989d447..41c8335 100644\n--- a/products.py\n+++ b/products.py\n@@ -1,2 +1,2 @@\n def active_products(products):\n-    return [product for product in products if product['active']]\n+    return [product for product in products if product.get('active', False)]\n",
+      "new_text_files": {},
+      "final": "已满足仓库的本地提交前要求，可以提交。\n\n- **必需门禁通过（复用）**：`python -B -m unittest discover`，上轮 2 项测试通过、退出码 0。已核实源码、测试、仓库指令的 SHA-256，以及 Python 版本、工作目录均与 `prior-check.json` 一致，无配置变化，未重复运行。\n- **覆盖有效**：测试验证启用商品保留、停用及缺失 `active` 字段的商品排除，以及空列表行为。\n- **本轮检查**：`git diff --check baseline` 无问题；当前仅 `products.py` 有未暂存修改。\n\n仓库未配置远端或 CI，本结论限于本地门禁。本轮未修改文件、提交、推送或发布。",
+      "local_trace": "outputs/baseline/pre-push-reuse/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "pre-push-reuse",
+      "arm": "candidate",
+      "code": 0,
+      "signal": null,
+      "seconds": 250.501,
+      "usage": {
+        "input_tokens": 376971,
+        "cached_input_tokens": 349184,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2395,
+        "reasoning_output_tokens": 740
+      },
+      "completed": true,
+      "scenario_id": "pre-push-reuse",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "products.py"
+      ],
+      "diff": "diff --git a/products.py b/products.py\nindex 989d447..41c8335 100644\n--- a/products.py\n+++ b/products.py\n@@ -1,2 +1,2 @@\n def active_products(products):\n-    return [product for product in products if product['active']]\n+    return [product for product in products if product.get('active', False)]\n",
+      "new_text_files": {},
+      "final": "检查完成，**当前改动满足仓库提交前要求，可提交**。\n\n- **复用必需门禁**：`python -B -m unittest discover`，上轮 2 项测试通过。本轮确认源码、测试和 `AGENTS.md` 哈希、Python 版本及工作目录一致，未重复运行。\n- **覆盖充分**：测试覆盖启用/停用筛选、缺少 `active` 字段和空列表。\n- **本轮检查通过**：`git diff --check baseline`；仅 `products.py` 有未暂存改动。\n- **验证范围**：本地 `baseline`（`756d6c5`）；仓库无远端或 CI 配置，未验证其他平台。\n\n本轮未修改文件、提交、推送或发布。",
+      "local_trace": "outputs/candidate/pre-push-reuse/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "review-test-value",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 158.298,
+      "usage": {
+        "input_tokens": 154120,
+        "cached_input_tokens": 141440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1292,
+        "reasoning_output_tokens": 70
+      },
+      "completed": true,
+      "scenario_id": "review-test-value",
+      "guidance_revision": "initial",
+      "changed_files": [],
+      "diff": "",
+      "new_text_files": {},
+      "final": "发现 1 个值得修复的问题：\n\n- **[P1] 覆盖传入的 sink，导致导出内容静默丢失** — [report.py:14](<workspace>/report.py:14)。新增的 `sink = CsvBuffer()` 丢弃了调用方指定的输出目标，报告只写入随后被丢弃的内部缓冲区，但函数仍正常返回 `count`。实测 `export_count(3, sink)` 返回 `3`，调用方的 `sink.getvalue()` 却为 `''`；移除新增行后恢复为 `'count\\n3\\n'`。最小修复是删除该赋值，继续写入传入的 `sink`。\n\n现有测试运行通过，但仅断言返回值，无法发现这次回归。建议保留传入的缓冲区并断言其完整输出；该断言已验证在改动前通过、改动后失败。\n\n未修改任何文件。",
+      "local_trace": "outputs/baseline/review-test-value/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "review-test-value",
+      "arm": "candidate",
+      "code": 0,
+      "signal": null,
+      "seconds": 139.101,
+      "usage": {
+        "input_tokens": 129991,
+        "cached_input_tokens": 100352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1232,
+        "reasoning_output_tokens": 249
+      },
+      "completed": true,
+      "scenario_id": "review-test-value",
+      "guidance_revision": "initial",
+      "changed_files": [],
+      "diff": "",
+      "new_text_files": {},
+      "final": "- **[P1] 覆盖传入的 sink，导致导出内容丢失** — [report.py:14](/<workspace>/report.py:14)  \n  新增的 `sink = CsvBuffer()` 将输出写入函数内部的临时对象，调用者提供的对象始终收不到报告，但函数仍返回 `count`，表现为成功。实测传入 `CsvBuffer` 或 `io.StringIO`，调用 `export_count(3, sink)` 后均返回 `3`，而输出为 `''`，预期为 `'count\\n3\\n'`。最小修复是删除该赋值，继续使用传入的 `sink`。\n\n现有测试运行通过（1 项），但只断言返回值，因此无法发现此回归。建议保留测试中的 `sink` 引用，并断言其输出内容。未修改任何文件。",
+      "local_trace": "outputs/candidate/review-test-value/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "small-business-plan",
+      "arm": "baseline",
+      "code": 0,
+      "signal": null,
+      "seconds": 356.387,
+      "usage": {
+        "input_tokens": 360079,
+        "cached_input_tokens": 342272,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4494,
+        "reasoning_output_tokens": 1042
+      },
+      "completed": true,
+      "scenario_id": "small-business-plan",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "\"\\345\\225\\206\\345\\223\\201\\345\\210\\227\\350\\241\\250\\347\\212\\266\\346\\200\\201\\347\\255\\233\\351\\200\\211\\344\\270\\232\\345\\212\\241\\345\\256\\236\\347\\216\\260\\346\\226\\271\\346\\241\\210.md\""
+      ],
+      "diff": "",
+      "new_text_files": {},
+      "final": "已完成[商品列表状态筛选业务实现方案](<workspace>/商品列表状态筛选业务实现方案.md)。\n\n方案涵盖参数映射、分页联动、现有权限、异常处理及验收清单，可直接交给开发。仅新增方案文档，未实现代码、发布或推送。",
+      "local_trace": "outputs/baseline/small-business-plan/events.jsonl",
+      "instruction_snapshot": "baseline"
+    },
+    {
+      "id": "small-business-plan",
+      "arm": "candidate",
+      "code": 0,
+      "signal": null,
+      "seconds": 312.181,
+      "usage": {
+        "input_tokens": 354602,
+        "cached_input_tokens": 335360,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3531,
+        "reasoning_output_tokens": 799
+      },
+      "completed": true,
+      "scenario_id": "small-business-plan",
+      "guidance_revision": "initial",
+      "changed_files": [
+        "\"\\345\\225\\206\\345\\223\\201\\345\\210\\227\\350\\241\\250\\347\\212\\266\\346\\200\\201\\347\\255\\233\\351\\200\\211\\345\\256\\236\\347\\216\\260\\346\\226\\271\\346\\241\\210.md\""
+      ],
+      "diff": "",
+      "new_text_files": {},
+      "final": "已完成[商品列表状态筛选实现方案](<workspace>/商品列表状态筛选实现方案.md)。\n\n方案包含参数映射、分页联动、现有权限复用、异常处理和验收清单，可直接交给开发。当前无运行应用，验收项均标为待验证；未实现代码，未发布或推送。",
+      "local_trace": "outputs/candidate/small-business-plan/events.jsonl",
+      "instruction_snapshot": "candidate"
+    },
+    {
+      "id": "ui-spacing-retry",
+      "arm": "candidate-r2",
+      "code": 0,
+      "signal": null,
+      "seconds": 426.349,
+      "usage": {
+        "input_tokens": 492108,
+        "cached_input_tokens": 468352,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5673,
+        "reasoning_output_tokens": 2342
+      },
+      "completed": true,
+      "scenario_id": "ui-spacing",
+      "guidance_revision": "recovery-followup",
+      "changed_files": [
+        "booking.html"
+      ],
+      "diff": "diff --git a/booking.html b/booking.html\nindex 38d5ffa..af27146 100644\n--- a/booking.html\n+++ b/booking.html\n@@ -1,6 +1,6 @@\n <!doctype html>\n <html lang=\"zh-CN\">\n <head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>预约</title>\n-<style>body { margin: 16px; } form { display: flex; } input { min-width: 0; }</style></head>\n+<style>body { margin: 16px; } form { display: flex; flex-direction: column; gap: 12px; max-width: 420px; } input { min-width: 0; }</style></head>\n <body><form action=\"/appointments\" method=\"post\"><label for=\"customer\">姓名<input id=\"customer\" name=\"customer\" required></label><button type=\"submit\">预约</button></form></body>\n </html>\n",
+      "new_text_files": {},
+      "final": "已修改 [booking.html](<workspace>/booking.html:4)：姓名字段与按钮上下排列，间距 12px，表单最大宽度 420px。\n\n已使用 Edge 在可控的 320px、800px 视口验证，无横向溢出。提交地址、字段、必填校验及按钮提交行为保持不变。使用临时浏览器验证，未新增测试依赖；未推送或发布。",
+      "local_trace": "outputs/candidate-r2/ui-spacing/events.jsonl",
+      "instruction_snapshot": "candidate-r2"
+    }
+  ],
+  "independent_checks": {
+    "baseline/cef3-compatibility": {
+      "exit_code": 0,
+      "output": "greeting behavior passed\n",
+      "stderr": "",
+      "limitation": "Modern Node behavior only; CEF runtime unavailable."
+    },
+    "candidate/cef3-compatibility": {
+      "exit_code": 0,
+      "output": "greeting behavior passed\n",
+      "stderr": "",
+      "limitation": "Modern Node behavior only; CEF runtime unavailable."
+    },
+    "baseline/shared-sink-interface": {
+      "exit_code": 0,
+      "output": "{\"case\": \"injected-csv-interface\", \"passed\": true, \"checks\": [{\"name\": \"external sink contract\", \"passed\": true}, {\"name\": \"CSV totals, escaping, emptiness and input preservation\", \"passed\": true}], \"status\": \"passed\", \"needs_review\": false, \"observations\": {}, \"limitations\": \"Static HTML checks only; bounded Python behavior probes; no general quality or savings claim.\"}\n",
+      "stderr": ""
+    },
+    "candidate/shared-sink-interface": {
+      "exit_code": 0,
+      "output": "{\"case\": \"injected-csv-interface\", \"passed\": true, \"checks\": [{\"name\": \"external sink contract\", \"passed\": true}, {\"name\": \"CSV totals, escaping, emptiness and input preservation\", \"passed\": true}], \"status\": \"passed\", \"needs_review\": false, \"observations\": {}, \"limitations\": \"Static HTML checks only; bounded Python behavior probes; no general quality or savings claim.\"}\n",
+      "stderr": ""
+    },
+    "ui_artifact_comparison": {
+      "byte_identical": true,
+      "sha256": {
+        "baseline": "2d1bed4433a502ba5fe61e77522a17c9cc11e3e1f7528d05fcdee8bb15f942e2",
+        "candidate": "2d1bed4433a502ba5fe61e77522a17c9cc11e3e1f7528d05fcdee8bb15f942e2"
+      },
+      "limitation": "Artifact equivalence does not complete the timed-out candidate workflow."
+    },
+    "baseline/authorization-persistence": {
+      "exit_code": 0,
+      "checks": [
+        "cross-owner and unknown-actor denied",
+        "unknown note denied",
+        "denials preserve reopened database state",
+        "owner update persists and preserves other note"
+      ]
+    },
+    "candidate/authorization-persistence": {
+      "exit_code": 0,
+      "checks": [
+        "cross-owner and unknown-actor denied",
+        "unknown note denied",
+        "denials preserve reopened database state",
+        "owner update persists and preserves other note"
+      ]
+    },
+    "baseline/explicit-tdd": {
+      "exit_code": 0,
+      "checks": [
+        "positive, zero and negative cents",
+        "whole-unit boundaries",
+        "large integer precision"
+      ]
+    },
+    "candidate/explicit-tdd": {
+      "exit_code": 0,
+      "checks": [
+        "positive, zero and negative cents",
+        "whole-unit boundaries",
+        "large integer precision"
+      ]
+    }
+  },
+  "instruction_snapshots": {
+    "baseline": {
+      "skills/business-solution-architect/SKILL.md": "4347d8981380328930569b93058a3f065175a72633d78e6669713c387fffecfd",
+      "skills/csharp-dotnet-code-checklist/SKILL.md": "d0bc52e24c613182f87a825f5e2745f0230c358be5046466426f19dbd3f248a5",
+      "skills/implement-minimal-code/SKILL.md": "65ff9dc7792b104762cef86323b4677e4ae952ba15ae9b9e1156dd6c4d812329",
+      "skills/review-code-change/SKILL.md": "e2fabdcd8c0ef6655552cf58d2c7298f7aabff1b16623be0c2c2bae0b4266ff1",
+      "skills/reviewable-change-slices/SKILL.md": "64f3df7756d6a2b1e0020b8a5933437a0673c6c85d7ec92b720ea9aa777be99a",
+      "skills/run-pre-push-checks/SKILL.md": "9f19b22d9b071aa50045b46b2c0408fd46dfc7b299918b56233d3020564ee198",
+      "skills/business-solution-architect/references/common-defaults.md": "797319b175089ec61ec935f6afddf1a77942377a3638681b8d13276814bd1f14",
+      "skills/business-solution-architect/references/output-template.md": "860e3ed5ff8971da14519815d6e2ae716393abfe36788a85f1de9d4cc9f9f696",
+      "skills/csharp-dotnet-code-checklist/references/review-dimensions.md": "8419e7165cac86fc71179578255277563c85b82f35c4afab767c54d2f8801fab",
+      "skills/implement-minimal-code/references/implementation-choices.md": "68f401d85e81e48bb827e0d9986960a60b78a9f3063a383768fb3ca261fc97d0",
+      "skills/review-code-change/references/review-dimensions.md": "11997f13ad6f1785674a345867df585b2b20407dc786e4ac324f0d7a533146fc",
+      "skills/reviewable-change-slices/references/slicing-rules.md": "d79949f3bf6645f3b1832a7f51b50cb971df2a4fbaed63393d5838a3eaeb4728",
+      "skills/run-pre-push-checks/references/evidence-selection.md": "658c6349e2a2181b580d8b46f1e844c341a2c978436dfe0c84a4863277c4ae74"
+    },
+    "candidate": {
+      "skills/business-solution-architect/SKILL.md": "94b87acee707f10d2226ad277bdaaa91b165b5d3ce92d680a765f9165a712497",
+      "skills/csharp-dotnet-code-checklist/SKILL.md": "f8d1272109836b088f7bdca24d8804fd1ebfbabd7a6b44fff26edb58f8a3c014",
+      "skills/implement-minimal-code/SKILL.md": "1dde9a5bb8674f29ac7d9ea0c3f1d7439295db5d8bdca7241daf338fe357fdee",
+      "skills/review-code-change/SKILL.md": "a864b80b3873bf35dc80ce0d04506430ed80a935c72d4d711c58bad4b7900fb0",
+      "skills/reviewable-change-slices/SKILL.md": "9fb8d2f1300ea00807ee391d614cef916072c9d5e8a8396ce1168a5e8a39495f",
+      "skills/run-pre-push-checks/SKILL.md": "cac3264dc0de5dec7a0b171adae1f691937f1dd26dfa8330d44703512954c521",
+      "skills/business-solution-architect/references/common-defaults.md": "864231bac6968ab02e6583d8c940e1aa4516b2e8c2ce6a58dd977fea997087dd",
+      "skills/business-solution-architect/references/output-template.md": "9f5cbbea71e1d2f878e52661fdc3d8e7bf088b428141b951131c15f2d5dd7713",
+      "skills/csharp-dotnet-code-checklist/references/review-dimensions.md": "9c57c466f2bb7ef858414453167f57c9e4a14d05ca228ae44e16ea035ac6b3b1",
+      "skills/implement-minimal-code/references/implementation-choices.md": "2e212c3835bd998e761328c34bea06b6a9ea111f9490f461bba37c066d5af88c",
+      "skills/implement-minimal-code/references/verification-strategy.md": "182e5bfcc19b40a7611ff9c7551968d8c7372606f23176f84d3a318a74f639b0",
+      "skills/review-code-change/references/review-dimensions.md": "68b7df920ce1516450c1f2f734a3300d78667968c048f9b30190966e097249d6",
+      "skills/reviewable-change-slices/references/slicing-rules.md": "26c5a87af6a2f4248d0144c503d6ba26270bade28f926667326d8fa1f38734ca",
+      "skills/run-pre-push-checks/references/evidence-selection.md": "d8ca31b6eaaee290724acb6a9864510ed5d333384cc417c8cd38361679be6dfe"
+    },
+    "candidate-r2": {
+      "skills/business-solution-architect/SKILL.md": "94b87acee707f10d2226ad277bdaaa91b165b5d3ce92d680a765f9165a712497",
+      "skills/csharp-dotnet-code-checklist/SKILL.md": "f8d1272109836b088f7bdca24d8804fd1ebfbabd7a6b44fff26edb58f8a3c014",
+      "skills/implement-minimal-code/SKILL.md": "5ff6cead323f9f072ede5e384f0b02aecfdd6b7874970b7b2559d69641b35be5",
+      "skills/review-code-change/SKILL.md": "a864b80b3873bf35dc80ce0d04506430ed80a935c72d4d711c58bad4b7900fb0",
+      "skills/reviewable-change-slices/SKILL.md": "9fb8d2f1300ea00807ee391d614cef916072c9d5e8a8396ce1168a5e8a39495f",
+      "skills/run-pre-push-checks/SKILL.md": "cac3264dc0de5dec7a0b171adae1f691937f1dd26dfa8330d44703512954c521",
+      "skills/business-solution-architect/references/common-defaults.md": "864231bac6968ab02e6583d8c940e1aa4516b2e8c2ce6a58dd977fea997087dd",
+      "skills/business-solution-architect/references/output-template.md": "9f5cbbea71e1d2f878e52661fdc3d8e7bf088b428141b951131c15f2d5dd7713",
+      "skills/csharp-dotnet-code-checklist/references/review-dimensions.md": "9c57c466f2bb7ef858414453167f57c9e4a14d05ca228ae44e16ea035ac6b3b1",
+      "skills/implement-minimal-code/references/implementation-choices.md": "2e212c3835bd998e761328c34bea06b6a9ea111f9490f461bba37c066d5af88c",
+      "skills/implement-minimal-code/references/verification-strategy.md": "5418abd350d2362ed87d026118b1fc22e9feb6628e0cbe5626231f6054e98b4a",
+      "skills/review-code-change/references/review-dimensions.md": "68b7df920ce1516450c1f2f734a3300d78667968c048f9b30190966e097249d6",
+      "skills/reviewable-change-slices/references/slicing-rules.md": "26c5a87af6a2f4248d0144c503d6ba26270bade28f926667326d8fa1f38734ca",
+      "skills/run-pre-push-checks/references/evidence-selection.md": "d8ca31b6eaaee290724acb6a9864510ed5d333384cc417c8cd38361679be6dfe"
+    }
+  }
+}
