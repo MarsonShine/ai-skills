@@ -22,7 +22,7 @@ At `effe34e`:
 - Negative fixture with a wrong name and an empty description → exit 1 with both errors; fixture removed afterward.
 - `quick_validate.py` for all 24 skills → every skill valid.
 - Plugin validator → not available on this host; not run.
-- GitHub Actions `skills` workflow → added, not run (this session does not push).
+- GitHub Actions `skills` workflow → added, not run (this session does not push); last recorded result: none.
 
 ## Blockers
 
