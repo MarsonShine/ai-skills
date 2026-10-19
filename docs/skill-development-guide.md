@@ -14,6 +14,7 @@ ai-skills/
       references/
       scripts/
       assets/
+  scripts/
   docs/
 ```
 
@@ -46,6 +47,7 @@ Run these checks from the repository root:
 
 ```powershell
 $repo = (Get-Location).Path
+python scripts/check_skill_catalog.py
 $codexHome = Join-Path $env:USERPROFILE ".codex"
 python -X utf8 (Join-Path $codexHome "skills\.system\plugin-creator\scripts\validate_plugin.py") $repo
 python -X utf8 (Join-Path $codexHome "skills\.system\skill-creator\scripts\quick_validate.py") (Join-Path $repo "skills\<skill-name>")
