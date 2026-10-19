@@ -31,7 +31,8 @@ The installed copies match the state recorded after the 2026-09-03 reinstall. Th
 From an unrestricted shell, with a fresh agent session afterward:
 
 ```powershell
-$repo = "E:\repositories\ai-skills"
+# Run from the repository root.
+$repo = (Get-Location).Path
 $dest = Join-Path $env:USERPROFILE ".dsh\skills"
 
 Get-ChildItem (Join-Path $repo "skills") -Directory |
