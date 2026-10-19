@@ -13,12 +13,14 @@ ai-skills/
   .github/copilot-instructions.md  # Repo-level Copilot guidance
   AGENTS.md                        # Canonical repo maintenance rules
   docs/skill-development-guide.md  # Development and maintenance guide
+  scripts/                         # Repository-level validation tooling
   skills/                          # Installable skills
   workspaces/                      # Eval/output workspaces, not installable skills
 ```
 
 Current skills:
 
+<!-- skills:start -->
 - `business-solution-architect`
 - `csharp-dotnet-code-checklist`
 - `fact-check-debunker`
@@ -43,6 +45,7 @@ Current skills:
 - `trim-reasoning-leakage`
 - `windows-reclaim-disk-space`
 - `write-natural-prose`
+<!-- skills:end -->
 
 `implement-minimal-code` is selected on demand for new features, bug fixes, and ordinary implementation refactors. Explicit code-reduction tasks use `find-code-simplifications`. Review-only, planning, documentation, and media tasks do not trigger `implement-minimal-code`.
 
@@ -232,6 +235,18 @@ done
 
 ## Publish And Validate
 
+Check that the README skill catalog matches `skills/`:
+
+```powershell
+python scripts/check_skill_catalog.py
+```
+
+After adding, renaming, or removing a skill, regenerate the block with:
+
+```powershell
+python scripts/check_skill_catalog.py --write
+```
+
 Validate the Codex plugin:
 
 ```powershell
@@ -277,9 +292,9 @@ For `npx skills` discovery, this repository includes `.claude-plugin/marketplace
 2. Keep `SKILL.md` small and move long guidance into `references/`.
 3. Use relative paths inside skills. Do not hard-code user profile or drive paths.
 4. Keep eval outputs and experiments under `workspaces/`, not directly under `skills/`.
-5. Validate the plugin and skills.
+5. Run `python scripts/check_skill_catalog.py`, then validate the plugin and skills.
 6. Commit the change.
-7. Reinstall or republish for the target tool.
+7. Reinstall or republish for the target tool, and record the installed source in `docs/install-state.md`.
 
 See [docs/skill-development-guide.md](docs/skill-development-guide.md) for the detailed development rules.
 

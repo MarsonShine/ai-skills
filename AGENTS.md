@@ -15,6 +15,7 @@ If a skill rule blocks otherwise requested work, identify the exact file and rul
 - Keep `.codex-plugin/plugin.json` at the repository root, skills under `skills/`, and the local marketplace entry at `.agents/plugins/marketplace.json`.
 - Only installable skills belong directly under `skills/`. Put evaluations, benchmark workspaces, experiments, and generated review artifacts in repository-level `workspaces/` or `docs/`.
 - Install or reinstall the plugin instead of maintaining copies in user profile skill folders. See `docs/skill-development-guide.md` when packaging or installation is part of the task.
+- Repository-level checks live in `scripts/`; they are maintenance tooling, not installable skills. Update `docs/install-state.md` after changing what an installed target loads.
 
 Use only the directories needed by a skill:
 
