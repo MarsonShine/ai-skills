@@ -2,7 +2,7 @@
 
 Updated: 2026-10-21
 Branch: `main`
-State baseline: `cafeb82` (the tree the checks below ran against)
+State baseline: `01e10ac` (the tree the checks below ran against)
 
 ## Repository
 
@@ -17,7 +17,7 @@ State baseline: `cafeb82` (the tree the checks below ran against)
 
 ## Validation
 
-At `cafeb82`:
+At `01e10ac`:
 
 - `python -X utf8 scripts/check_skill_catalog.py` → `ok: 25 skills; frontmatter and README catalog match`.
 - `quick_validate.py` for all 25 skills → every skill valid.

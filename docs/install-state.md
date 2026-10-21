@@ -1,7 +1,7 @@
 # Install State
 
 Checked: 2026-10-21
-Source: `main` at `5122dee`
+Source: `main` at `01e10ac`
 Plugin version: `0.2.0+codex.20261013120707`
 
 This file records where installed copies came from and how far they have drifted. It is not an install log for every tool.
@@ -12,7 +12,7 @@ DeepSeek Harness loads user skills from `%USERPROFILE%\.dsh\skills`. Other hosts
 
 ## Harness Kit
 
-Installed 2026-10-21 from the `bootstrap-harness` templates and script at `main` `cafeb82`:
+Installed 2026-10-21 from the `bootstrap-harness` templates and script at `main` `01e10ac`:
 
 - Engine: `%USERPROFILE%\.agents\harness\` (`harness.py` plus `templates/`).
 - Skill: a junction at `%USERPROFILE%\.dsh\skills\bootstrap-harness` pointing to this repository.
