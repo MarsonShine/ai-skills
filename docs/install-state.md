@@ -1,7 +1,7 @@
 # Install State
 
-Checked: 2026-10-19
-Source: `main` at `a9e08e4`
+Checked: 2026-10-21
+Source: `main` at `5122dee`
 Plugin version: `0.2.0+codex.20261013120707`
 
 This file records where installed copies came from and how far they have drifted. It is not an install log for every tool.
@@ -10,9 +10,20 @@ This file records where installed copies came from and how far they have drifted
 
 DeepSeek Harness loads user skills from `%USERPROFILE%\.dsh\skills`. Other hosts may use the plugin entry, junctions, or their own skill directory.
 
+## Harness Kit
+
+Installed 2026-10-21 from the `bootstrap-harness` templates and script at `main` `cafeb82`:
+
+- Engine: `%USERPROFILE%\.agents\harness\` (`harness.py` plus `templates/`).
+- Skill: a junction at `%USERPROFILE%\.dsh\skills\bootstrap-harness` pointing to this repository.
+- Global triggers: `~/.dsh/AGENTS.md`, `~/.codex/AGENTS.md`, and `~/.claude/CLAUDE.md`. They only detect a missing block and propose `init` or `adopt`; they do not contain the rule body.
+- First adopter: `MS.Microservice`, baseline v1.
+
+Update the engine by copying the current skill files again; the templates are the source of truth.
+
 ## Drift
 
-17 of 24 `SKILL.md` files match this repository byte for byte. The remaining 7 are older installed copies:
+18 of 25 `SKILL.md` files match this repository byte for byte. The remaining 7 are older installed copies:
 
 | Skill | Repository (chars) | Installed (chars) |
 | --- | ---: | ---: |
