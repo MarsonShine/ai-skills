@@ -21,6 +21,7 @@ ai-skills/
 Current skills:
 
 <!-- skills:start -->
+- `bootstrap-harness`
 - `business-solution-architect`
 - `csharp-dotnet-code-checklist`
 - `fact-check-debunker`
