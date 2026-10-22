@@ -1,40 +1,27 @@
-# Progress
+# Current State
 
-Updated: 2026-10-21
-Branch: `main`
-State baseline: `01e10ac` (the tree the checks below ran against)
+Updated: 2026-10-22
+Branch: main
+Baseline: 26d1c79
+Status: in_progress
+Task: T-20261022-CLEAN-STATE
+Next: Complete the five slices in the [task ledger](workspaces/session-closeout/README.md).
 
-## Repository
+## Current Work
 
-- `main` contains `GPT6-Astra` (`a9e08e4`); the branch is no longer a second source of truth.
-- Working tree: clean.
-- Plugin version: `0.2.0+codex.20261013120707`.
-- 25 skills. `bootstrap-harness` installs a managed `AGENTS.md` block, Claude/Copilot adapters, and status/task files.
-- Installed copies: 7 of 25 skills still differ and were never synced after the 2026-10-13 changes. See [docs/install-state.md](docs/install-state.md).
-- Harness engine installed at `%USERPROFILE%\.agents\harness\`; global triggers exist in `~/.dsh`, `~/.codex`, and `~/.claude`. `MS.Microservice` uses baseline v1.
-- Decisions: [docs/decisions/](docs/decisions/README.md).
-- Evidence index: [workspaces/README.md](workspaces/README.md).
+- Maintain one current-state entry here; read only the task and module material needed next.
+- Scope: state accuracy, document lifecycle, read-only closeout checks, skill packaging and resumption exercises.
+- The earlier harness recovery pilot is complete: [evidence](workspaces/harness-evidence-pilot/README.md).
+- Install versions and host-specific drift have one owner: [install state](docs/install-state.md).
 
-## Validation
+## Verification
 
-At `01e10ac`:
+- Baseline `26d1c79`: [skills CI passed](https://github.com/MarsonShine/ai-skills/actions/runs/39720607992).
+- New slice checks and limitations are recorded in the task ledger; this baseline pass is not evidence for later edits.
+- The unavailable plugin-validator helper is not reported as a pass; catalog, skill and behavioral checks remain available.
 
-- `python -X utf8 scripts/check_skill_catalog.py` → `ok: 25 skills; frontmatter and README catalog match`.
-- `quick_validate.py` for all 25 skills → every skill valid.
-- Harness fixtures: `init` created the expected files; `adopt` preserved existing `AGENTS.md` text; a hand-edited block failed `check` with exit 1; `sync --write` restored it; `init` refused a non-empty `AGENTS.md` and a dirty auto-init.
-- `MS.Microservice`: `harness.py check` passes for baseline v1; `AGENTS.md` and `.github/copilot-instructions.md` hashes match.
-- Plugin validator → not available on this host; not run.
-- GitHub Actions `skills` workflow → added, not run (this session does not push); last recorded result: none.
+## Navigation
 
-## Blockers
-
-- The first CI result needs a push.
-
-## Next
-
-1. Sync the seven stale skill copies from `main`. The engine and global triggers are installed; the copies are not.
-2. Push `main`, then record the first `skills` workflow result in the validation section.
-3. Use `MS.Microservice` as the pilot for the v1 block; after one real task, review VCR and scope violations.
-4. Choose the next follow-up from the notes in [docs/gpt6-astra-skill-audit.md](docs/gpt6-astra-skill-audit.md).
-
-For work that spans sessions, see [docs/multi-session-workflow.md](docs/multi-session-workflow.md). Keep this file short; the backlog belongs in the audit notes, not here.
+- [Cross-session workflow](docs/multi-session-workflow.md)
+- [Decisions](docs/decisions/README.md)
+- [Historical evidence index](workspaces/README.md) — open only when the task requires it.
