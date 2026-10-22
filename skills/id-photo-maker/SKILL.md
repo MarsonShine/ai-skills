@@ -19,6 +19,8 @@ description: "制作报名用或可打印裁剪的证件照，支持尺寸、背
 
 使用可用的 Python 3.11+；本地处理依赖 Pillow、rembg，见 `requirements.txt`。下列路径中的 `{baseDir}` 是当前技能目录，不是固定的用户安装目录。
 
+技能包不携带虚拟环境。需要独立环境时，在技能目录之外执行 `python -m venv <env-dir>`，用该环境的解释器安装 `-m pip install -r "{baseDir}/requirements.txt"`，并用同一解释器运行下列命令。清单默认安装 rembg 的 CPU 后端；首次自动抠图还可能下载模型。`--skip-background-removal` 路径只需要 Pillow。
+
 ```text
 python "{baseDir}/scripts/process_local_photo.py" "<photo-path-or-url>" --size 1寸 --background white --framing standard --output-dir "<processed-dir>"
 python "{baseDir}/scripts/render_print_sheet.py" --photo "<processed-dir>/id-photo.png" --size 1寸 --pages a4,6inch --output-dir "<print-dir>"

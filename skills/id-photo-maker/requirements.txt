@@ -1,2 +1,2 @@
 Pillow>=10.0.0
-rembg>=2.0.0
+rembg[cpu]>=2.0.0

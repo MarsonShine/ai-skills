@@ -48,6 +48,7 @@ Run these checks from the repository root:
 ```powershell
 $repo = (Get-Location).Path
 python scripts/check_skill_catalog.py
+python scripts/check_skill_package.py
 $codexHome = Join-Path $env:USERPROFILE ".codex"
 python -X utf8 (Join-Path $codexHome "skills\.system\plugin-creator\scripts\validate_plugin.py") $repo
 python -X utf8 (Join-Path $codexHome "skills\.system\skill-creator\scripts\quick_validate.py") (Join-Path $repo "skills\<skill-name>")
@@ -81,6 +82,7 @@ Start a new Codex thread after reinstalling so the updated skills are loaded int
 
 - Treat `skills/` as source code. Review diffs before committing.
 - Keep generated caches, temporary outputs, and evaluation workspaces out of normal skill folders unless they are intentional fixtures.
+- Rebuild Python environments outside `skills/` from the relevant requirements file. Runtime environments and bytecode must not enter the installable tree, even if ignored by Git; the package check runs in CI before installation.
 - Update `.codex-plugin/plugin.json` when the plugin description, version, prompt examples, or visible capability set changes.
 - Update routing indexes when adding, renaming, or removing skills.
 - Do not duplicate the same skill in `.codex/skills` and this repository as two independent sources. Install from this plugin instead.

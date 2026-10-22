@@ -25,8 +25,20 @@ jobs:
       - name: Validate catalog and frontmatter
         run: python scripts/check_skill_catalog.py
 
+      - name: Validate installable package contents
+        run: python scripts/check_skill_package.py
+
       - name: Check harness document recovery
         run: python scripts/test_bootstrap_harness.py
 
       - name: Check read-only session closeout
         run: python scripts/test_closeout.py
+
+      - name: Rebuild image-tool dependencies
+        run: python -m pip install -r skills/photo-selector/requirements.txt -r skills/id-photo-maker/requirements.txt
+
+      - name: Check background-removal runtime
+        run: python -c "import rembg"
+
+      - name: Smoke local image tools
+        run: python -B scripts/smoke_image_tools.py

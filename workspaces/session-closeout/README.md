@@ -16,7 +16,7 @@ Out of scope: .NET business changes, dependency-security remediation, new tracin
 | 1 | docs: correct current state and retire completed task | Relative links resolve; current facts match Git/CI; previous task remains accessible | passed |
 | 2 | docs: define state and evidence lifecycle | Single owners; input-based freshness; bounded startup and archive rules | passed |
 | 3 | feat(harness): check session closeout without writes | Regression fixtures for conflicts, links, scope and scratch; read-only repeatability | passed |
-| 4 | chore(skills): remove packaged Python environments | Clean dependency reconstruction; representative image-tool smoke; no tracked runtime caches | pending |
+| 4 | chore(skills): remove packaged Python environments | Clean dependency reconstruction; representative image-tool smoke; no tracked runtime caches | passed |
 | 5 | test: verify repository resumption and refresh installation | Two repository exercises, installation hashes, current-state handoff and push | pending |
 
 ## Baseline Observations
@@ -37,3 +37,5 @@ Slice 1: relative links passed; previous task preserved; Git/CI baseline facts i
 Slice 2: ownership/lifecycle reviewed; relative links passed; time-only staleness rules replaced with relevant-input comparison.
 
 Slice 3: six closeout CLI tests and four support-document tests passed; catalog and changed-skill validation passed. Actual closeout inspections passed for both repositories with explicit scopes. Checks do not prove semantic freshness or business CI health.
+
+Slice 4: the package guard rejected the four original runtime/cache directories, then passed after removing 2,948 unchanged tracked files. A new isolated Python 3.12 environment rebuilt both requirements files. Pillow 13.0.0 passed pagination, candidate ordering, dimensions, ID size/background, print-output and source-preservation checks before and after removal. rembg 2.0.86 initially failed import because the original requirement omitted an ONNX backend; declaring rembg[cpu] installed ONNX Runtime 1.31.0 and import passed. CI now checks reconstruction, import and local smoke. AI model inference, Liblib and macOS JXA were not exercised. The initial sandbox ensurepip launch failed; the same task-owned environment initialized successfully outside the sandbox.

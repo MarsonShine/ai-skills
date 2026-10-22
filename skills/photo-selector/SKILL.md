@@ -17,7 +17,7 @@ description: "从本地照片批量挑片、比较相似照片、排序或生成
 
 ## 联络表工具
 
-macOS 默认使用 JXA + AppKit；Linux / Windows 使用 Python 3 + Pillow。包装器会优先使用技能内已有的 `.venv`。
+macOS 默认使用 JXA + AppKit；Linux / Windows 使用 Python 3 + Pillow。技能包不携带虚拟环境。需要独立环境时，在技能目录之外创建 venv，用该环境的 Python 执行 `-m pip install -r "{baseDir}/requirements.txt"`，并将 `PHOTO_SELECTOR_PYTHON` 指向它。包装器仍兼容用户已有的技能内 `.venv`。
 
 ```text
 bash "{baseDir}/scripts/make_contact_sheets.sh" "<photos-dir>" "<sheets-dir>" 4 4 480 360
@@ -26,7 +26,7 @@ pwsh -File "{baseDir}/scripts/make_contact_sheets.ps1" "<photos-dir>" "<sheets-d
 
 按当前平台选择一个入口。参数依次为输入目录、输出目录、列数、行数、单格宽高；可追加候选名单路径（每行一个文件名）。需要放大候选时可用 `3 3 640 480`。
 
-缺少 Pillow 时使用 `python -m pip install pillow`，遵循当前环境的安装权限。后端实现为 `scripts/contact_sheet.jxa` 与 `scripts/contact_sheet_pillow.py`；Bash 包装器支持 `PHOTO_SELECTOR_BACKEND=macos-jxa|python-pillow` 和 `PHOTO_SELECTOR_PYTHON`。
+使用选定环境的解释器安装依赖，遵循当前环境的安装权限。后端实现为 `scripts/contact_sheet.jxa` 与 `scripts/contact_sheet_pillow.py`；Bash 包装器支持 `PHOTO_SELECTOR_BACKEND=macos-jxa|python-pillow` 和 `PHOTO_SELECTOR_PYTHON`。
 
 ## 源片保护
 

@@ -1,6 +1,9 @@
 # Dependencies and package managers
 node_modules/
 *.tgz
+.venv/
+__pycache__/
+*.py[cod]
 
 # Local scratch and generated output
 work/

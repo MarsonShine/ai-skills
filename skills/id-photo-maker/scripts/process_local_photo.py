@@ -28,7 +28,7 @@ def ensure_pillow():
     except ImportError as exc:
         raise SystemExit(
             "Pillow is required for photo processing. Install it with "
-            "'python3 -m pip install -r ~/.copilot/skills/id-photo-maker/requirements.txt'."
+            "this interpreter's pip and requirements.txt from the current skill directory."
         ) from exc
 
     return Image, ImageOps
@@ -40,7 +40,7 @@ def ensure_rembg():
     except ImportError as exc:
         raise SystemExit(
             "rembg is required for automatic background removal. Install it with "
-            "'python3 -m pip install -r ~/.copilot/skills/id-photo-maker/requirements.txt'."
+            "this interpreter's pip and requirements.txt from the current skill directory."
         ) from exc
 
     return remove
