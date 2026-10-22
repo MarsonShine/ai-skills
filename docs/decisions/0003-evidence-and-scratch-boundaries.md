@@ -22,9 +22,9 @@ Only `workspaces/<task>/` is citable evidence. Each set states its baseline comm
 ## Consequences
 
 - A result without a baseline commit and limitations is not evidence.
-- Evidence older than the code it evaluates is marked stale, not silently reused.
+- Evidence is stale when relevant evaluated inputs change; unrelated later commits and timestamps alone do not invalidate it. Reuse retains the original execution date and explains applicability.
 - Index maintenance is part of finishing an evaluation.
 
 ## Review trigger
 
-If evidence volume grows, add retention rules here rather than committing raw runs.
+Retention and current-state transitions are defined in [the session workflow](../multi-session-workflow.md). Revisit them if retained evidence obscures current facts; preserve unique rationale and repair references before removal.

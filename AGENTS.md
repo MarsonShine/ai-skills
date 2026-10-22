@@ -10,6 +10,8 @@ Read applicable instructions and the files or contracts relevant to the affected
 
 If a skill rule blocks otherwise requested work, identify the exact file and rule, explain what remains blocked, and complete independent authorized work. Ask only for missing decisions or authorization that materially affect the result.
 
+Start from [PROGRESS.md](PROGRESS.md) and its active-task link. Follow [state and handoff lifecycle](docs/multi-session-workflow.md) when ending or continuing work; load historical evidence only for a concrete question.
+
 ## Plugin and Skill Layout
 
 - Keep `.codex-plugin/plugin.json` at the repository root, skills under `skills/`, and the local marketplace entry at `.agents/plugins/marketplace.json`.
