@@ -1,7 +1,7 @@
 # Harness support-document evidence pilot
 
 Task ID: T-20261022-HARNESS-DOCS
-Status: in_progress
+Status: completed
 Source: the observability-plan review identified that `sync/check` do not cover auxiliary project documents.
 Baseline: ai-skills `af63286`; MS.Microservice `b8b2d75`.
 
@@ -15,9 +15,9 @@ Out of scope: business changes, full agent tracing, a new recorder, automatic do
 | ID | Acceptance | Evidence | Result |
 | --- | --- | --- | --- |
 | A1 | `check` rejects each missing or empty required support document | Regression suite R1/R2 | Passed |
-| A2 | `sync --write` restores these documents and the resulting project passes `check` | Regression suite R2; MS fixture pending | Unit checks passed |
-| A3 | Existing non-empty project documents remain byte-identical; dry run writes nothing | Regression suite R2; MS fixture pending | Unit checks passed |
-| A4 | The MS project passes the updated check and evidence links resolve | Project check and link inspection | Not verified |
+| A2 | `sync --write` restores these documents and the resulting project passes `check` | Regression suite R2; MS P2-01/P2-02 | Passed |
+| A3 | Existing non-empty project documents remain byte-identical; dry run writes nothing | Regression suite R2; MS P2-01/P2-02 | Passed |
+| A4 | The MS project passes the updated check and evidence links resolve | MS P1/P3: project check, 19 relative links | Passed |
 
 ## Execution evidence
 
@@ -35,4 +35,12 @@ Reviewer conclusion: R1 reproduces the omission at the common document owner; R2
 
 Run R2 and R3 from a checkout of this slice. To reproduce R1, keep the tests but use the engine from `af63286` in an isolated checkout. The regression tests create and clean temporary fixtures, not project files.
 
-These checks establish support-document presence and non-destructive restoration, not document freshness, acceptance quality, business correctness or full agent tracing. MS integration evidence will be added after its pilot. Local raw console output is not a shared artifact; this summary and the regression suite retain the necessary result and reproduction steps.
+The fix and regression evidence are committed in ai-skills `837c3dd`. The adopting project pilot is committed in MS.Microservice `b6d581a`, under `docs/validation/T-20261022-HARNESS-DOCS/`: `summary.md`, `replay.py` and two independently retained result JSON files. From that project's root, run `python docs/validation/T-20261022-HARNESS-DOCS/replay.py --skills-root <ai-skills-checkout>` to reproduce the six-step baseline/fixed-engine comparison. The candidate engine SHA-256 in both recorded runs is `ce64fd39fde8c04e8aadb22511efccf49e64aa997e28cb338afb39f442266d03`.
+
+These checks establish support-document presence and non-destructive restoration, not document freshness, acceptance quality, business correctness or full agent tracing. Local raw console output is not a shared artifact; the summaries, retained fixture results and regression suite preserve the required facts and reproduction steps. No .NET business code changed or business/infrastructure tests ran.
+
+## Pilot Decision
+
+Existing command output plus a scoped reproducible fixture covered this task's execution facts. No repeated collection gap justified a general recorder, so no `trace.py`, universal event schema, host parser or completion-rate metric was introduced. The bootstrap skill offers this workflow only when an evidence pilot is requested; review and pre-push skills retain their existing evidence-reuse rules.
+
+Mapping observations to acceptance criteria and judging freshness still requires reviewer reasoning. The pilot was executed and assessed by the same agent; it is not independent human review and provides no measured claim about review time, model success rate or API cost.

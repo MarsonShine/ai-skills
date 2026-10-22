@@ -1,22 +1,21 @@
 # Install State
 
-Checked: 2026-10-21
-Source: `main` at `27e44f9` with the local plugin cachebuster update
-Plugin version: `0.2.0+codex.20261021175202`
+Checked: 2026-10-22
+Source: `main` at `837c3dd` with the optional evidence-pilot guide and plugin cachebuster update
+Plugin version: `0.2.0+codex.20261022115539`
 
 This file records where installed copies came from and how far they have drifted. It is not an install log for every tool.
 
 ## Codex
 
-Reinstalled `ai-skills@ai-skills` on 2026-10-21 from this repository's local marketplace using `codex plugin add ai-skills@ai-skills --json`.
+Reinstalled `ai-skills@ai-skills` on 2026-10-22 from this repository's local marketplace using `codex plugin add ai-skills@ai-skills --json`.
 
-- Installed cache: `%USERPROFILE%\.codex\plugins\cache\ai-skills\ai-skills\0.2.0+codex.20261021175202`.
-- Includes 25 skills, including the new `bootstrap-harness` skill.
-- Updated entrypoints since the previous Codex cache: `implement-minimal-code`, `markdown-pdf-export`, `review-technical-prose`, and `write-natural-prose`.
-- All 25 skill entrypoints passed quick validation, and the repository skill catalog check passed.
-- SHA-256 comparison confirmed all 3,057 installed skill files match the repository, with no missing or extra files; the plugin manifest also matches byte for byte.
+- Installed cache: `%USERPROFILE%\.codex\plugins\cache\ai-skills\ai-skills\0.2.0+codex.20261022115539`.
+- Includes 25 skills. `bootstrap-harness` now checks/restores missing or blank support documents and routes explicitly requested evidence pilots to a dedicated reference.
+- The changed entrypoint passed quick validation; the catalog check and four engine regression tests passed. Unchanged skill checks remain valid from the previous installation.
+- SHA-256 comparison confirmed all 3,058 installed skill files match the repository, with no missing or extra files; the installed manifest and standalone engine also match their sources byte for byte.
 - Restart Codex and open a new chat to load the updated plugin into the model context.
-- Repository harness adoption was declined for this update; `AGENTS.md` was not changed.
+- This source repository has not adopted the managed block; no adoption was performed.
 
 ## DeepSeek Harness Installed Target
 
@@ -32,6 +31,8 @@ Installed 2026-10-21 from the `bootstrap-harness` templates and script at `main`
 - First adopter: `MS.Microservice`, baseline v1.
 
 Update the engine by copying the current skill files again; the templates are the source of truth.
+
+Updated 2026-10-22: copied the engine from `837c3dd` and its `harness.md` template after confirming installed files matched the previous source. The installed engine passed `check` against MS.Microservice. The managed-block baseline remains v1; existing non-empty project documents were migrated explicitly in the MS pilot, not overwritten by `sync`.
 
 ## DeepSeek Harness Drift
 

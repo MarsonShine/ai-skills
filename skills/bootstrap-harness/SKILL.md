@@ -19,6 +19,8 @@ All write commands are dry runs without `--write`. Review the diff; do not commi
 
 Read `references/harness-layout.md` when choosing adapters, explaining the layers, or recovering without the CLI.
 
+For an explicitly requested acceptance-evidence pilot, read `references/evidence-pilot.md`. Keep it scoped to the selected task; it does not add a required workflow to every repository.
+
 ## Boundaries
 
 - Do not overwrite a non-empty `AGENTS.md`; use `adopt`.
