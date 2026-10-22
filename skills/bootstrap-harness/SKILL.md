@@ -21,6 +21,8 @@ Read `references/harness-layout.md` when choosing adapters, explaining the layer
 
 For an explicitly requested acceptance-evidence pilot, read `references/evidence-pilot.md`. Keep it scoped to the selected task; it does not add a required workflow to every repository.
 
+For session closeout or resumption, use the project's existing current-state owner. Read `references/session-closeout.md` for the read-only `closeout` command and its limits. Consolidate current facts, retain task evidence, and identify disposable task-owned artifacts before ending work.
+
 ## Boundaries
 
 - Do not overwrite a non-empty `AGENTS.md`; use `adopt`.

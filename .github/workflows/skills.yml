@@ -27,3 +27,6 @@ jobs:
 
       - name: Check harness document recovery
         run: python scripts/test_bootstrap_harness.py
+
+      - name: Check read-only session closeout
+        run: python scripts/test_closeout.py

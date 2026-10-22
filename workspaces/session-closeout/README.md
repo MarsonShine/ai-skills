@@ -15,7 +15,7 @@ Out of scope: .NET business changes, dependency-security remediation, new tracin
 | --- | --- | --- | --- |
 | 1 | docs: correct current state and retire completed task | Relative links resolve; current facts match Git/CI; previous task remains accessible | passed |
 | 2 | docs: define state and evidence lifecycle | Single owners; input-based freshness; bounded startup and archive rules | passed |
-| 3 | feat(harness): check session closeout without writes | Regression fixtures for conflicts, links, scope and scratch; read-only repeatability | pending |
+| 3 | feat(harness): check session closeout without writes | Regression fixtures for conflicts, links, scope and scratch; read-only repeatability | passed |
 | 4 | chore(skills): remove packaged Python environments | Clean dependency reconstruction; representative image-tool smoke; no tracked runtime caches | pending |
 | 5 | test: verify repository resumption and refresh installation | Two repository exercises, installation hashes, current-state handoff and push | pending |
 
@@ -35,3 +35,5 @@ Record each slice's checks here; retain task-specific durable evidence, not a tr
 Slice 1: relative links passed; previous task preserved; Git/CI baseline facts inspected. No runtime code changed.
 
 Slice 2: ownership/lifecycle reviewed; relative links passed; time-only staleness rules replaced with relevant-input comparison.
+
+Slice 3: six closeout CLI tests and four support-document tests passed; catalog and changed-skill validation passed. Actual closeout inspections passed for both repositories with explicit scopes. Checks do not prove semantic freshness or business CI health.

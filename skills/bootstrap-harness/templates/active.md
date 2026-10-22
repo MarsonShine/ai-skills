@@ -2,6 +2,7 @@
 
 Status: idle
 Task: none
+Next: 根据用户请求填写任务契约。
 
 ## 契约
 
@@ -12,4 +13,4 @@ Task: none
 - 依赖：
 - 证据：
 
-同一时间只允许一个 `in_progress`。完成或阻塞后，把结果写入 `docs/status.md`，再换下一张任务卡。
+同一时间只允许一个 `in_progress`。完成后将契约和结果归入项目证据目录，再将本入口设为 idle/none。阻塞时保留 Task、Blocker 和 Next，并同步当前状态页。

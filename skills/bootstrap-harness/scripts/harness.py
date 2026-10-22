@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
 import re
 import subprocess
 import sys
@@ -347,6 +348,15 @@ def cmd_sync(root: Path, write_changes: bool) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
+    closeout = sub.add_parser("closeout", help="read-only state, scope and explicit scratch checks")
+    closeout.add_argument("--root", help="repository root (defaults to the git root)")
+    closeout.add_argument("--state", default="docs/status.md", help="current-state Markdown path")
+    closeout.add_argument("--task", help="optional active-task Markdown path")
+    closeout.add_argument("--scope", action="append", default=[], help="allowed changed file/directory; repeatable")
+    closeout.add_argument("--preserve", action="append", default=[], help="PATH=reason for pre-existing changes or retained scratch")
+    closeout.add_argument("--scratch", action="append", default=[], help="explicit task-owned path to check; repeatable")
+    closeout.add_argument("--base", help="also inspect committed changes since this revision")
+    closeout.add_argument("--complete", action="store_true", help="require idle state after archiving the completed task")
     for name in ("status", "check", "init", "adopt", "sync"):
         command = sub.add_parser(name)
         command.add_argument("--root", help="repository root (defaults to the git root)")
@@ -357,6 +367,15 @@ def main() -> int:
 
     args = parser.parse_args()
     root = repo_root(args.root)
+
+    if args.command == "closeout":
+        sys.dont_write_bytecode = True
+        from closeout import inspect_closeout
+
+        result = inspect_closeout(root, args.state, args.task, args.scope, args.preserve,
+                                  args.scratch, args.base, args.complete)
+        print(json.dumps(result, ensure_ascii=True, indent=2))
+        return 1 if result["errors"] else 0
 
     if args.command == "status":
         return cmd_status(root)
