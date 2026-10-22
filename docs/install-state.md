@@ -1,8 +1,8 @@
 # Install State
 
 Checked: 2026-10-22
-Source: `main` at `837c3dd` with the optional evidence-pilot guide and plugin cachebuster update
-Plugin version: `0.2.0+codex.20261022115539`
+Source: implementation at `3de862b`, with this session-closeout metadata update
+Plugin version: `0.2.0+codex.20261022150930`
 
 This file records where installed copies came from and how far they have drifted. It is not an install log for every tool.
 
@@ -10,10 +10,10 @@ This file records where installed copies came from and how far they have drifted
 
 Reinstalled `ai-skills@ai-skills` on 2026-10-22 from this repository's local marketplace using `codex plugin add ai-skills@ai-skills --json`.
 
-- Installed cache: `%USERPROFILE%\.codex\plugins\cache\ai-skills\ai-skills\0.2.0+codex.20261022115539`.
-- Includes 25 skills. `bootstrap-harness` now checks/restores missing or blank support documents and routes explicitly requested evidence pilots to a dedicated reference.
-- The changed entrypoint passed quick validation; the catalog check and four engine regression tests passed. Unchanged skill checks remain valid from the previous installation.
-- SHA-256 comparison confirmed all 3,058 installed skill files match the repository, with no missing or extra files; the installed manifest and standalone engine also match their sources byte for byte.
+- Installed cache: `%USERPROFILE%\.codex\plugins\cache\ai-skills\ai-skills\0.2.0+codex.20261022150930`.
+- Includes 25 skills, read-only closeout checks, and image-tool dependency manifests. Virtual environments and bytecode were removed from the installable tree.
+- The three changed entrypoints passed quick validation; catalog/package checks, six closeout tests, four recovery tests, image-tool smoke and rembg CPU import passed. Scope and limitations: [closeout evidence](../workspaces/session-closeout/README.md).
+- SHA-256 comparison verified all 113 installed skill files, with no missing, extra or different files; the manifest and standalone closeout engine/templates also match their sources byte for byte.
 - Restart Codex and open a new chat to load the updated plugin into the model context.
 - This source repository has not adopted the managed block; no adoption was performed.
 
@@ -32,11 +32,11 @@ Installed 2026-10-21 from the `bootstrap-harness` templates and script at `main`
 
 Update the engine by copying the current skill files again; the templates are the source of truth.
 
-Updated 2026-10-22: copied the engine from `837c3dd` and its `harness.md` template after confirming installed files matched the previous source. The installed engine passed `check` against MS.Microservice. The managed-block baseline remains v1; existing non-empty project documents were migrated explicitly in the MS pilot, not overwritten by `sync`.
+The closeout update adds `closeout.py` next to the standalone `harness.py` and refreshes the status/active templates. The managed-block baseline remains v1; project-owned non-empty documents are migrated explicitly, not overwritten by sync.
 
-## DeepSeek Harness Drift
+## DeepSeek Harness Drift (Historical Check)
 
-18 of 25 `SKILL.md` files match this repository byte for byte. The remaining 7 are older installed copies:
+Last checked 2026-10-21, before the current closeout and packaging changes. At that check, 18 of 25 `SKILL.md` files matched the repository byte for byte and the remaining 7 were older copies. This table is not a fresh comparison against the current source:
 
 | Skill | Repository (chars) | Installed (chars) |
 | --- | ---: | ---: |

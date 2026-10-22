@@ -1,0 +1,37 @@
+{
+  "repository": "ai-skills",
+  "baseline": "26d1c79",
+  "read_files": [
+    "AGENTS.md",
+    "PROGRESS.md"
+  ],
+  "before": {
+    "AGENTS.md": {
+      "characters": 5800,
+      "lines": 65
+    },
+    "PROGRESS.md": {
+      "characters": 2246,
+      "lines": 40
+    }
+  },
+  "after": {
+    "AGENTS.md": {
+      "characters": 6021,
+      "lines": 67
+    },
+    "PROGRESS.md": {
+      "characters": 1497,
+      "lines": 27
+    }
+  },
+  "recovered_state": {
+    "Status": "idle",
+    "Task": "none",
+    "Next": "For the next requested skill change, use the [development guide](docs/skill-development-guide.md); retain the [completed closeout evidence](workspaces/session-closeout/README.md)."
+  },
+  "before_characters": 8046,
+  "after_characters": 7518,
+  "result": "passed",
+  "limits": "Deterministic startup-path inspection, not a fresh model session. Characters are not tokens; model mistakes and repeated test executions were not measured."
+}
