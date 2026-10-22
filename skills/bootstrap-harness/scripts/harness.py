@@ -17,6 +17,12 @@ AGENTS = Path("AGENTS.md")
 CLAUDE = Path("CLAUDE.md")
 COPILOT = Path(".github/copilot-instructions.md")
 IGNORE = Path(".harness-ignore")
+SUPPORT_TEMPLATES = {
+    Path("docs/status.md"): "status.md",
+    Path("docs/tasks/active.md"): "active.md",
+    Path(".github/pull_request_template.md"): "pull_request_template.md",
+    Path("docs/harness.md"): "harness.md",
+}
 
 PROJECT_SECTION = """## Project
 
@@ -194,15 +200,10 @@ def ensure_claude(root: Path) -> bool:
 
 def ensure_support_files(root: Path) -> list[str]:
     created: list[str] = []
-    files = {
-        Path("docs/status.md"): template("status.md"),
-        Path("docs/tasks/active.md"): template("active.md"),
-        Path(".github/pull_request_template.md"): template("pull_request_template.md"),
-        Path("docs/harness.md"): harness_doc(),
-    }
-    for relative, content in files.items():
+    for relative, name in SUPPORT_TEMPLATES.items():
         path = root / relative
-        if not path.is_file():
+        if not path.is_file() or not read(path).strip():
+            content = harness_doc() if name == "harness.md" else template(name)
             write(path, content)
             created.append(str(relative))
     return created
@@ -252,6 +253,13 @@ def cmd_check(root: Path) -> int:
         warnings.append("CLAUDE.md: missing")
     elif "@AGENTS.md" not in read(claude):
         warnings.append("CLAUDE.md: missing @AGENTS.md import")
+
+    for relative in SUPPORT_TEMPLATES:
+        path = root / relative
+        if not path.is_file():
+            errors.append(f"{relative.as_posix()}: missing; run sync --write to restore the template")
+        elif not read(path).strip():
+            errors.append(f"{relative.as_posix()}: empty; run sync --write to restore the template")
 
     for message in warnings:
         print(f"warning: {message}")
@@ -314,7 +322,7 @@ def cmd_sync(root: Path, write_changes: bool) -> int:
     if not agents.is_file() or parse(read(agents)) is None:
         raise SystemExit("error: AGENTS.md has no managed block; run adopt")
     body = template("AGENTS.managed.md")
-    print("would update the managed block in AGENTS.md and copilot instructions")
+    print("would update managed blocks and restore missing or empty support documents")
     if not write_changes:
         print("dry run; pass --write to apply")
         return 0
@@ -329,7 +337,10 @@ def cmd_sync(root: Path, write_changes: bool) -> int:
         else:
             write(copilot, insert_block(text, render(body)))
     ensure_claude(root)
+    created = ensure_support_files(root)
     print("synced; review the diff before committing")
+    for item in created:
+        print(f"- restored {item}")
     return 0
 
 

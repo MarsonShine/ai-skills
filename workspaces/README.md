@@ -6,6 +6,7 @@ Tracked evaluation evidence and reusable case sets. Skills live in `skills/`; no
 
 | Workspace | Recorded baseline | Contents | Status |
 | --- | --- | --- | --- |
+| [harness-evidence-pilot](harness-evidence-pilot/README.md) | `af63286`, 2026-10-22 | support-document regression evidence and MS integration pilot | Unit checks passed; project pilot in progress |
 | [gpt6-astra-audit](gpt6-astra-audit/README.md) | `16f105b`, 2026-09-07 | structure, command, and behavior JSON | Historical; later skill edits invalidate it |
 | [skill-routing-evals](skill-routing-evals/README.md) | none (cases only) | 50 catalog-routing cases | Reusable case set; no result committed |
 | [implement-minimal-code-evals](implement-minimal-code-evals/README.md) | 2026-09-03 run | 7 cases, baseline and candidate outputs, `RESULTS.md` | Historical |

@@ -24,3 +24,6 @@ jobs:
 
       - name: Validate catalog and frontmatter
         run: python scripts/check_skill_catalog.py
+
+      - name: Check harness document recovery
+        run: python scripts/test_bootstrap_harness.py

@@ -33,6 +33,10 @@ python ~/.agents/harness/harness.py check
 
 `init` 只用于新仓库或空 `AGENTS.md`；已有内容用 `adopt`。所有写操作先看 diff，不自动提交。
 
+`check` 还会检查任务卡、状态页、本恢复指南和 PR 模板是否存在且非空。`sync --write` 只为缺失或空白的辅助文件补建模板，保留已有非空文件的原始内容。补建不能恢复丢失的任务结果，历史内容应从 Git 或备份恢复。
+
+更新源模板不会迁移已有项目文档；新增字段需要在项目中增量修改。`check` 不验证验收标准、证据链接或业务正确性。
+
 ## 没有 AI 工具时
 
 1. 打开 `AGENTS.md`，保留 `## Working Agreement` 到 `<!-- /harness:managed -->` 的内容；不要手改托管块。

@@ -20,6 +20,12 @@ The engine and its templates must work without the skill and without the ai-skil
 
 Every embedded block carries `<!-- harness:managed vN sha256:... -->`. The hash covers the body between the markers, not the marker. `check` fails on a hash mismatch and only warns when the version is older.
 
+## Support Documents
+
+`check` also fails when the task card, status page, harness recovery guide, or PR template is missing or blank. `sync --write` restores these files from templates only when missing or blank; existing non-empty files remain byte-identical. Restoring a template does not recover lost task results: recover those from Git or backups.
+
+Template changes do not migrate existing project documents. Add any new fields deliberately in the adopting project, preserving its content. `check` verifies file presence and non-empty content, not acceptance criteria, evidence links, or business correctness.
+
 ## Safety
 
 - `init` requires a missing or empty `AGENTS.md`; `adopt` inserts the block after the first heading and preserves existing text.
