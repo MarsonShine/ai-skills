@@ -34,6 +34,17 @@ jobs:
       - name: Check read-only session closeout
         run: python scripts/test_closeout.py
 
+      - name: Setup Node for WeChat draft checks
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Check WeChat previews, image preparation and draft recovery
+        run: |
+          python -m pip install -r skills/wechat-mp-publisher/requirements.txt
+          python -B scripts/test_wechat_images.py
+          node --test scripts/test_wechat_*.mjs
+
       - name: Rebuild image-tool dependencies
         run: python -m pip install -r skills/photo-selector/requirements.txt -r skills/id-photo-maker/requirements.txt
 

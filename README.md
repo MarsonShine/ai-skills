@@ -44,9 +44,12 @@ Current skills:
 - `sync-documentation-site`
 - `translate-tech-en-zh`
 - `trim-reasoning-leakage`
+- `wechat-mp-publisher`
 - `windows-reclaim-disk-space`
 - `write-natural-prose`
 <!-- skills:end -->
+
+`wechat-mp-publisher` turns ordered photos and copy into a local WeChat Official Account preview. After the author confirms the account and revision it creates or updates one draft. See the [skill workflow](skills/wechat-mp-publisher/SKILL.md).
 
 `implement-minimal-code` is selected on demand for new features, bug fixes, and ordinary implementation refactors. Explicit code-reduction tasks use `find-code-simplifications`. Review-only, planning, documentation, and media tasks do not trigger `implement-minimal-code`.
 

@@ -6,10 +6,11 @@ Tracked evaluation evidence and reusable case sets. Skills live in `skills/`; no
 
 | Workspace | Recorded baseline | Contents | Status |
 | --- | --- | --- | --- |
+| [wechat-mp-publisher](wechat-mp-publisher/README.md) | `afb1f6c` plus the draft assistant, 2026-11-11 | offline preview, draft recovery and account acceptance | Local checks complete; WeChat account and phone acceptance pending |
 | [session-closeout](session-closeout/README.md) | ai-skills `26d1c79`, MS `b6d581a`, 2026-10-22 | state, lifecycle, packaging and resumption work | Completed; scoped measurements and checks |
 | [harness-evidence-pilot](harness-evidence-pilot/README.md) | baseline `af63286`, fix `837c3dd`, 2026-10-22 | support-document regression evidence and MS integration pilot `b6d581a` | Completed; scoped execution evidence, not a model evaluation |
 | [gpt6-astra-audit](gpt6-astra-audit/README.md) | `16f105b`, 2026-09-07 | structure, command, and behavior JSON | Historical; later skill edits invalidate it |
-| [skill-routing-evals](skill-routing-evals/README.md) | none (cases only) | 50 catalog-routing cases | Reusable case set; no result committed |
+| [skill-routing-evals](skill-routing-evals/README.md) | cases maintained in the workspace | catalog-routing cases | Reusable case set |
 | [implement-minimal-code-evals](implement-minimal-code-evals/README.md) | 2026-09-03 run | 7 cases, baseline and candidate outputs, `RESULTS.md` | Historical |
 | [verification-strategy-evals](verification-strategy-evals/README.md) | 2026-10-13 run | 10 cases, `results.json`, `RESULTS.md` | Historical |
 | [csharp-dotnet-code-checklist-workspace](csharp-dotnet-code-checklist-workspace/iteration-1/benchmark.md) | iteration-1 | benchmark plus three reviews with and without the skill | Historical |

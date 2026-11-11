@@ -1,6 +1,20 @@
 {
   "cases": [
     {
+      "id": "wechat-draft-with-photos",
+      "prompt": "这三张照片配上这段日记，排成公众号图文，我看过后再放进草稿箱。",
+      "expected_skills": ["wechat-mp-publisher"],
+      "forbidden_skills": ["photo-selector", "qwen-image-generator"],
+      "reason": "The destination and preview-to-draft handoff are explicit."
+    },
+    {
+      "id": "wechat-negative-family-diary",
+      "prompt": "帮我把这段家庭日记的语气写得自然一点，给我文案就好。",
+      "expected_skills": ["write-natural-prose"],
+      "forbidden_skills": ["wechat-mp-publisher"],
+      "reason": "A family story alone does not request a WeChat layout or draft."
+    },
+    {
       "id": "loop-scheduled-monitor-zh",
       "prompt": "每十分钟检查一次这个 PR 的 CI，合并后自动停止。",
       "expected_skills": ["loop-orchestrator"],
