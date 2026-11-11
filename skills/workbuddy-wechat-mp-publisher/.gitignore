@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.wechat-mp/
+*.egg-info/

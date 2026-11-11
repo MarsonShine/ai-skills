@@ -19,7 +19,8 @@ function lineBreaks(value: string): string {
 
 type Photo = { path: string; caption: string };
 
-export function articleHtml(text: string, photos: Photo[], scene: Scene, whitespace: string, epigraph?: string): string {
+export function articleHtml(text: string, photos: Photo[], scene: Scene, whitespace: string, epigraph?: string,
+  footer?: { path: string; text: string }): string {
   const { ink, paper, line, serif } = scenes[scene];
   const gap = (whitespace === "airy" ? 30 : whitespace === "tight" ? 14 : 22) + (scene === "daily" ? 4 : 0);
   const font = serif ? "Georgia, 'Songti SC', SimSun, serif" : "-apple-system, 'Microsoft YaHei', sans-serif";
@@ -55,6 +56,10 @@ export function articleHtml(text: string, photos: Photo[], scene: Scene, whitesp
         ? `<p style="margin:7px 0 0;text-align:center;font-size:13px;color:${ink};">${lineBreaks(photo.caption)}</p>` : "";
       content.push(`<section style="margin:0 0 ${gap}px;${frame}">${marker}<img src="${photo.path}" alt="${escapeHtml(photo.caption)}" style="display:block;width:100%;max-width:100%;height:auto;" />${caption}</section>`);
     }
+  }
+  if (footer) {
+    const footerText = footer.text ? `<p style="margin:10px 0 0;text-align:center;font-size:13px;line-height:1.6;">${lineBreaks(footer.text)}</p>` : "";
+    content.push(`<section style="margin:${gap}px 0 0;text-align:center;"><img src="${footer.path}" alt="公众号二维码" style="display:block;width:100%;max-width:198px;height:auto;margin:0 auto;" />${footerText}</section>`);
   }
   return `<section style="font-family:${font};font-size:16px;line-height:1.85;color:#292d29;overflow-wrap:break-word;">${content.join("")}</section>`;
 }

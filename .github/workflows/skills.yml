@@ -45,6 +45,11 @@ jobs:
           python -B scripts/test_wechat_images.py
           node --test scripts/test_wechat_*.mjs
 
+      - name: Check WorkBuddy article profile, voice, rewrite, image and render flow
+        run: |
+          python -m pip install -r skills/workbuddy-wechat-article/requirements.txt
+          python -B scripts/test_workbuddy_article.py
+
       - name: Rebuild image-tool dependencies
         run: python -m pip install -r skills/photo-selector/requirements.txt -r skills/id-photo-maker/requirements.txt
 

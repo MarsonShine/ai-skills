@@ -12,7 +12,7 @@ const configDir = resolve(homedir(), '.config/wechat-mp')
 const stateDir = resolve(process.env.WECHAT_MP_STATE_DIR || resolve(homedir(), '.wechat-mp/state'))
 const backend = 'https://mp.weixin.qq.com/'
 const help = {
-  preview: 'preview --text 内容 | --text-file 文件 --images 照片1 照片2 [--workdir 文章目录] [--scene daily|family|travel|anniversary] [--cover 照片] [--layout 文件] [--profile 文件] [--edits 文件]',
+  preview: 'preview --text 内容 | --text-file 文件 --images 照片1 照片2 [--workdir 文章目录] [--scene daily|family|travel|anniversary] [--cover 照片] [--layout 文件] [--profile 文件] [--edits 文件] [--footer-image 图片 --footer-text 文字]',
   check: 'check [--offline] [--account AppID] [--bundle 版本目录 --action draft|update]',
   draft: 'draft --bundle 版本目录 --account AppID --confirmed 确认码',
   update: 'update --bundle 版本目录 --account AppID --confirmed 确认码 [--overwrite 冲突码]',
@@ -54,6 +54,7 @@ async function run(command: Command, args: string[]): Promise<Record<string, unk
     const { values: v } = parseArgs({ args: expandImages(args), options: {
       text: str, 'text-file': str, image: many, caption: many, title: str, digest: str, cover: str, scene: str,
       quality: str, author: str, profile: str, workdir: str, layout: str, edits: str, epigraph: str, account: str, action: str,
+      'footer-image': str, 'footer-text': str,
     } })
     if ((v.text === undefined) === (v['text-file'] === undefined)) throw new Error('请提供 --text 或 --text-file 中的一项')
     const source = v.text ?? readFileSync(resolve(v['text-file']!), 'utf8').replace(/^\uFEFF/, '')
@@ -75,6 +76,7 @@ async function run(command: Command, args: string[]): Promise<Record<string, unk
       for (const sentence of sentences.filter(s => s.includes(word))) suggestions.push('作者偏好避用“' + word + '”，可复核原句：“' + sentence.trim() + '”')
     }
     const result = await preview({ ...layout, scene, workdir, text, title: v.title, digest: v.digest,
+      footerImage: v['footer-image'], footerText: v['footer-text'],
       epigraph: v.epigraph, quality, author: v.author ?? profile.author, profile, python: python(), changes, suggestions })
     const bundle = await loadBundle(result.bundleDir)
     return { ...result, workdir, changes, suggestions, preferences: profile,

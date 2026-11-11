@@ -46,6 +46,8 @@ Current skills:
 - `trim-reasoning-leakage`
 - `wechat-mp-publisher`
 - `windows-reclaim-disk-space`
+- `workbuddy-wechat-article`
+- `workbuddy-wechat-mp-publisher`
 - `write-natural-prose`
 <!-- skills:end -->
 

@@ -14,7 +14,7 @@ Reinstalled `ai-skills@ai-skills` on 2026-11-11 with the local marketplace insta
 - Includes 26 skills. SHA-256 checks matched all 125 skill files and the plugin manifest against the installation snapshot.
 - The WeChat assistant passed local preview and draft recovery checks. Account and phone acceptance remain pending. See the [draft assistant acceptance record](../workspaces/wechat-mp-publisher/README.md) and [earlier session-closeout evidence](../workspaces/session-closeout/README.md).
 - Open a new Codex chat to load the updated skill catalog.
-- The source now adds a first-time setup guide at `skills/wechat-mp-publisher/README.md` and links it from the skill entrypoint. This documentation change is not in the installed cache above; reinstall the plugin to load it in a future session.
+- The source adds a first-time setup guide and optional centered QR footer support to `wechat-mp-publisher`. These changes are not in the installed cache above; reinstall the plugin to load them in a future session.
 - This source repository has not adopted the managed block; no adoption was performed.
 
 ## DeepSeek Harness Installed Target

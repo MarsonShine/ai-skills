@@ -49,6 +49,24 @@ test("user-supplied fields over WeChat limits fail without truncation", async ()
   await assert.rejects(preview({ ...input, author: "作".repeat(17) }), /作者/);
 });
 
+test("footer stays centered after all photos and is included in the verified preview", async t => {
+  const root = await mkdtemp(join(tmpdir(), "wx-footer-test-"));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  execFileSync(python(), ["-c", "from PIL import Image; import sys; from pathlib import Path; d=Path(sys.argv[1]); Image.new('RGB',(8,6),'red').save(d/'photo.png'); Image.new('RGB',(20,20),'white').save(d/'qr.png')", root]);
+  const result = await preview({ workdir: join(root, "draft"), text: "正文。", images: [join(root, "photo.png")],
+    footerImage: join(root, "qr.png"), footerText: "扫一扫二维码\n快来关注 <我>～" });
+  const bundle = await loadBundle(result.bundleDir, { requireCurrent: true });
+  assert.deepEqual(bundle.layout.order, [1]);
+  assert.equal(bundle.images.length, 3);
+  assert.match(bundle.html, /max-width:198px/);
+  assert.match(bundle.html, /扫一扫二维码<br\/>快来关注 &lt;我&gt;～/);
+  assert.ok(bundle.html.indexOf('images/body-1.') < bundle.html.indexOf('images/body-2.'));
+  assert.ok(bundle.html.indexOf('images/body-2.') < bundle.html.indexOf('扫一扫二维码'));
+  assert.equal(result.quality[1].pixel_equal, true);
+  await writeFile(join(result.bundleDir, bundle.images[1].path), "changed QR");
+  await assert.rejects(loadBundle(result.bundleDir), /预览图片已改变/);
+});
+
 test("every scene dresses the same ordinary text and ordered photos without writing new story details", () => {
   const photos = [{ path: "images/body-1.jpg", caption: "" }, { path: "images/body-2.jpg", caption: "" }];
   const content = Object.keys(scenes).map(scene => articleHtml("出门，绕了一圈。\n\n回家。", photos, scene, "normal"));

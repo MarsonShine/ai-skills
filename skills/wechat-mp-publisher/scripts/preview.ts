@@ -12,6 +12,7 @@ type Quality = "balanced" | "lossless";
 export type PreviewInput = {
   text: string; images: string[]; workdir: string; title?: string; digest?: string; author?: string;
   cover?: string; scene?: string; captions?: string[]; epigraph?: string; quality?: Quality; python?: string;
+  footerImage?: string; footerText?: string;
   profile?: { author?: string; scene?: string; whitespace?: string };
   imageNumbers?: number[]; coverNumber?: number; changes?: Change[]; suggestions?: string[];
 };
@@ -95,6 +96,7 @@ function metadata(input: PreviewInput) {
   if (!Array.isArray(input.images) || !input.images.length || input.images.some(p => typeof p !== "string" || !p.trim())) {
     throw new Error("请提供至少一张正文图片。");
   }
+  if (input.footerText && !input.footerImage) throw new Error("页尾文字需要配合页尾图片使用。");
   const opening = input.text.trim().split(/\r\n|[\r\n]/u)[0].trim();
   const firstSentence = opening.match(/^[^。！？!?]+(?:[。！？!?][”」』]?|$)/u)?.[0] || opening;
   const title = limit(input.title ?? excerpt(firstSentence, 32), 32, "标题");
@@ -168,11 +170,15 @@ export async function preview(input: PreviewInput) {
     for (const [i, file] of input.images.entries()) {
       prepared.push(await prepareImage(file, imageDir, `body-${i + 1}`, quality, python));
     }
+    const footer = input.footerImage
+      ? await prepareImage(input.footerImage, imageDir, `body-${input.images.length + 1}`, "lossless", python)
+      : undefined;
     const cover = await prepareImage(input.cover ?? input.images[0], imageDir, "cover", quality, python);
     const photos = prepared.map(({ image }, i) => ({ path: image.path, caption: input.captions?.[i] || "" }));
-    const html = articleHtml(input.text, photos, layout.scene, whitespace, input.epigraph);
+    const html = articleHtml(input.text, photos, layout.scene, whitespace, input.epigraph,
+      footer && { path: footer.image.path, text: input.footerText ?? "" });
     validateHtml(html);
-    const images = [...prepared.map(p => p.image), cover.image];
+    const images = [...prepared.map(p => p.image), ...(footer ? [footer.image] : []), cover.image];
     const content: BundleContent = { schema: 1, articleId, title, digest, author, html, cover: cover.image.path,
       images, layout, changes: input.changes ?? [], suggestions: input.suggestions ?? [] };
     const page = reviewHtml(content);
@@ -193,7 +199,7 @@ export async function preview(input: PreviewInput) {
     await writeFile(pointer, JSON.stringify({ articleId, version }));
     await rename(pointer, join(workdir, "current.json"));
     return { ok: true, articleId, version, bundleDir, previewPath: join(bundleDir, "preview.html"), title, digest,
-      scene: layout.scene, quality: [...prepared, cover].map(p => p.measurement) };
+      scene: layout.scene, quality: [...prepared, ...(footer ? [footer] : []), cover].map(p => p.measurement) };
   } finally {
     await rm(pointer, { force: true });
     await rm(stage, { recursive: true, force: true });
