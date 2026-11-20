@@ -1,14 +1,14 @@
 # State, Evidence and Session Handoff
 
-Start with `AGENTS.md`, [current state](../PROGRESS.md), and only the active task linked there. Open module docs, decisions and historical runs when a concrete task question requires them. The documentation index is a map, not a required reading list.
+Start with `AGENTS.md`. In the integration checkout, read [current state](../PROGRESS.md) and follow the active task. In a task worktree, read its root `HANDOFF.md` and follow its `Next` action. Open module docs, decisions and historical runs when a concrete question requires them.
 
 ## Owners and Lifecycle
 
 | Material | Single owner | At completion or replacement |
 | --- | --- | --- |
-| Current task, blocker and next action | `PROGRESS.md` | Replace current facts; keep a link to the result, not a session-by-session journal |
+| Integration state and next action | `PROGRESS.md`, maintained by the integrator | Replace current facts and link the relevant result |
 | Task contract and retained evidence | `workspaces/<task>/README.md` | Mark completed/blocked; keep baseline, acceptance, outcomes and limitations |
-| Branch-local unfinished work | Worktree-root `HANDOFF.md` | Integrate durable information before removing the handoff |
+| Task state, blocker and next action in a worktree | Worktree-root `HANDOFF.md`, maintained by the session doing that task | Preserve its unique contract and results in `workspaces/<task>/` before removal |
 | Current installation and drift | `docs/install-state.md` | Update after installation; other entrypoints link here |
 | Current behavior and rationale | Module documentation and accepted decisions | Consolidate unique reasoning before marking a decision superseded |
 | Historical evaluations | `workspaces/README.md` index | Label applicability by evaluated inputs; do not load transcripts by default |
@@ -20,7 +20,7 @@ Current state should fit roughly one page. Length is a review signal, not permis
 
 1. Inspect the diff against the session's starting state; explain unrelated/pre-existing changes rather than reverting them.
 2. Record sufficient verification for affected behavior, with code/configuration/environment inputs and links to evidence. Preserve pending CI, known failures and unrun checks as such.
-3. Update the task result and this repository's current-state owner. Completed work points to its result; unfinished work names the blocker, remaining edits and exact next action.
+3. Update the entry this session owns. A worktree task updates its `HANDOFF.md`, while an integrator updates `PROGRESS.md`. Completed work points to its result; unfinished work names the blocker, remaining edits and exact next action.
 4. Remove only disposable artifacts created or explicitly adopted by the task. Move necessary evidence out of scratch first. Ignored files are not automatically disposable.
 5. Confirm the next session can locate its task and validation entrypoint. Commit and push only under the user's authorization.
 
@@ -40,6 +40,8 @@ Raw logs may remain in CI with its retention limits; shared review must retain a
 
 ## Concurrent Work and Recovery
 
-Only the integrator updates `PROGRESS.md`; a separate worktree maintains its own `HANDOFF.md`. Reconcile handoff content on integration, then remove it when safe.
+Use a separate Git worktree and a unique task ID for each concurrent task. Two sessions in the same working directory share the task card and Git index. A replacement session resumes the existing ID in the same worktree. Keep each `HANDOFF.md` untracked and stage task files explicitly. Before removing a worktree, preserve required evidence at its durable path.
+
+From the repository root, run `python skills/bootstrap-harness/scripts/harness.py tasks --root .` for a read-only view of local worktree tasks and duplicate active IDs. Run `closeout --worktree-task` against one worktree, adding `--complete` once its card links to its completed evidence. The [card format and examples](../skills/bootstrap-harness/references/session-closeout.md) describe both modes. Only the integrator updates `PROGRESS.md`.
 
 A recovery exercise should begin without chat history, find the current task, identify applicable evidence and name the next operation using the startup map. Record reading volume and factual mistakes separately from model-performance claims. Occasional manual maintenance can review stale indexes and unused constraints; scheduling requires an explicit request.

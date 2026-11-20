@@ -10,7 +10,7 @@ Read applicable instructions and the files or contracts relevant to the affected
 
 If a skill rule blocks otherwise requested work, identify the exact file and rule, explain what remains blocked, and complete independent authorized work. Ask only for missing decisions or authorization that materially affect the result.
 
-Start from [PROGRESS.md](PROGRESS.md) and its active-task link. Follow [state and handoff lifecycle](docs/multi-session-workflow.md) when ending or continuing work; load historical evidence only for a concrete question.
+In the integration checkout start from [PROGRESS.md](PROGRESS.md). In a parallel task worktree, start from its root `HANDOFF.md` and follow its next action. Use the [state and handoff lifecycle](docs/multi-session-workflow.md) when ending or resuming work.
 
 ## Plugin and Skill Layout
 

@@ -21,7 +21,7 @@ Read `references/harness-layout.md` when choosing adapters, explaining the layer
 
 For an explicitly requested acceptance-evidence pilot, read `references/evidence-pilot.md`. Keep it scoped to the selected task; it does not add a required workflow to every repository.
 
-For session closeout or resumption, use the project's existing current-state owner. Read `references/session-closeout.md` for the read-only `closeout` command and its limits. Consolidate current facts, retain task evidence, and identify disposable task-owned artifacts before ending work.
+For ordinary closeout, use the project's existing state entry. For concurrent tasks, use a separate Git worktree and task ID for each. `harness.py tasks` lists local handoffs and `closeout --worktree-task` checks the selected one. See [session closeout](references/session-closeout.md) for the card format, commands and completion rules.
 
 ## Boundaries
 

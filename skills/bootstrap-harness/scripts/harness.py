@@ -11,7 +11,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-VERSION = 1
+VERSION = 2
 END_MARKER = "<!-- /harness:managed -->"
 START_RE = re.compile(r"<!--\s*harness:managed\s+v(\d+)\s+sha256:([0-9a-f]{64})\s*-->")
 AGENTS = Path("AGENTS.md")
@@ -93,7 +93,7 @@ def replace_block(text: str, body: str) -> str | None:
     parsed = parse(text)
     if parsed is None:
         return None
-    return text[: int(parsed["start"])] + render(body) + text[int(parsed["end"]) :]
+    return text[: int(parsed["start"])] + render(body).rstrip("\n") + text[int(parsed["end"]) :]
 
 
 def insert_block(text: str, block: str) -> str:
@@ -350,14 +350,16 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     closeout = sub.add_parser("closeout", help="read-only state, scope and explicit scratch checks")
     closeout.add_argument("--root", help="repository root (defaults to the git root)")
-    closeout.add_argument("--state", default="docs/status.md", help="current-state Markdown path")
+    mode = closeout.add_mutually_exclusive_group()
+    mode.add_argument("--state", help="current-state Markdown path (default: docs/status.md)")
+    mode.add_argument("--worktree-task", action="store_true", help="check this worktree's HANDOFF.md")
     closeout.add_argument("--task", help="optional active-task Markdown path")
     closeout.add_argument("--scope", action="append", default=[], help="allowed changed file/directory; repeatable")
     closeout.add_argument("--preserve", action="append", default=[], help="PATH=reason for pre-existing changes or retained scratch")
     closeout.add_argument("--scratch", action="append", default=[], help="explicit task-owned path to check; repeatable")
     closeout.add_argument("--base", help="also inspect committed changes since this revision")
-    closeout.add_argument("--complete", action="store_true", help="require idle state after archiving the completed task")
-    for name in ("status", "check", "init", "adopt", "sync"):
+    closeout.add_argument("--complete", action="store_true", help="require idle integration state or completed handoff with evidence")
+    for name in ("status", "check", "init", "adopt", "sync", "tasks"):
         command = sub.add_parser(name)
         command.add_argument("--root", help="repository root (defaults to the git root)")
         if name in ("init", "adopt", "sync"):
@@ -368,12 +370,18 @@ def main() -> int:
     args = parser.parse_args()
     root = repo_root(args.root)
 
-    if args.command == "closeout":
+    if args.command in ("tasks", "closeout"):
         sys.dont_write_bytecode = True
-        from closeout import inspect_closeout
+        from closeout import inspect_closeout, list_worktree_tasks
 
-        result = inspect_closeout(root, args.state, args.task, args.scope, args.preserve,
-                                  args.scratch, args.base, args.complete)
+        if args.command == "tasks":
+            result = list_worktree_tasks(root)
+        else:
+            if args.worktree_task and args.task:
+                parser.error("--worktree-task and --task select different task cards")
+            result = inspect_closeout(root, args.state or "docs/status.md", args.task, args.scope,
+                                      args.preserve, args.scratch, args.base, args.complete,
+                                      worktree_task=args.worktree_task)
         print(json.dumps(result, ensure_ascii=True, indent=2))
         return 1 if result["errors"] else 0
 

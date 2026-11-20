@@ -6,6 +6,7 @@ __pycache__/
 *.py[cod]
 
 # Local scratch and generated output
+/HANDOFF.md
 work/
 outputs/
 .codex-tmp/

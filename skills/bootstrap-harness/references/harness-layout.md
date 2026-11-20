@@ -5,7 +5,7 @@
 | Layer | Location | Responsibility |
 | --- | --- | --- |
 | Global trigger | `~/.dsh/AGENTS.md`, `~/.codex/AGENTS.md`, `~/.claude/CLAUDE.md` | Detect a missing block and propose `init` |
-| Engine | `~/.agents/harness/` (`harness.py` + `templates/`) | Generate, adopt, sync, and check blocks |
+| Engine | `~/.agents/harness/` (the CLI, its Python modules and `templates/`) | Maintain managed blocks, inspect closeout and list worktree tasks |
 | Project | `AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md` | Canonical block, adapters, project facts |
 | Skill | this skill | Tell the agent when to call the engine |
 
@@ -38,5 +38,5 @@ Template changes do not migrate existing project documents. Add any new fields d
 
 1. Keep the managed block in `AGENTS.md` and the same block at the top of `.github/copilot-instructions.md`.
 2. Keep `CLAUDE.md` containing `@AGENTS.md`.
-3. Keep `docs/status.md` and `docs/tasks/active.md` updated by hand.
+3. The integrator maintains `docs/status.md` and `docs/tasks/active.md`. For concurrent tasks, use `git worktree list` and read each worktree's root `HANDOFF.md` to locate its next action. Keep unfinished cards available for resumption. [Worktree task format and commands](session-closeout.md)
 4. When the engine is available again, run `sync --write` to restore markers and hashes.
