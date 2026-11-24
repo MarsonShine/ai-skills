@@ -39,6 +39,12 @@ Treat the examples as illustrations, not phrases to repeat.
 - For personal or opinion writing, use only experiences the user supplied. First person, contrast, and light self-deprecation are optional tools, not a house style; never invent personal details.
 - For technical articles and documentation, establish the intended reader and prerequisite knowledge. Explain unfamiliar concepts before relying on them, connect them to the actual implementation, and use a small input/output example or diagram when it clarifies the mechanism. Then develop the problem, reasoning, tradeoffs, and limits; this is a thought sequence, not a required set of headings. Add only the background that reader needs, rather than a general subject tutorial.
 
+## Explaining Performance Changes And Refactors
+
+When the reader asks why a code change helps, follow one concrete input through short excerpts from the old and new paths. Start both at the same caller-visible state and stop at the same result. Make common work visible, even if one version hides it inside a helper. Name the operation that disappeared or moved, what it acted on, and how its cost varied with input size or call count. For a refactor, explain which responsibility moved and which observable behavior it preserves; claim a speed or allocation benefit only when supported.
+
+Keep a constraint beside the line it explains: for example, a slice is safe while its backing array remains exclusively owned through the awaited write. Link to the existing benchmark or acceptance record for measurements. Leave warm-ups, timing procedures, results tables, prediction exercises and hypothetical counterexamples out of the walkthrough by default. Include them when they are the requested deliverable, such as a benchmark report or a hands-on tutorial.
+
 ## Technical Documentation And Comments
 
 - **README:** Help users get a working result with the feature's purpose, setup, usage examples, parameters, and necessary limitations. Prefer examples and tables when they make lookup faster. Keep deployment prerequisites and constraints that change how callers must use the API visible here.

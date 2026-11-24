@@ -33,6 +33,12 @@ Remove adjectives, repetition, and narration only when those clauses remain clea
 - **Prompts and visible strings:** exact wording is behavior; inspect rendered or model-visible output.
 - **Diagnostics:** failing subject, violated rule, and corrective action.
 
+## Performance And Refactoring Walkthroughs
+
+Compare excerpts at the same input state and output boundary. If the old snippet starts after materialization but the new snippet includes reading the input, restore that missing step before judging the cost. Check that the reader can identify the changed operation, its owner, the work it saves or the responsibility it moves, and the real lifetime, budget or failure rule it must preserve.
+
+Flag benchmark narration that interrupts the code explanation. Prefer a link to the runnable case or acceptance evidence. Remove repeated numbers, exercise prompts and speculative scenarios unless the reader asked for an experiment or tutorial. Preserve a concrete condition when omitting it would make the proposed technique incorrect. Keep measurements scoped to the path and metric actually tested.
+
 ## Duplication and Length
 
 Search distinctive phrases and keep one home for extended explanation. Replace duplicates with links when the local reader can still use the interface safely. Treat word budgets as discovery and design constraints, never as permission to delete obligations.
