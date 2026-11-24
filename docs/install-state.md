@@ -1,8 +1,8 @@
 # Install State
 
-Checked: 2026-11-20
-Source: `00d346b` with working-tree harness v2 changes
-Plugin version: `0.2.0+codex.20261120182139`
+Checked: 2026-11-24
+Source: `4a13a62` on `main`
+Plugin version: `0.2.0+codex.20261124073010`
 
 This file records where installed copies came from and how far they have drifted. It is not an install log for every tool.
 
@@ -10,8 +10,8 @@ This file records where installed copies came from and how far they have drifted
 
 The local marketplace installer used a snapshot of the current repository's installable files. The configured marketplace source remains this repository.
 
-- Installed cache: `%USERPROFILE%\.codex\plugins\cache\ai-skills\ai-skills\0.2.0+codex.20261120182139`.
-- All 167 installed skill files matched the installation snapshot by SHA-256, and the plugin manifest matched byte for byte. The 28 skills include the two WorkBuddy skills already present in the source repository.
+- Installed cache: `%USERPROFILE%\.codex\plugins\cache\ai-skills\ai-skills\0.2.0+codex.20261124073010`.
+- All 167 installed skill files matched the installation snapshot by SHA-256, and the plugin manifest matched byte for byte. The plugin is installed and enabled with 28 skills. Performance and refactoring walkthrough guidance is updated in the authoring, review, and implementation workflows.
 - The WeChat assistant passed local preview and draft recovery checks. Account and phone acceptance remain pending. See the [draft assistant acceptance record](../workspaces/wechat-mp-publisher/README.md) and [earlier session-closeout evidence](../workspaces/session-closeout/README.md).
 - Open a new Codex chat to load the updated skill catalog.
 - This source repository has not adopted the managed block; no adoption was performed.
